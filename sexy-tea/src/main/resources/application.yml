@@ -1,0 +1,7 @@
+server:
+  port: 6886
+spring:
+  application:
+    name: sexy-tea
+  profiles:
+    active: dev
