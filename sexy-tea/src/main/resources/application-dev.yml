@@ -40,3 +40,4 @@ spring:
   devtools:
     livereload:
       enabled: true
+config: swaggerConfig: isShow: true

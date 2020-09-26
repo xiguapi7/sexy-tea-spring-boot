@@ -1,0 +1,27 @@
+package sexy.tea.constant;
+
+/**
+ * 响应结果常量类
+ *
+ * @author 大大大西西瓜皮🍉
+ * @date 12:40 2020-09-26
+ * description:
+ */
+public class ResultConstant {
+
+    public static final Integer SUCCESS = 200;
+
+    public static final Integer NOT_FOUND = 404;
+
+    public static final Integer SERVER_ERROR = 500;
+
+    public static final Integer NETWORK_ERROR = 600;
+
+    public static final String SUCCESS_MSG = "Success";
+
+    public static final String NOT_FOUND_MSG = "Not Found";
+
+    public static final String SERVER_ERROR_MSG = "Server Error";
+
+    public static final String NETWORK_ERROR_MSG = "Network Error";
+}
