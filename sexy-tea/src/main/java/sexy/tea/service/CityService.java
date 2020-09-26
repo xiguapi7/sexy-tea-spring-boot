@@ -1,5 +1,6 @@
 package sexy.tea.service;
 
+import sexy.tea.common.Result;
 import sexy.tea.model.City;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface CityService {
 
     int insertOrUpdateSelective(City record);
 
+    Result find();
 }

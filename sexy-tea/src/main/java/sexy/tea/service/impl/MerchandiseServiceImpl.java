@@ -1,10 +1,13 @@
 package sexy.tea.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sexy.tea.common.Result;
 import sexy.tea.mapper.MerchandiseMapper;
 import sexy.tea.model.Merchandise;
 import sexy.tea.service.MerchandiseService;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -48,4 +51,13 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         return merchandiseMapper.insertOrUpdateSelective(record);
     }
 
+    @Override
+    public Result find(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
+        Example example = Example.builder(Merchandise.class).build();
+        example.createCriteria().andEqualTo("status", 1);
+
+        List<Merchandise> merchandiseList = merchandiseMapper.selectByExample(example);
+        return Result.success(merchandiseList);
+    }
 }

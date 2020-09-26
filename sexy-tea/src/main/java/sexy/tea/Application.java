@@ -2,6 +2,7 @@ package sexy.tea;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import tk.mybatis.spring.annotation.MapperScan;
 
 /**
  * 茶颜粤色后端项目启动类
@@ -11,6 +12,7 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
  * description:
  */
 @SpringBootApplication
+@MapperScan("sexy.tea.mapper")
 public class Application {
 
     public static void main(String[] args) {

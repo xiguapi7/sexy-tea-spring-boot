@@ -1,24 +1,26 @@
 package sexy.tea.controller;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sexy.tea.common.Result;
-import sexy.tea.service.BeverageService;
+import sexy.tea.service.MerchandiseService;
 
 /**
  * @author 大大大西西瓜皮🍉
- * @date 15:15 2020-09-26
+ * @date 21:29 2020-09-26
  * description:
  */
 @RestController
-@RequestMapping("/beverage")
-public class BeverageController {
+@RequestMapping("/merchandise")
+public class MerchandiseController {
 
-    private final BeverageService service;
+    private final MerchandiseService service;
 
-    public BeverageController(BeverageService service) {
+    @Autowired
+    public MerchandiseController(MerchandiseService service) {
         this.service = service;
     }
 

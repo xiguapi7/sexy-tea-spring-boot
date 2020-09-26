@@ -1,10 +1,13 @@
 package sexy.tea.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sexy.tea.common.Result;
 import sexy.tea.mapper.SelectionMapper;
 import sexy.tea.model.Selection;
 import sexy.tea.service.SelectionService;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -48,4 +51,14 @@ public class SelectionServiceImpl implements SelectionService {
         return selectionMapper.insertOrUpdateSelective(record);
     }
 
+    @Override
+    public Result find(int pageNum, int pageSize) {
+
+        PageHelper.startPage(pageNum, pageSize);
+        Example example = Example.builder(Selection.class).build();
+        example.createCriteria().andEqualTo("status", 1);
+
+        List<Selection> selectionList = selectionMapper.selectByExample(example);
+        return Result.success(selectionList);
+    }
 }

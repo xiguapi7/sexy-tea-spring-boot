@@ -1,5 +1,6 @@
 package sexy.tea.service;
 
+import sexy.tea.common.Result;
 import sexy.tea.model.Selection;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface SelectionService {
 
     int insertOrUpdateSelective(Selection record);
 
+    Result find(int pageNum, int pageSize);
 }

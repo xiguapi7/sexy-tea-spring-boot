@@ -9,13 +9,15 @@ package sexy.tea.constant;
  */
 public class ResultConstant {
 
-    public static final Integer SUCCESS = 200;
+    public static final Integer SUCCESS = 0;
 
-    public static final Integer NOT_FOUND = 404;
+    public static final Integer BUSINESS_EXCEPTION = 1;
 
-    public static final Integer SERVER_ERROR = 500;
+    public static final Integer NOT_FOUND = -1;
 
-    public static final Integer NETWORK_ERROR = 600;
+    public static final Integer SERVER_ERROR = -2;
+
+    public static final Integer NETWORK_ERROR = -3;
 
     public static final String SUCCESS_MSG = "Success";
 
@@ -24,4 +26,6 @@ public class ResultConstant {
     public static final String SERVER_ERROR_MSG = "Server Error";
 
     public static final String NETWORK_ERROR_MSG = "Network Error";
+
+    public static final String BUSINESS_EXCEPTION_MSG = "Business Exception";
 }

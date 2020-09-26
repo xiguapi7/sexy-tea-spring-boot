@@ -1,10 +1,13 @@
 package sexy.tea.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sexy.tea.common.Result;
 import sexy.tea.mapper.BeverageMapper;
 import sexy.tea.model.Beverage;
 import sexy.tea.service.BeverageService;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -48,4 +51,14 @@ public class BeverageServiceImpl implements BeverageService {
         return beverageMapper.insertOrUpdateSelective(record);
     }
 
+    @Override
+    public Result find(int pageNum, int pageSize) {
+
+        PageHelper.startPage(pageNum, pageSize);
+        Example example = Example.builder(Beverage.class).build();
+        example.createCriteria().andEqualTo("status", 1);
+
+        List<Beverage> beverageList = beverageMapper.selectByExample(example);
+        return Result.success(beverageList);
+    }
 }

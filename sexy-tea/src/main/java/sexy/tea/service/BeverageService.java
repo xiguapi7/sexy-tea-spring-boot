@@ -1,5 +1,6 @@
 package sexy.tea.service;
 
+import sexy.tea.common.Result;
 import sexy.tea.model.Beverage;
 
 import java.util.List;
@@ -21,4 +22,5 @@ public interface BeverageService {
 
     int insertOrUpdateSelective(Beverage record);
 
+    Result find(int pageNum, int pageSize);
 }

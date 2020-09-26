@@ -22,14 +22,14 @@ public class GlobalExceptionHandler {
     //声明要捕获的异常
     @ExceptionHandler(Exception.class)
     @ResponseBody
-    public <T> Result<?> defaultExceptionHandler(HttpServletRequest request, Exception e) {
+    public <T> Result defaultExceptionHandler(HttpServletRequest request, Exception e) {
         e.printStackTrace();
         if (e instanceof BusinessException) {
             log.error("业务异常：" + e.getMessage(), this.getClass());
             BusinessException businessException = (BusinessException) e;
-            return new Result<>(businessException.getCode(), businessException.getMessage());
+            return Result.business(businessException.getMessage());
         }
         //未知错误
-        return new Result<>(-1, "系统异常：\\n" + e);
+        return Result.result(-10, "系统异常：\\n" + e, request.getRequestURL().toString());
     }
 }

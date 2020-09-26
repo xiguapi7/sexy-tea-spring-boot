@@ -54,6 +54,11 @@
             <artifactId>druid-spring-boot-starter</artifactId>
             <version>1.1.24</version>
         </dependency>
+        <dependency>
+            <groupId>com.github.pagehelper</groupId>
+            <artifactId>pagehelper-spring-boot-starter</artifactId>
+            <version>1.2.10</version>
+        </dependency>
 
         <!--图片服务器minio支持-->
         <dependency>
@@ -123,13 +128,21 @@
                 <directory>src/main/java</directory>
                 <includes>
                     <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.txt</include>
+                    <include>**/*.properties</include>
                 </includes>
+                <filtering>false</filtering>
             </resource>
             <resource>
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.xml</include>
+                    <include>**/*.yml</include>
+                    <include>**/*.txt</include>
+                    <include>**/*.properties</include>
                 </includes>
+                <filtering>false</filtering>
             </resource>
         </resources>
     </build>

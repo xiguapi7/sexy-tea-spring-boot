@@ -2,9 +2,11 @@ package sexy.tea.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sexy.tea.common.Result;
 import sexy.tea.mapper.CityMapper;
 import sexy.tea.model.City;
 import sexy.tea.service.CityService;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -48,4 +50,12 @@ public class CityServiceImpl implements CityService {
         return cityMapper.insertOrUpdateSelective(record);
     }
 
+    @Override
+    public Result find() {
+
+        Example example = Example.builder(City.class).build();
+        example.createCriteria().andEqualTo("status", 1);
+        List<City> cityList = cityMapper.selectByExample(example);
+        return Result.success(cityList);
+    }
 }

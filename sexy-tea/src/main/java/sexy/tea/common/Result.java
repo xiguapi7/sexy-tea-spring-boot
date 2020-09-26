@@ -5,6 +5,7 @@ import lombok.Data;
 import sexy.tea.constant.ResultConstant;
 
 import java.io.Serializable;
+import java.util.Optional;
 
 /**
  * 响应结果封装类
@@ -15,7 +16,7 @@ import java.io.Serializable;
  */
 @Data
 @Builder
-public class Result<T> implements Serializable {
+public class Result implements Serializable {
 
     // 响应码
     private Integer code;
@@ -24,51 +25,53 @@ public class Result<T> implements Serializable {
     private String msg;
 
     // 响应数据
-    private T data;
+    private Object data;
 
-    public Result(Integer code, String msg, T data) {
-        this.code = code;
-        this.msg = msg;
-        this.data = data;
+    public static Result result(Integer code, String msg, Object data) {
+        return Result.builder()
+                .code(code)
+                .msg(msg)
+                .data(data)
+                .build();
     }
 
-    public Result(Integer code) {
-        this(code, "", null);
+    public static Result success() {
+        return result(ResultConstant.SUCCESS, ResultConstant.SUCCESS_MSG, Optional.empty());
     }
 
-    public Result(Integer code, String msg) {
-        this(code, msg, null);
+    public static Result success(Object data) {
+        return result(ResultConstant.SUCCESS, ResultConstant.SUCCESS_MSG, data);
     }
 
-    public Result<T> sucess() {
-        return new Result<>(ResultConstant.SUCCESS, ResultConstant.SUCCESS_MSG);
+    public static Result notFound(Object data) {
+        return result(ResultConstant.NOT_FOUND, ResultConstant.NOT_FOUND_MSG, data);
     }
 
-    public Result<T> success(T data) {
-        return new Result<>(ResultConstant.SUCCESS, ResultConstant.SUCCESS_MSG, data);
+    public static Result notFound() {
+        return result(ResultConstant.NOT_FOUND, ResultConstant.NOT_FOUND_MSG, Optional.empty());
     }
 
-    public Result<T> notFound() {
-        return new Result<>(ResultConstant.NOT_FOUND, ResultConstant.NOT_FOUND_MSG);
+    public static Result serverError(Object data) {
+        return result(ResultConstant.SERVER_ERROR, ResultConstant.SERVER_ERROR_MSG, data);
     }
 
-    public Result<T> notFound(T data) {
-        return new Result<>(ResultConstant.NOT_FOUND, ResultConstant.NOT_FOUND_MSG, data);
+    public static Result serverError() {
+        return result(ResultConstant.SERVER_ERROR, ResultConstant.SERVER_ERROR_MSG, Optional.empty());
     }
 
-    public Result<T> serverError() {
-        return new Result<>(ResultConstant.SERVER_ERROR, ResultConstant.SERVER_ERROR_MSG);
+    public static Result networkError(Object data) {
+        return result(ResultConstant.NETWORK_ERROR, ResultConstant.NETWORK_ERROR_MSG, data);
     }
 
-    public Result<T> serverError(T data) {
-        return new Result<>(ResultConstant.SERVER_ERROR, ResultConstant.SERVER_ERROR_MSG, data);
+    public static Result networkError() {
+        return result(ResultConstant.NETWORK_ERROR, ResultConstant.NETWORK_ERROR_MSG, Optional.empty());
     }
 
-    public Result<T> networkError() {
-        return new Result<>(ResultConstant.NETWORK_ERROR, ResultConstant.NETWORK_ERROR_MSG);
+    public static Result business(Object data) {
+        return result(ResultConstant.BUSINESS_EXCEPTION, ResultConstant.BUSINESS_EXCEPTION_MSG, data);
     }
 
-    public Result<T> networkError(T data) {
-        return new Result<>(ResultConstant.NETWORK_ERROR, ResultConstant.NETWORK_ERROR_MSG, data);
+    public static Result business() {
+        return result(ResultConstant.BUSINESS_EXCEPTION, ResultConstant.BUSINESS_EXCEPTION_MSG, Optional.empty());
     }
 }

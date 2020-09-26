@@ -13,6 +13,7 @@ import java.util.List;
  */
 @Mapper
 public interface CityMapper extends tk.mybatis.mapper.common.Mapper<City> {
+
     int updateBatch(List<City> list);
 
     int updateBatchSelective(List<City> list);

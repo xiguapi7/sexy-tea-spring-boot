@@ -2,9 +2,11 @@ package sexy.tea.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import sexy.tea.common.Result;
 import sexy.tea.mapper.StoreMapper;
 import sexy.tea.model.Store;
 import sexy.tea.service.StoreService;
+import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
 
@@ -48,4 +50,13 @@ public class StoreServiceImpl implements StoreService {
         return storeMapper.insertOrUpdateSelective(record);
     }
 
+    @Override
+    public Result find() {
+
+        Example example = Example.builder(Store.class).build();
+        example.createCriteria().andEqualTo("status", 1);
+
+        List<Store> storeList = storeMapper.selectByExample(example);
+        return Result.success(storeList);
+    }
 }

@@ -1,5 +1,6 @@
 package sexy.tea.service;
 
+import sexy.tea.common.Result;
 import sexy.tea.model.Merchandise;
 
 import java.util.List;
@@ -22,4 +23,5 @@ public interface MerchandiseService {
 
     int insertOrUpdateSelective(Merchandise record);
 
+    Result find(int pageNum, int pageSize);
 }
