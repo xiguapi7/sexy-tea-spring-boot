@@ -1,0 +1,339 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sexy.tea.mapper.MembershipMapper">
+  <resultMap id="BaseResultMap" type="sexy.tea.model.Membership">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    <!--@Table membership-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="star_level" jdbcType="VARCHAR" property="starLevel" />
+    <result column="star_level_name" jdbcType="VARCHAR" property="starLevelName" />
+    <result column="star_number" jdbcType="INTEGER" property="starNumber" />
+    <result column="next_lev" jdbcType="INTEGER" property="nextLev" />
+    <result column="privileges" jdbcType="VARCHAR" property="privileges" />
+    <result column="expire_date" jdbcType="DATE" property="expireDate" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    id, `uid`, star_level, star_level_name, star_number, next_lev, `privileges`, expire_date, 
+    `status`, create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    update membership
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`uid` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.uid,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="star_level = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.starLevel,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="star_level_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.starLevelName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="star_number = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.starNumber,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="next_lev = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.nextLev,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="`privileges` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.privileges,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="expire_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.expireDate,jdbcType=DATE}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    update membership
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`uid` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.uid != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.uid,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="star_level = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.starLevel != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.starLevel,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="star_level_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.starLevelName != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.starLevelName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="star_number = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.starNumber != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.starNumber,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="next_lev = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.nextLev != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.nextLev,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`privileges` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.privileges != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.privileges,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="expire_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.expireDate != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.expireDate,jdbcType=DATE}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    insert into membership
+    (`uid`, star_level, star_level_name, star_number, next_lev, `privileges`, expire_date, 
+      `status`, create_time, update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.uid,jdbcType=INTEGER}, #{item.starLevel,jdbcType=VARCHAR}, #{item.starLevelName,jdbcType=VARCHAR}, 
+        #{item.starNumber,jdbcType=INTEGER}, #{item.nextLev,jdbcType=INTEGER}, #{item.privileges,jdbcType=VARCHAR}, 
+        #{item.expireDate,jdbcType=DATE}, #{item.status,jdbcType=TINYINT}, #{item.createTime,jdbcType=TIMESTAMP}, 
+        #{item.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Membership" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    insert into membership
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `uid`,
+      star_level,
+      star_level_name,
+      star_number,
+      next_lev,
+      `privileges`,
+      expire_date,
+      `status`,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{uid,jdbcType=INTEGER},
+      #{starLevel,jdbcType=VARCHAR},
+      #{starLevelName,jdbcType=VARCHAR},
+      #{starNumber,jdbcType=INTEGER},
+      #{nextLev,jdbcType=INTEGER},
+      #{privileges,jdbcType=VARCHAR},
+      #{expireDate,jdbcType=DATE},
+      #{status,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      `uid` = #{uid,jdbcType=INTEGER},
+      star_level = #{starLevel,jdbcType=VARCHAR},
+      star_level_name = #{starLevelName,jdbcType=VARCHAR},
+      star_number = #{starNumber,jdbcType=INTEGER},
+      next_lev = #{nextLev,jdbcType=INTEGER},
+      `privileges` = #{privileges,jdbcType=VARCHAR},
+      expire_date = #{expireDate,jdbcType=DATE},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Membership" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    insert into membership
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="starLevel != null">
+        star_level,
+      </if>
+      <if test="starLevelName != null">
+        star_level_name,
+      </if>
+      <if test="starNumber != null">
+        star_number,
+      </if>
+      <if test="nextLev != null">
+        next_lev,
+      </if>
+      <if test="privileges != null">
+        `privileges`,
+      </if>
+      <if test="expireDate != null">
+        expire_date,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="starLevel != null">
+        #{starLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="starLevelName != null">
+        #{starLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="starNumber != null">
+        #{starNumber,jdbcType=INTEGER},
+      </if>
+      <if test="nextLev != null">
+        #{nextLev,jdbcType=INTEGER},
+      </if>
+      <if test="privileges != null">
+        #{privileges,jdbcType=VARCHAR},
+      </if>
+      <if test="expireDate != null">
+        #{expireDate,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="starLevel != null">
+        star_level = #{starLevel,jdbcType=VARCHAR},
+      </if>
+      <if test="starLevelName != null">
+        star_level_name = #{starLevelName,jdbcType=VARCHAR},
+      </if>
+      <if test="starNumber != null">
+        star_number = #{starNumber,jdbcType=INTEGER},
+      </if>
+      <if test="nextLev != null">
+        next_lev = #{nextLev,jdbcType=INTEGER},
+      </if>
+      <if test="privileges != null">
+        `privileges` = #{privileges,jdbcType=VARCHAR},
+      </if>
+      <if test="expireDate != null">
+        expire_date = #{expireDate,jdbcType=DATE},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

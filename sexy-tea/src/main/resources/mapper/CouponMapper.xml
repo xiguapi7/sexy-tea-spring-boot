@@ -1,0 +1,467 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sexy.tea.mapper.CouponMapper">
+  <resultMap id="BaseResultMap" type="sexy.tea.model.Coupon">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    <!--@Table coupon-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="start_date" jdbcType="DATE" property="startDate" />
+    <result column="expire_date" jdbcType="DATE" property="expireDate" />
+    <result column="use_date" jdbcType="DATE" property="useDate" />
+    <result column="use_status" jdbcType="INTEGER" property="useStatus" />
+    <result column="goods_type" jdbcType="VARCHAR" property="goodsType" />
+    <result column="require_type" jdbcType="VARCHAR" property="requireType" />
+    <result column="require" jdbcType="INTEGER" property="require" />
+    <result column="coupon_type" jdbcType="VARCHAR" property="couponType" />
+    <result column="coupon_num" jdbcType="INTEGER" property="couponNum" />
+    <result column="coupon_img" jdbcType="VARCHAR" property="couponImg" />
+    <result column="rules" jdbcType="VARCHAR" property="rules" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    id, title, start_date, expire_date, use_date, use_status, goods_type, require_type, 
+    `require`, coupon_type, coupon_num, coupon_img, rules, `status`, create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    update coupon
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.title,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="start_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.startDate,jdbcType=DATE}
+        </foreach>
+      </trim>
+      <trim prefix="expire_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.expireDate,jdbcType=DATE}
+        </foreach>
+      </trim>
+      <trim prefix="use_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.useDate,jdbcType=DATE}
+        </foreach>
+      </trim>
+      <trim prefix="use_status = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.useStatus,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="goods_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.goodsType,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="require_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.requireType,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`require` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.require,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="coupon_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.couponType,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="coupon_num = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.couponNum,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="coupon_img = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.couponImg,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="rules = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.rules,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    update coupon
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="title = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.title != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.title,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="start_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.startDate != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.startDate,jdbcType=DATE}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="expire_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.expireDate != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.expireDate,jdbcType=DATE}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="use_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.useDate != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.useDate,jdbcType=DATE}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="use_status = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.useStatus != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.useStatus,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="goods_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.goodsType != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.goodsType,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="require_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.requireType != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.requireType,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`require` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.require != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.require,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="coupon_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.couponType != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.couponType,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="coupon_num = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.couponNum != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.couponNum,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="coupon_img = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.couponImg != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.couponImg,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="rules = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.rules != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.rules,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    insert into coupon
+    (title, start_date, expire_date, use_date, use_status, goods_type, require_type, 
+      `require`, coupon_type, coupon_num, coupon_img, rules, `status`, create_time, update_time
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.title,jdbcType=VARCHAR}, #{item.startDate,jdbcType=DATE}, #{item.expireDate,jdbcType=DATE}, 
+        #{item.useDate,jdbcType=DATE}, #{item.useStatus,jdbcType=INTEGER}, #{item.goodsType,jdbcType=VARCHAR}, 
+        #{item.requireType,jdbcType=VARCHAR}, #{item.require,jdbcType=INTEGER}, #{item.couponType,jdbcType=VARCHAR}, 
+        #{item.couponNum,jdbcType=INTEGER}, #{item.couponImg,jdbcType=VARCHAR}, #{item.rules,jdbcType=VARCHAR}, 
+        #{item.status,jdbcType=TINYINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Coupon" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    insert into coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      title,
+      start_date,
+      expire_date,
+      use_date,
+      use_status,
+      goods_type,
+      require_type,
+      `require`,
+      coupon_type,
+      coupon_num,
+      coupon_img,
+      rules,
+      `status`,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{title,jdbcType=VARCHAR},
+      #{startDate,jdbcType=DATE},
+      #{expireDate,jdbcType=DATE},
+      #{useDate,jdbcType=DATE},
+      #{useStatus,jdbcType=INTEGER},
+      #{goodsType,jdbcType=VARCHAR},
+      #{requireType,jdbcType=VARCHAR},
+      #{require,jdbcType=INTEGER},
+      #{couponType,jdbcType=VARCHAR},
+      #{couponNum,jdbcType=INTEGER},
+      #{couponImg,jdbcType=VARCHAR},
+      #{rules,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      title = #{title,jdbcType=VARCHAR},
+      start_date = #{startDate,jdbcType=DATE},
+      expire_date = #{expireDate,jdbcType=DATE},
+      use_date = #{useDate,jdbcType=DATE},
+      use_status = #{useStatus,jdbcType=INTEGER},
+      goods_type = #{goodsType,jdbcType=VARCHAR},
+      require_type = #{requireType,jdbcType=VARCHAR},
+      `require` = #{require,jdbcType=INTEGER},
+      coupon_type = #{couponType,jdbcType=VARCHAR},
+      coupon_num = #{couponNum,jdbcType=INTEGER},
+      coupon_img = #{couponImg,jdbcType=VARCHAR},
+      rules = #{rules,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Coupon" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    insert into coupon
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="startDate != null">
+        start_date,
+      </if>
+      <if test="expireDate != null">
+        expire_date,
+      </if>
+      <if test="useDate != null">
+        use_date,
+      </if>
+      <if test="useStatus != null">
+        use_status,
+      </if>
+      <if test="goodsType != null">
+        goods_type,
+      </if>
+      <if test="requireType != null">
+        require_type,
+      </if>
+      <if test="require != null">
+        `require`,
+      </if>
+      <if test="couponType != null">
+        coupon_type,
+      </if>
+      <if test="couponNum != null">
+        coupon_num,
+      </if>
+      <if test="couponImg != null">
+        coupon_img,
+      </if>
+      <if test="rules != null">
+        rules,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        #{startDate,jdbcType=DATE},
+      </if>
+      <if test="expireDate != null">
+        #{expireDate,jdbcType=DATE},
+      </if>
+      <if test="useDate != null">
+        #{useDate,jdbcType=DATE},
+      </if>
+      <if test="useStatus != null">
+        #{useStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null">
+        #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="requireType != null">
+        #{requireType,jdbcType=VARCHAR},
+      </if>
+      <if test="require != null">
+        #{require,jdbcType=INTEGER},
+      </if>
+      <if test="couponType != null">
+        #{couponType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponNum != null">
+        #{couponNum,jdbcType=INTEGER},
+      </if>
+      <if test="couponImg != null">
+        #{couponImg,jdbcType=VARCHAR},
+      </if>
+      <if test="rules != null">
+        #{rules,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="startDate != null">
+        start_date = #{startDate,jdbcType=DATE},
+      </if>
+      <if test="expireDate != null">
+        expire_date = #{expireDate,jdbcType=DATE},
+      </if>
+      <if test="useDate != null">
+        use_date = #{useDate,jdbcType=DATE},
+      </if>
+      <if test="useStatus != null">
+        use_status = #{useStatus,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null">
+        goods_type = #{goodsType,jdbcType=VARCHAR},
+      </if>
+      <if test="requireType != null">
+        require_type = #{requireType,jdbcType=VARCHAR},
+      </if>
+      <if test="require != null">
+        `require` = #{require,jdbcType=INTEGER},
+      </if>
+      <if test="couponType != null">
+        coupon_type = #{couponType,jdbcType=VARCHAR},
+      </if>
+      <if test="couponNum != null">
+        coupon_num = #{couponNum,jdbcType=INTEGER},
+      </if>
+      <if test="couponImg != null">
+        coupon_img = #{couponImg,jdbcType=VARCHAR},
+      </if>
+      <if test="rules != null">
+        rules = #{rules,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

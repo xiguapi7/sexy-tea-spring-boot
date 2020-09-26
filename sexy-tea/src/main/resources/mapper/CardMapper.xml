@@ -1,0 +1,287 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sexy.tea.mapper.CardMapper">
+  <resultMap id="BaseResultMap" type="sexy.tea.model.Card">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    <!--@Table card-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="card_id" jdbcType="INTEGER" property="cardId" />
+    <result column="card_name" jdbcType="VARCHAR" property="cardName" />
+    <result column="card_image" jdbcType="VARCHAR" property="cardImage" />
+    <result column="balance" jdbcType="DECIMAL" property="balance" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    id, `uid`, card_id, card_name, card_image, balance, `status`, create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    update card
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`uid` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.uid,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="card_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.cardId,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="card_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.cardName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="card_image = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.cardImage,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="balance = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.balance,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    update card
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`uid` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.uid != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.uid,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="card_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.cardId != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.cardId,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="card_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.cardName != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.cardName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="card_image = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.cardImage != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.cardImage,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="balance = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.balance != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.balance,jdbcType=DECIMAL}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    insert into card
+    (`uid`, card_id, card_name, card_image, balance, `status`, create_time, update_time
+      )
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.uid,jdbcType=INTEGER}, #{item.cardId,jdbcType=INTEGER}, #{item.cardName,jdbcType=VARCHAR}, 
+        #{item.cardImage,jdbcType=VARCHAR}, #{item.balance,jdbcType=DECIMAL}, #{item.status,jdbcType=TINYINT}, 
+        #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Card" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    insert into card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `uid`,
+      card_id,
+      card_name,
+      card_image,
+      balance,
+      `status`,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{uid,jdbcType=INTEGER},
+      #{cardId,jdbcType=INTEGER},
+      #{cardName,jdbcType=VARCHAR},
+      #{cardImage,jdbcType=VARCHAR},
+      #{balance,jdbcType=DECIMAL},
+      #{status,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      `uid` = #{uid,jdbcType=INTEGER},
+      card_id = #{cardId,jdbcType=INTEGER},
+      card_name = #{cardName,jdbcType=VARCHAR},
+      card_image = #{cardImage,jdbcType=VARCHAR},
+      balance = #{balance,jdbcType=DECIMAL},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Card" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    insert into card
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="cardId != null">
+        card_id,
+      </if>
+      <if test="cardName != null">
+        card_name,
+      </if>
+      <if test="cardImage != null">
+        card_image,
+      </if>
+      <if test="balance != null">
+        balance,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="cardId != null">
+        #{cardId,jdbcType=INTEGER},
+      </if>
+      <if test="cardName != null">
+        #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardImage != null">
+        #{cardImage,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="cardId != null">
+        card_id = #{cardId,jdbcType=INTEGER},
+      </if>
+      <if test="cardName != null">
+        card_name = #{cardName,jdbcType=VARCHAR},
+      </if>
+      <if test="cardImage != null">
+        card_image = #{cardImage,jdbcType=VARCHAR},
+      </if>
+      <if test="balance != null">
+        balance = #{balance,jdbcType=DECIMAL},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

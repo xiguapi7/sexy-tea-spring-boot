@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sexy.tea.mapper.ExpenseRecordMapper">
+  <resultMap id="BaseResultMap" type="sexy.tea.model.ExpenseRecord">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    <!--@Table expense_record-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="consume_date" jdbcType="TIMESTAMP" property="consumeDate" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+    <result column="goods" jdbcType="VARCHAR" property="goods" />
+    <result column="total_price" jdbcType="DECIMAL" property="totalPrice" />
+    <result column="star_gain" jdbcType="INTEGER" property="starGain" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    id, `uid`, consume_date, store_name, goods, total_price, star_gain, `status`, create_time, 
+    update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    update expense_record
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`uid` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.uid,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="consume_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.consumeDate,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="store_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.storeName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="goods = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.goods,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="total_price = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.totalPrice,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="star_gain = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.starGain,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    update expense_record
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`uid` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.uid != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.uid,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="consume_date = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.consumeDate != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.consumeDate,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="store_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.storeName != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.storeName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="goods = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.goods != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.goods,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="total_price = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.totalPrice != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.totalPrice,jdbcType=DECIMAL}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="star_gain = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.starGain != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.starGain,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    insert into expense_record
+    (`uid`, consume_date, store_name, goods, total_price, star_gain, `status`, create_time, 
+      update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.uid,jdbcType=INTEGER}, #{item.consumeDate,jdbcType=TIMESTAMP}, #{item.storeName,jdbcType=VARCHAR}, 
+        #{item.goods,jdbcType=VARCHAR}, #{item.totalPrice,jdbcType=DECIMAL}, #{item.starGain,jdbcType=INTEGER}, 
+        #{item.status,jdbcType=TINYINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.ExpenseRecord" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    insert into expense_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `uid`,
+      consume_date,
+      store_name,
+      goods,
+      total_price,
+      star_gain,
+      `status`,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{uid,jdbcType=INTEGER},
+      #{consumeDate,jdbcType=TIMESTAMP},
+      #{storeName,jdbcType=VARCHAR},
+      #{goods,jdbcType=VARCHAR},
+      #{totalPrice,jdbcType=DECIMAL},
+      #{starGain,jdbcType=INTEGER},
+      #{status,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      `uid` = #{uid,jdbcType=INTEGER},
+      consume_date = #{consumeDate,jdbcType=TIMESTAMP},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      goods = #{goods,jdbcType=VARCHAR},
+      total_price = #{totalPrice,jdbcType=DECIMAL},
+      star_gain = #{starGain,jdbcType=INTEGER},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.ExpenseRecord" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
+    insert into expense_record
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="consumeDate != null">
+        consume_date,
+      </if>
+      <if test="storeName != null">
+        store_name,
+      </if>
+      <if test="goods != null">
+        goods,
+      </if>
+      <if test="totalPrice != null">
+        total_price,
+      </if>
+      <if test="starGain != null">
+        star_gain,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="consumeDate != null">
+        #{consumeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeName != null">
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="goods != null">
+        #{goods,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null">
+        #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="starGain != null">
+        #{starGain,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="consumeDate != null">
+        consume_date = #{consumeDate,jdbcType=TIMESTAMP},
+      </if>
+      <if test="storeName != null">
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="goods != null">
+        goods = #{goods,jdbcType=VARCHAR},
+      </if>
+      <if test="totalPrice != null">
+        total_price = #{totalPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="starGain != null">
+        star_gain = #{starGain,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

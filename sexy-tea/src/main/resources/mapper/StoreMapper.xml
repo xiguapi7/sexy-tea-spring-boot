@@ -1,0 +1,519 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sexy.tea.mapper.StoreMapper">
+  <resultMap id="BaseResultMap" type="sexy.tea.model.Store">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    <!--@Table store-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="brand" jdbcType="VARCHAR" property="brand" />
+    <result column="country" jdbcType="VARCHAR" property="country" />
+    <result column="city" jdbcType="VARCHAR" property="city" />
+    <result column="center_longitude" jdbcType="VARCHAR" property="centerLongitude" />
+    <result column="center_latitude" jdbcType="VARCHAR" property="centerLatitude" />
+    <result column="store_number" jdbcType="VARCHAR" property="storeNumber" />
+    <result column="store_serial" jdbcType="VARCHAR" property="storeSerial" />
+    <result column="store_name" jdbcType="VARCHAR" property="storeName" />
+    <result column="store_address" jdbcType="VARCHAR" property="storeAddress" />
+    <result column="longitude" jdbcType="VARCHAR" property="longitude" />
+    <result column="latitude" jdbcType="VARCHAR" property="latitude" />
+    <result column="phone_number" jdbcType="VARCHAR" property="phoneNumber" />
+    <result column="post_code" jdbcType="VARCHAR" property="postCode" />
+    <result column="owner_ship_type" jdbcType="VARCHAR" property="ownerShipType" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    id, brand, country, city, center_longitude, center_latitude, store_number, store_serial, 
+    store_name, store_address, longitude, latitude, phone_number, post_code, owner_ship_type, 
+    `status`, create_time, update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    update store
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="brand = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.brand,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="country = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.country,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="city = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.city,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="center_longitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.centerLongitude,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="center_latitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.centerLatitude,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="store_number = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.storeNumber,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="store_serial = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.storeSerial,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="store_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.storeName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="store_address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.storeAddress,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="longitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.longitude,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="latitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.latitude,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="phone_number = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.phoneNumber,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="post_code = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.postCode,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="owner_ship_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.ownerShipType,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    update store
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="brand = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.brand != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.brand,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="country = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.country != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.country,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="city = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.city != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.city,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="center_longitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.centerLongitude != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.centerLongitude,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="center_latitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.centerLatitude != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.centerLatitude,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="store_number = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.storeNumber != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.storeNumber,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="store_serial = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.storeSerial != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.storeSerial,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="store_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.storeName != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.storeName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="store_address = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.storeAddress != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.storeAddress,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="longitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.longitude != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.longitude,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="latitude = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.latitude != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.latitude,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="phone_number = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.phoneNumber != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.phoneNumber,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="post_code = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.postCode != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.postCode,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="owner_ship_type = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.ownerShipType != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.ownerShipType,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    insert into store
+    (brand, country, city, center_longitude, center_latitude, store_number, store_serial, 
+      store_name, store_address, longitude, latitude, phone_number, post_code, owner_ship_type, 
+      `status`, create_time, update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.brand,jdbcType=VARCHAR}, #{item.country,jdbcType=VARCHAR}, #{item.city,jdbcType=VARCHAR}, 
+        #{item.centerLongitude,jdbcType=VARCHAR}, #{item.centerLatitude,jdbcType=VARCHAR}, 
+        #{item.storeNumber,jdbcType=VARCHAR}, #{item.storeSerial,jdbcType=VARCHAR}, #{item.storeName,jdbcType=VARCHAR}, 
+        #{item.storeAddress,jdbcType=VARCHAR}, #{item.longitude,jdbcType=VARCHAR}, #{item.latitude,jdbcType=VARCHAR}, 
+        #{item.phoneNumber,jdbcType=VARCHAR}, #{item.postCode,jdbcType=VARCHAR}, #{item.ownerShipType,jdbcType=VARCHAR}, 
+        #{item.status,jdbcType=TINYINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Store" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    insert into store
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      brand,
+      country,
+      city,
+      center_longitude,
+      center_latitude,
+      store_number,
+      store_serial,
+      store_name,
+      store_address,
+      longitude,
+      latitude,
+      phone_number,
+      post_code,
+      owner_ship_type,
+      `status`,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{brand,jdbcType=VARCHAR},
+      #{country,jdbcType=VARCHAR},
+      #{city,jdbcType=VARCHAR},
+      #{centerLongitude,jdbcType=VARCHAR},
+      #{centerLatitude,jdbcType=VARCHAR},
+      #{storeNumber,jdbcType=VARCHAR},
+      #{storeSerial,jdbcType=VARCHAR},
+      #{storeName,jdbcType=VARCHAR},
+      #{storeAddress,jdbcType=VARCHAR},
+      #{longitude,jdbcType=VARCHAR},
+      #{latitude,jdbcType=VARCHAR},
+      #{phoneNumber,jdbcType=VARCHAR},
+      #{postCode,jdbcType=VARCHAR},
+      #{ownerShipType,jdbcType=VARCHAR},
+      #{status,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      brand = #{brand,jdbcType=VARCHAR},
+      country = #{country,jdbcType=VARCHAR},
+      city = #{city,jdbcType=VARCHAR},
+      center_longitude = #{centerLongitude,jdbcType=VARCHAR},
+      center_latitude = #{centerLatitude,jdbcType=VARCHAR},
+      store_number = #{storeNumber,jdbcType=VARCHAR},
+      store_serial = #{storeSerial,jdbcType=VARCHAR},
+      store_name = #{storeName,jdbcType=VARCHAR},
+      store_address = #{storeAddress,jdbcType=VARCHAR},
+      longitude = #{longitude,jdbcType=VARCHAR},
+      latitude = #{latitude,jdbcType=VARCHAR},
+      phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      post_code = #{postCode,jdbcType=VARCHAR},
+      owner_ship_type = #{ownerShipType,jdbcType=VARCHAR},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Store" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    insert into store
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="brand != null">
+        brand,
+      </if>
+      <if test="country != null">
+        country,
+      </if>
+      <if test="city != null">
+        city,
+      </if>
+      <if test="centerLongitude != null">
+        center_longitude,
+      </if>
+      <if test="centerLatitude != null">
+        center_latitude,
+      </if>
+      <if test="storeNumber != null">
+        store_number,
+      </if>
+      <if test="storeSerial != null">
+        store_serial,
+      </if>
+      <if test="storeName != null">
+        store_name,
+      </if>
+      <if test="storeAddress != null">
+        store_address,
+      </if>
+      <if test="longitude != null">
+        longitude,
+      </if>
+      <if test="latitude != null">
+        latitude,
+      </if>
+      <if test="phoneNumber != null">
+        phone_number,
+      </if>
+      <if test="postCode != null">
+        post_code,
+      </if>
+      <if test="ownerShipType != null">
+        owner_ship_type,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="brand != null">
+        #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="centerLongitude != null">
+        #{centerLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="centerLatitude != null">
+        #{centerLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNumber != null">
+        #{storeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storeSerial != null">
+        #{storeSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAddress != null">
+        #{storeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null">
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerShipType != null">
+        #{ownerShipType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="brand != null">
+        brand = #{brand,jdbcType=VARCHAR},
+      </if>
+      <if test="country != null">
+        country = #{country,jdbcType=VARCHAR},
+      </if>
+      <if test="city != null">
+        city = #{city,jdbcType=VARCHAR},
+      </if>
+      <if test="centerLongitude != null">
+        center_longitude = #{centerLongitude,jdbcType=VARCHAR},
+      </if>
+      <if test="centerLatitude != null">
+        center_latitude = #{centerLatitude,jdbcType=VARCHAR},
+      </if>
+      <if test="storeNumber != null">
+        store_number = #{storeNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="storeSerial != null">
+        store_serial = #{storeSerial,jdbcType=VARCHAR},
+      </if>
+      <if test="storeName != null">
+        store_name = #{storeName,jdbcType=VARCHAR},
+      </if>
+      <if test="storeAddress != null">
+        store_address = #{storeAddress,jdbcType=VARCHAR},
+      </if>
+      <if test="longitude != null">
+        longitude = #{longitude,jdbcType=VARCHAR},
+      </if>
+      <if test="latitude != null">
+        latitude = #{latitude,jdbcType=VARCHAR},
+      </if>
+      <if test="phoneNumber != null">
+        phone_number = #{phoneNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null">
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="ownerShipType != null">
+        owner_ship_type = #{ownerShipType,jdbcType=VARCHAR},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>

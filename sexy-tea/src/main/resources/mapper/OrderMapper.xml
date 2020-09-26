@@ -1,0 +1,314 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sexy.tea.mapper.OrderMapper">
+  <resultMap id="BaseResultMap" type="sexy.tea.model.Order">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    <!--@Table `order`-->
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="order_number" jdbcType="BIGINT" property="orderNumber" />
+    <result column="pay_price" jdbcType="DECIMAL" property="payPrice" />
+    <result column="is_pay" jdbcType="BOOLEAN" property="isPay" />
+    <result column="pay_id" jdbcType="BIGINT" property="payId" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    id, `uid`, order_number, pay_price, is_pay, pay_id, pay_time, `status`, create_time, 
+    update_time
+  </sql>
+  <update id="updateBatch" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    update `order`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`uid` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.uid,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="order_number = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.orderNumber,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="pay_price = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.payPrice,jdbcType=DECIMAL}
+        </foreach>
+      </trim>
+      <trim prefix="is_pay = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.isPay,jdbcType=BOOLEAN}
+        </foreach>
+      </trim>
+      <trim prefix="pay_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.payId,jdbcType=BIGINT}
+        </foreach>
+      </trim>
+      <trim prefix="pay_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.payTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <update id="updateBatchSelective" parameterType="java.util.List">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    update `order`
+    <trim prefix="set" suffixOverrides=",">
+      <trim prefix="`uid` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.uid != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.uid,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="order_number = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.orderNumber != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.orderNumber,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="pay_price = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.payPrice != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.payPrice,jdbcType=DECIMAL}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="is_pay = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.isPay != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.isPay,jdbcType=BOOLEAN}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="pay_id = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.payId != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.payId,jdbcType=BIGINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="pay_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.payTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.payTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="`status` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.status != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="update_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.updateTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+    </trim>
+    where id in
+    <foreach close=")" collection="list" item="item" open="(" separator=", ">
+      #{item.id,jdbcType=INTEGER}
+    </foreach>
+  </update>
+  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    insert into `order`
+    (`uid`, order_number, pay_price, is_pay, pay_id, pay_time, `status`, create_time, 
+      update_time)
+    values
+    <foreach collection="list" item="item" separator=",">
+      (#{item.uid,jdbcType=INTEGER}, #{item.orderNumber,jdbcType=BIGINT}, #{item.payPrice,jdbcType=DECIMAL}, 
+        #{item.isPay,jdbcType=BOOLEAN}, #{item.payId,jdbcType=BIGINT}, #{item.payTime,jdbcType=TIMESTAMP}, 
+        #{item.status,jdbcType=TINYINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}
+        )
+    </foreach>
+  </insert>
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Order" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    insert into `order`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      `uid`,
+      order_number,
+      pay_price,
+      is_pay,
+      pay_id,
+      pay_time,
+      `status`,
+      create_time,
+      update_time,
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      #{uid,jdbcType=INTEGER},
+      #{orderNumber,jdbcType=BIGINT},
+      #{payPrice,jdbcType=DECIMAL},
+      #{isPay,jdbcType=BOOLEAN},
+      #{payId,jdbcType=BIGINT},
+      #{payTime,jdbcType=TIMESTAMP},
+      #{status,jdbcType=TINYINT},
+      #{createTime,jdbcType=TIMESTAMP},
+      #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      `uid` = #{uid,jdbcType=INTEGER},
+      order_number = #{orderNumber,jdbcType=BIGINT},
+      pay_price = #{payPrice,jdbcType=DECIMAL},
+      is_pay = #{isPay,jdbcType=BOOLEAN},
+      pay_id = #{payId,jdbcType=BIGINT},
+      pay_time = #{payTime,jdbcType=TIMESTAMP},
+      `status` = #{status,jdbcType=TINYINT},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP},
+    </trim>
+  </insert>
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Order" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    insert into `order`
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="uid != null">
+        `uid`,
+      </if>
+      <if test="orderNumber != null">
+        order_number,
+      </if>
+      <if test="payPrice != null">
+        pay_price,
+      </if>
+      <if test="isPay != null">
+        is_pay,
+      </if>
+      <if test="payId != null">
+        pay_id,
+      </if>
+      <if test="payTime != null">
+        pay_time,
+      </if>
+      <if test="status != null">
+        `status`,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    values
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="orderNumber != null">
+        #{orderNumber,jdbcType=BIGINT},
+      </if>
+      <if test="payPrice != null">
+        #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isPay != null">
+        #{isPay,jdbcType=BOOLEAN},
+      </if>
+      <if test="payId != null">
+        #{payId,jdbcType=BIGINT},
+      </if>
+      <if test="payTime != null">
+        #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+    on duplicate key update 
+    <trim suffixOverrides=",">
+      <if test="id != null">
+        id = #{id,jdbcType=INTEGER},
+      </if>
+      <if test="uid != null">
+        `uid` = #{uid,jdbcType=INTEGER},
+      </if>
+      <if test="orderNumber != null">
+        order_number = #{orderNumber,jdbcType=BIGINT},
+      </if>
+      <if test="payPrice != null">
+        pay_price = #{payPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="isPay != null">
+        is_pay = #{isPay,jdbcType=BOOLEAN},
+      </if>
+      <if test="payId != null">
+        pay_id = #{payId,jdbcType=BIGINT},
+      </if>
+      <if test="payTime != null">
+        pay_time = #{payTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="status != null">
+        `status` = #{status,jdbcType=TINYINT},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+</mapper>
