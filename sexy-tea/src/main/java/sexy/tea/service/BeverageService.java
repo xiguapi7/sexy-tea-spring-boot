@@ -23,4 +23,6 @@ public interface BeverageService {
     int insertOrUpdateSelective(Beverage record);
 
     Result find(int pageNum, int pageSize);
+
+    Result findByPrimaryKey(Integer primaryKey);
 }

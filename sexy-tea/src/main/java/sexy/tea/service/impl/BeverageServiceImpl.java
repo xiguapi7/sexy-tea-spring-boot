@@ -61,4 +61,15 @@ public class BeverageServiceImpl implements BeverageService {
         List<Beverage> beverageList = beverageMapper.selectByExample(example);
         return Result.success(beverageList);
     }
+
+    @Override
+    // @Cacheable(value = RedisConstant)
+    public Result findByPrimaryKey(Integer primaryKey) {
+
+        Beverage beverage = beverageMapper.selectByPrimaryKey(primaryKey);
+        if (beverage == null || primaryKey <= 0) {
+            return Result.notFound();
+        }
+        return Result.success(beverage);
+    }
 }

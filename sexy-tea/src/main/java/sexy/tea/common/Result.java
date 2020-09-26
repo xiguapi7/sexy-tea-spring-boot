@@ -74,4 +74,12 @@ public class Result implements Serializable {
     public static Result business() {
         return result(ResultConstant.BUSINESS_EXCEPTION, ResultConstant.BUSINESS_EXCEPTION_MSG, Optional.empty());
     }
+
+    public static Result notLogin(Object data) {
+        return result(ResultConstant.NOT_LOGIN, ResultConstant.NOT_LOGIN_MSG, data);
+    }
+
+    public static Result notLogin() {
+        return result(ResultConstant.NOT_LOGIN, ResultConstant.NOT_LOGIN_MSG, Optional.empty());
+    }
 }

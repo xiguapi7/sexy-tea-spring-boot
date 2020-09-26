@@ -1,51 +1,74 @@
-server: port: 6886
-spring: application: name: sexy-tea
-        datasource: # 数据源类型设置为Druid数据源
-          type: com.alibaba.druid.pool.DruidDataSource
-          # 数据源信息
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://localhost:3306/sexy-tea?charsetEncoding=utf8mb4&serverTimezone=UTC
-          username: root
-          password: 1015
-          # 数据连接池配置
-          druid: initial-size: 8
-                 max-active: 20
-                 min-idle: 8
-                 max-wait: 6000
-            # 是否缓存preparedStatement，也就是PSCache,PSCache对支持游标的数据库性能提升巨大，比如说oracle,在mysql下建议关闭。
-                 pool-prepared-statements: false
-            # 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
-                 max-open-prepared-statements: -1
-            # 配置检测可以关闭的空闲连接间隔时间
-                 time-between-eviction-runs-millis: 60000
-            # 配置连接在连接池中的最小生存时间
-                 min-evictable-idle-time-millis: 300000
-                 max-evictable-idle-time-millis: 400000
-            # 引入过滤器, 监控统计的stat和防御SQL注入的wall
-                 filters: stat,wall
-            # spring监控AOP切入点
-                 aop-patterns: sexy.tea.service.*
-            # 是否启用StatFilter
-                 web-stat-filter: enabled: true
-                                  url-pattern: /*
-                                  exclusions:
-                 validation-query: SELECT 1 FROM DUAL
-                 test-while-idle: true
-                 test-on-borrow: false
-                 test-on-return: false
-                 use-global-data-source-stat: true
-                 connect-properties: druid.stat.mergeSql-true;druid.stat.slowSqlMills=5000
-        devtools: livereload: enabled: true
-config: swagger-config: is-show: true
+server:
+  port: 6886
+spring:
+  application:
+    name: sexy-tea
+  datasource:
+    # 数据源类型设置为Druid数据源
+    type: com.alibaba.druid.pool.DruidDataSource
+    # 数据源信息
+    driver-class-name: com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/sexy-tea?charsetEncoding=utf8mb4&serverTimezone=UTC
+    username: root
+    password: 1015
+    # 数据连接池配置
+    druid:
+      initial-size: 8
+      max-active: 20
+      min-idle: 8
+      max-wait: 6000
+      # 是否缓存preparedStatement，也就是PSCache,PSCache对支持游标的数据库性能提升巨大，比如说oracle,在mysql下建议关闭。
+      pool-prepared-statements: false
+      # 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
+      max-open-prepared-statements: -1
+      # 配置检测可以关闭的空闲连接间隔时间
+      time-between-eviction-runs-millis: 60000
+      # 配置连接在连接池中的最小生存时间
+      min-evictable-idle-time-millis: 300000
+      max-evictable-idle-time-millis: 400000
+      # 引入过滤器, 监控统计的stat和防御SQL注入的wall
+      filters: stat,wall
+      # spring监控AOP切入点
+      aop-patterns: sexy.tea.service.*
+      # 是否启用StatFilter
+      web-stat-filter:
+        enabled: true
+        url-pattern: /*
+        exclusions:
+      validation-query: SELECT 1 FROM DUAL
+      test-while-idle: true
+      test-on-borrow: false
+      test-on-return: false
+      use-global-data-source-stat: true
+      connect-properties: druid.stat.mergeSql-true;druid.stat.slowSqlMills=5000
+  devtools:
+    livereload:
+      enabled: true
+  redis:
+    client-name: sexy-tea
+    host: 127.0.0.1
+    database: 0
+    port: 6379
+    password: lsp
+    timeout: 1000ms
+#config:
+#  swagger-config:
+#    is-show: true
 # mybatis配置
-mybatis: type-aliases-package: sexy.tea.model
-         mapper-locations: classpath:mapper/**/*.xml
+mybatis:
+  type-aliases-package: sexy.tea.model
+  mapper-locations: classpath:mapper/**/*.xml
 # 通用mapper配置
-mapper: #  mappers: sexy.tea.mapper
+mapper:
+  #  mappers: sexy.tea.mapper
   not-empty: false
   identity: MYSQL
 # 分页插件配置
-pagehelper: helper-dialect: MYSQL
-            reasonable: true
-            support-methods-arguments: true
-            params: count=countSql
+pagehelper:
+  helper-dialect: MYSQL
+  reasonable: true
+  support-methods-arguments: true
+  params: count=countSql
+redis:
+  user:
+    prefix: "user:"
