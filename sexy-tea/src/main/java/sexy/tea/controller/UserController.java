@@ -30,10 +30,10 @@ public class UserController {
         return service.register(user);
     }
 
-    @PostMapping("/login")
-    public Result login(@RequestBody User user, HttpSession session) {
+    @PostMapping("/login/{role}")
+    public Result login(@RequestBody User user, @PathVariable String role, HttpSession session) {
         user.setPassword(SecureUtil.md5(user.getPassword()));
-        return service.login(user, session);
+        return service.login(user, role, session);
     }
 
     @GetMapping("/checkLogin/{loginSessionId}")

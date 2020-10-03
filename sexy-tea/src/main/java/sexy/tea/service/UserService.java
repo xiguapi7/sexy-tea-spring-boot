@@ -28,7 +28,7 @@ public interface UserService {
 
     Result register(User user);
 
-    Result login(User user, HttpSession session);
+    Result login(User user, String role, HttpSession session);
 
     Result logout(String loginSessionId);
 }

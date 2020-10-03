@@ -106,7 +106,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result login(User user, HttpSession session) {
+    public Result login(User user, String role, HttpSession session) {
 
         if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
             return Result.argumentError("用户名或密码不能为空");
@@ -116,6 +116,7 @@ public class UserServiceImpl implements UserService {
         example.createCriteria()
                 .andEqualTo("username", user.getUsername())
                 .andEqualTo("password", user.getPassword())
+                .andEqualTo("role", role)
                 .andEqualTo("status", 1);
         user = userMapper.selectOneByExample(example);
         if (user.getId() == null) {
