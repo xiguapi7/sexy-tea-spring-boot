@@ -65,16 +65,11 @@
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
         </dependency>
-        <dependency>
+        <!--<dependency>
             <groupId>org.springframework.session</groupId>
             <artifactId>spring-session-data-redis</artifactId>
             <version>RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session</artifactId>
-            <version>RELEASE</version>
-        </dependency>
+        </dependency>-->
 
         <!--图片服务器minio支持-->
         <dependency>
@@ -86,12 +81,12 @@
         <!--Hutool工具类-->
         <dependency>
             <groupId>cn.hutool</groupId>
-            <artifactId>hutool-all</artifactId>
+            <artifactId>hutool-crypto</artifactId>
             <version>5.4.3</version>
         </dependency>
 
         <!-- swagger2 -->
-        <dependency>
+        <!--<dependency>
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger2</artifactId>
             <version>2.9.2</version>
@@ -100,7 +95,7 @@
             <groupId>io.springfox</groupId>
             <artifactId>springfox-swagger-ui</artifactId>
             <version>2.9.2</version>
-        </dependency>
+        </dependency>-->
 
         <!--编译和测试相关依赖-->
         <dependency>
@@ -155,6 +150,7 @@
                 <directory>src/main/resources</directory>
                 <includes>
                     <include>**/*.xml</include>
+                    <include>**/*.yml</include>
                     <include>**/*.txt</include>
                     <include>**/*.properties</include>
                     <include>**/*.properties</include>

@@ -2,26 +2,34 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sexy.tea.mapper.OrderMapper">
   <resultMap id="BaseResultMap" type="sexy.tea.model.Order">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    <!--@mbg.generated generated on Tue Sep 29 12:44:50 CST 2020.-->
     <!--@Table `order`-->
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
-    <result column="order_number" jdbcType="BIGINT" property="orderNumber" />
-    <result column="pay_price" jdbcType="DECIMAL" property="payPrice" />
+    <result column="pay_price" jdbcType="INTEGER" property="payPrice" />
     <result column="is_pay" jdbcType="BOOLEAN" property="isPay" />
-    <result column="pay_id" jdbcType="BIGINT" property="payId" />
-    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
-    <result column="status" jdbcType="TINYINT" property="status" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="nickname" jdbcType="VARCHAR" property="nickname" />
+    <result column="remark" jdbcType="VARCHAR" property="remark" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="pay_time" jdbcType="TIMESTAMP" property="payTime" />
+    <result column="consign_time" jdbcType="TIMESTAMP" property="consignTime" />
+    <result column="end_time" jdbcType="TIMESTAMP" property="endTime" />
+    <result column="close_time" jdbcType="TIMESTAMP" property="closeTime" />
+    <result column="post_fee" jdbcType="INTEGER" property="postFee" />
+    <result column="shipping_name" jdbcType="VARCHAR" property="shippingName" />
+    <result column="shipping_code" jdbcType="VARCHAR" property="shippingCode" />
+    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
-    id, `uid`, order_number, pay_price, is_pay, pay_id, pay_time, `status`, create_time, 
+    <!--@mbg.generated generated on Tue Sep 29 12:44:50 CST 2020.-->
+    id, `uid`, pay_price, is_pay, username, nickname, remark, create_time, pay_time, 
+    consign_time, end_time, close_time, post_fee, shipping_name, shipping_code, `status`, 
     update_time
   </sql>
   <update id="updateBatch" parameterType="java.util.List">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    <!--@mbg.generated generated on Tue Sep 29 12:44:50 CST 2020.-->
     update `order`
     <trim prefix="set" suffixOverrides=",">
       <trim prefix="`uid` = case" suffix="end,">
@@ -29,14 +37,9 @@
           when id = #{item.id,jdbcType=INTEGER} then #{item.uid,jdbcType=INTEGER}
         </foreach>
       </trim>
-      <trim prefix="order_number = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.orderNumber,jdbcType=BIGINT}
-        </foreach>
-      </trim>
       <trim prefix="pay_price = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.payPrice,jdbcType=DECIMAL}
+          when id = #{item.id,jdbcType=INTEGER} then #{item.payPrice,jdbcType=INTEGER}
         </foreach>
       </trim>
       <trim prefix="is_pay = case" suffix="end,">
@@ -44,9 +47,24 @@
           when id = #{item.id,jdbcType=INTEGER} then #{item.isPay,jdbcType=BOOLEAN}
         </foreach>
       </trim>
-      <trim prefix="pay_id = case" suffix="end,">
+      <trim prefix="username = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.payId,jdbcType=BIGINT}
+          when id = #{item.id,jdbcType=INTEGER} then #{item.username,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="nickname = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.nickname,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="remark = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.remark,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
         </foreach>
       </trim>
       <trim prefix="pay_time = case" suffix="end,">
@@ -54,14 +72,39 @@
           when id = #{item.id,jdbcType=INTEGER} then #{item.payTime,jdbcType=TIMESTAMP}
         </foreach>
       </trim>
+      <trim prefix="consign_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.consignTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="end_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.endTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="close_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.closeTime,jdbcType=TIMESTAMP}
+        </foreach>
+      </trim>
+      <trim prefix="post_fee = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.postFee,jdbcType=INTEGER}
+        </foreach>
+      </trim>
+      <trim prefix="shipping_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.shippingName,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
+      <trim prefix="shipping_code = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=INTEGER} then #{item.shippingCode,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
       <trim prefix="`status` = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
-        </foreach>
-      </trim>
-      <trim prefix="create_time = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
         </foreach>
       </trim>
       <trim prefix="update_time = case" suffix="end,">
@@ -76,7 +119,7 @@
     </foreach>
   </update>
   <update id="updateBatchSelective" parameterType="java.util.List">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+    <!--@mbg.generated generated on Tue Sep 29 12:44:50 CST 2020.-->
     update `order`
     <trim prefix="set" suffixOverrides=",">
       <trim prefix="`uid` = case" suffix="end,">
@@ -86,17 +129,10 @@
           </if>
         </foreach>
       </trim>
-      <trim prefix="order_number = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.orderNumber != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.orderNumber,jdbcType=BIGINT}
-          </if>
-        </foreach>
-      </trim>
       <trim prefix="pay_price = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           <if test="item.payPrice != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.payPrice,jdbcType=DECIMAL}
+            when id = #{item.id,jdbcType=INTEGER} then #{item.payPrice,jdbcType=INTEGER}
           </if>
         </foreach>
       </trim>
@@ -107,10 +143,31 @@
           </if>
         </foreach>
       </trim>
-      <trim prefix="pay_id = case" suffix="end,">
+      <trim prefix="username = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
-          <if test="item.payId != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.payId,jdbcType=BIGINT}
+          <if test="item.username != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.username,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="nickname = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.nickname != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.nickname,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="remark = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.remark != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.remark,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="create_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.createTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
           </if>
         </foreach>
       </trim>
@@ -121,17 +178,52 @@
           </if>
         </foreach>
       </trim>
+      <trim prefix="consign_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.consignTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.consignTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="end_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.endTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.endTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="close_time = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.closeTime != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.closeTime,jdbcType=TIMESTAMP}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="post_fee = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.postFee != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.postFee,jdbcType=INTEGER}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="shipping_name = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.shippingName != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.shippingName,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
+      <trim prefix="shipping_code = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.shippingCode != null">
+            when id = #{item.id,jdbcType=INTEGER} then #{item.shippingCode,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
       <trim prefix="`status` = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           <if test="item.status != null">
             when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
-          </if>
-        </foreach>
-      </trim>
-      <trim prefix="create_time = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.createTime != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
           </if>
         </foreach>
       </trim>
@@ -148,69 +240,56 @@
       #{item.id,jdbcType=INTEGER}
     </foreach>
   </update>
-  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+  <insert id="batchInsert" parameterType="map">
+    <!--@mbg.generated generated on Tue Sep 29 12:44:50 CST 2020.-->
     insert into `order`
-    (`uid`, order_number, pay_price, is_pay, pay_id, pay_time, `status`, create_time, 
+    (id, `uid`, pay_price, is_pay, username, nickname, remark, create_time, pay_time, 
+      consign_time, end_time, close_time, post_fee, shipping_name, shipping_code, `status`, 
       update_time)
     values
     <foreach collection="list" item="item" separator=",">
-      (#{item.uid,jdbcType=INTEGER}, #{item.orderNumber,jdbcType=BIGINT}, #{item.payPrice,jdbcType=DECIMAL}, 
-        #{item.isPay,jdbcType=BOOLEAN}, #{item.payId,jdbcType=BIGINT}, #{item.payTime,jdbcType=TIMESTAMP}, 
-        #{item.status,jdbcType=TINYINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}
-        )
+      (#{item.id,jdbcType=INTEGER}, #{item.uid,jdbcType=INTEGER}, #{item.payPrice,jdbcType=INTEGER}, 
+        #{item.isPay,jdbcType=BOOLEAN}, #{item.username,jdbcType=VARCHAR}, #{item.nickname,jdbcType=VARCHAR}, 
+        #{item.remark,jdbcType=VARCHAR}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.payTime,jdbcType=TIMESTAMP}, 
+        #{item.consignTime,jdbcType=TIMESTAMP}, #{item.endTime,jdbcType=TIMESTAMP}, #{item.closeTime,jdbcType=TIMESTAMP}, 
+        #{item.postFee,jdbcType=INTEGER}, #{item.shippingName,jdbcType=VARCHAR}, #{item.shippingCode,jdbcType=VARCHAR}, 
+        #{item.status,jdbcType=TINYINT}, #{item.updateTime,jdbcType=TIMESTAMP})
     </foreach>
   </insert>
-  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Order" useGeneratedKeys="true">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+  <insert id="insertOrUpdate" parameterType="sexy.tea.model.Order">
+    <!--@mbg.generated generated on Tue Sep 29 12:44:50 CST 2020.-->
     insert into `order`
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      `uid`,
-      order_number,
-      pay_price,
-      is_pay,
-      pay_id,
-      pay_time,
-      `status`,
-      create_time,
-      update_time,
-    </trim>
+    (id, `uid`, pay_price, is_pay, username, nickname, remark, create_time, pay_time, 
+      consign_time, end_time, close_time, post_fee, shipping_name, shipping_code, `status`, 
+      update_time)
     values
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      #{uid,jdbcType=INTEGER},
-      #{orderNumber,jdbcType=BIGINT},
-      #{payPrice,jdbcType=DECIMAL},
-      #{isPay,jdbcType=BOOLEAN},
-      #{payId,jdbcType=BIGINT},
-      #{payTime,jdbcType=TIMESTAMP},
-      #{status,jdbcType=TINYINT},
-      #{createTime,jdbcType=TIMESTAMP},
-      #{updateTime,jdbcType=TIMESTAMP},
-    </trim>
+    (#{id,jdbcType=INTEGER}, #{uid,jdbcType=INTEGER}, #{payPrice,jdbcType=INTEGER}, #{isPay,jdbcType=BOOLEAN}, 
+      #{username,jdbcType=VARCHAR}, #{nickname,jdbcType=VARCHAR}, #{remark,jdbcType=VARCHAR}, 
+      #{createTime,jdbcType=TIMESTAMP}, #{payTime,jdbcType=TIMESTAMP}, #{consignTime,jdbcType=TIMESTAMP}, 
+      #{endTime,jdbcType=TIMESTAMP}, #{closeTime,jdbcType=TIMESTAMP}, #{postFee,jdbcType=INTEGER}, 
+      #{shippingName,jdbcType=VARCHAR}, #{shippingCode,jdbcType=VARCHAR}, #{status,jdbcType=TINYINT}, 
+      #{updateTime,jdbcType=TIMESTAMP})
     on duplicate key update 
-    <trim suffixOverrides=",">
-      <if test="id != null">
-        id = #{id,jdbcType=INTEGER},
-      </if>
-      `uid` = #{uid,jdbcType=INTEGER},
-      order_number = #{orderNumber,jdbcType=BIGINT},
-      pay_price = #{payPrice,jdbcType=DECIMAL},
-      is_pay = #{isPay,jdbcType=BOOLEAN},
-      pay_id = #{payId,jdbcType=BIGINT},
-      pay_time = #{payTime,jdbcType=TIMESTAMP},
-      `status` = #{status,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-    </trim>
+    id = #{id,jdbcType=INTEGER}, 
+    `uid` = #{uid,jdbcType=INTEGER}, 
+    pay_price = #{payPrice,jdbcType=INTEGER}, 
+    is_pay = #{isPay,jdbcType=BOOLEAN}, 
+    username = #{username,jdbcType=VARCHAR}, 
+    nickname = #{nickname,jdbcType=VARCHAR}, 
+    remark = #{remark,jdbcType=VARCHAR}, 
+    create_time = #{createTime,jdbcType=TIMESTAMP}, 
+    pay_time = #{payTime,jdbcType=TIMESTAMP}, 
+    consign_time = #{consignTime,jdbcType=TIMESTAMP}, 
+    end_time = #{endTime,jdbcType=TIMESTAMP}, 
+    close_time = #{closeTime,jdbcType=TIMESTAMP}, 
+    post_fee = #{postFee,jdbcType=INTEGER}, 
+    shipping_name = #{shippingName,jdbcType=VARCHAR}, 
+    shipping_code = #{shippingCode,jdbcType=VARCHAR}, 
+    `status` = #{status,jdbcType=TINYINT}, 
+    update_time = #{updateTime,jdbcType=TIMESTAMP}
   </insert>
-  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Order" useGeneratedKeys="true">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+  <insert id="insertOrUpdateSelective" parameterType="sexy.tea.model.Order">
+    <!--@mbg.generated generated on Tue Sep 29 12:44:50 CST 2020.-->
     insert into `order`
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
@@ -219,26 +298,47 @@
       <if test="uid != null">
         `uid`,
       </if>
-      <if test="orderNumber != null">
-        order_number,
-      </if>
       <if test="payPrice != null">
         pay_price,
       </if>
       <if test="isPay != null">
         is_pay,
       </if>
-      <if test="payId != null">
-        pay_id,
+      <if test="username != null">
+        username,
+      </if>
+      <if test="nickname != null">
+        nickname,
+      </if>
+      <if test="remark != null">
+        remark,
+      </if>
+      <if test="createTime != null">
+        create_time,
       </if>
       <if test="payTime != null">
         pay_time,
       </if>
+      <if test="consignTime != null">
+        consign_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="closeTime != null">
+        close_time,
+      </if>
+      <if test="postFee != null">
+        post_fee,
+      </if>
+      <if test="shippingName != null">
+        shipping_name,
+      </if>
+      <if test="shippingCode != null">
+        shipping_code,
+      </if>
       <if test="status != null">
         `status`,
-      </if>
-      <if test="createTime != null">
-        create_time,
       </if>
       <if test="updateTime != null">
         update_time,
@@ -252,26 +352,47 @@
       <if test="uid != null">
         #{uid,jdbcType=INTEGER},
       </if>
-      <if test="orderNumber != null">
-        #{orderNumber,jdbcType=BIGINT},
-      </if>
       <if test="payPrice != null">
-        #{payPrice,jdbcType=DECIMAL},
+        #{payPrice,jdbcType=INTEGER},
       </if>
       <if test="isPay != null">
         #{isPay,jdbcType=BOOLEAN},
       </if>
-      <if test="payId != null">
-        #{payId,jdbcType=BIGINT},
+      <if test="username != null">
+        #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="payTime != null">
         #{payTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="consignTime != null">
+        #{consignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeTime != null">
+        #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postFee != null">
+        #{postFee,jdbcType=INTEGER},
+      </if>
+      <if test="shippingName != null">
+        #{shippingName,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingCode != null">
+        #{shippingCode,jdbcType=VARCHAR},
+      </if>
       <if test="status != null">
         #{status,jdbcType=TINYINT},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null">
         #{updateTime,jdbcType=TIMESTAMP},
@@ -285,26 +406,47 @@
       <if test="uid != null">
         `uid` = #{uid,jdbcType=INTEGER},
       </if>
-      <if test="orderNumber != null">
-        order_number = #{orderNumber,jdbcType=BIGINT},
-      </if>
       <if test="payPrice != null">
-        pay_price = #{payPrice,jdbcType=DECIMAL},
+        pay_price = #{payPrice,jdbcType=INTEGER},
       </if>
       <if test="isPay != null">
         is_pay = #{isPay,jdbcType=BOOLEAN},
       </if>
-      <if test="payId != null">
-        pay_id = #{payId,jdbcType=BIGINT},
+      <if test="username != null">
+        username = #{username,jdbcType=VARCHAR},
+      </if>
+      <if test="nickname != null">
+        nickname = #{nickname,jdbcType=VARCHAR},
+      </if>
+      <if test="remark != null">
+        remark = #{remark,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="payTime != null">
         pay_time = #{payTime,jdbcType=TIMESTAMP},
       </if>
+      <if test="consignTime != null">
+        consign_time = #{consignTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="closeTime != null">
+        close_time = #{closeTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="postFee != null">
+        post_fee = #{postFee,jdbcType=INTEGER},
+      </if>
+      <if test="shippingName != null">
+        shipping_name = #{shippingName,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingCode != null">
+        shipping_code = #{shippingCode,jdbcType=VARCHAR},
+      </if>
       <if test="status != null">
         `status` = #{status,jdbcType=TINYINT},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
       </if>
       <if test="updateTime != null">
         update_time = #{updateTime,jdbcType=TIMESTAMP},

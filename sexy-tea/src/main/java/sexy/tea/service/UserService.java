@@ -1,7 +1,9 @@
 package sexy.tea.service;
 
+import sexy.tea.common.Result;
 import sexy.tea.model.User;
 
+import javax.servlet.http.HttpSession;
 import java.util.List;
 
 /**
@@ -22,4 +24,11 @@ public interface UserService {
 
     int insertOrUpdateSelective(User record);
 
+    Result check(String loginSessionId);
+
+    Result register(User user);
+
+    Result login(User user, HttpSession session);
+
+    Result logout(String loginSessionId);
 }

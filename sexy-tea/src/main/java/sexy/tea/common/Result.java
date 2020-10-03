@@ -82,4 +82,12 @@ public class Result implements Serializable {
     public static Result notLogin() {
         return result(ResultConstant.NOT_LOGIN, ResultConstant.NOT_LOGIN_MSG, Optional.empty());
     }
+
+    public static Result argumentError(Object data) {
+        return result(ResultConstant.ARGUMENT_ERROR, ResultConstant.ARGUMENT_ERROR_MSG, data);
+    }
+
+    public static Result argumentError() {
+        return result(ResultConstant.ARGUMENT_ERROR, ResultConstant.ARGUMENT_ERROR_MSG, Optional.empty());
+    }
 }

@@ -1,5 +1,5 @@
 server:
-  port: 6886
+  port: 8080
 spring:
   application:
     name: sexy-tea
@@ -49,11 +49,14 @@ spring:
     host: 127.0.0.1
     database: 0
     port: 6379
-    password: lsp
-    timeout: 1000ms
-#config:
-#  swagger-config:
-#    is-show: true
+    timeout: 60000
+    password:
+    jedis:
+      pool:
+        max-active: 10
+        max-idle: 8
+        min-idle: 0
+        max-wait: 60000
 # mybatis配置
 mybatis:
   type-aliases-package: sexy.tea.model
@@ -69,6 +72,11 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
-redis:
-  user:
-    prefix: "user:"
+ord:
+  gen: 100
+  default: 101
+  item: 102
+login:
+  session:
+    prefix: "sexyTeaSession:sessions:"
+    timeout: 3600

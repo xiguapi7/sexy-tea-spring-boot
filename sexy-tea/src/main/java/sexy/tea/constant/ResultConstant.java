@@ -21,6 +21,8 @@ public class ResultConstant {
 
     public static final Integer NOT_LOGIN = 2;
 
+    public static final Integer ARGUMENT_ERROR = 3;
+
     public static final String SUCCESS_MSG = "Success";
 
     public static final String NOT_FOUND_MSG = "Not Found";
@@ -32,4 +34,6 @@ public class ResultConstant {
     public static final String BUSINESS_EXCEPTION_MSG = "Business Exception";
 
     public static final String NOT_LOGIN_MSG = "Not login";
+
+    public static final String ARGUMENT_ERROR_MSG = "Argument Error";
 }

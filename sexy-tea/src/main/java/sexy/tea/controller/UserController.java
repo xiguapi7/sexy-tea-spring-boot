@@ -1,13 +1,13 @@
 package sexy.tea.controller;
 
+import cn.hutool.crypto.SecureUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sexy.tea.common.Result;
 import sexy.tea.model.User;
 import sexy.tea.service.UserService;
+
+import javax.servlet.http.HttpSession;
 
 /**
  * @author 大大大西西瓜皮🍉
@@ -25,9 +25,24 @@ public class UserController {
         this.service = service;
     }
 
-    @PostMapping("/login")
-    public Result login(@RequestBody User user) {
+    @PostMapping(path = "/register")
+    public Result register(@RequestBody User user) {
+        return service.register(user);
+    }
 
-        return null;
+    @PostMapping("/login")
+    public Result login(@RequestBody User user, HttpSession session) {
+        user.setPassword(SecureUtil.md5(user.getPassword()));
+        return service.login(user, session);
+    }
+
+    @GetMapping("/check/{loginSessionId}")
+    public Result check(@PathVariable String loginSessionId) {
+        return service.check(loginSessionId);
+    }
+
+    @GetMapping("/logout/{loginSessionId}")
+    public Result logout(@PathVariable String loginSessionId) {
+        return service.logout(loginSessionId);
     }
 }

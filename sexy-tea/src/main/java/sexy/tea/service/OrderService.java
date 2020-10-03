@@ -1,6 +1,9 @@
 package sexy.tea.service;
 
+import sexy.tea.common.Result;
 import sexy.tea.model.Order;
+import sexy.tea.model.OrderGoods;
+import sexy.tea.model.OrderShipping;
 
 import java.util.List;
 
@@ -22,4 +25,6 @@ public interface OrderService {
 
     int insertOrUpdateSelective(Order record);
 
+    Result createOrder(Order order, List<OrderGoods> orderGoodsList, OrderShipping orderShipping);
 }
+

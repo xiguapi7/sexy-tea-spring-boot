@@ -6,66 +6,71 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
-import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.util.Date;
 
 /**
+ *
  * author 大大大西西瓜皮🍉
  * date 12:44 2020-09-29
- * description:
+ * description: 
  */
 @Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "order_goods")
-public class OrderGoods implements Serializable {
+@Table(name = "order_shipping")
+public class OrderShipping implements Serializable {
     /**
-     * 订单商品表
+     * 订单ID
      */
     @Id
-    @Column(name = "id")
-    @GeneratedValue(generator = "JDBC")
-    private Integer id;
-
-    /**
-     * 订单id
-     */
     @Column(name = "order_id")
-    private Integer orderId;
+    private String orderId;
 
     /**
-     * 商品id
+     * 收货人名字
      */
-    @Column(name = "goods_id")
-    private Integer goodsId;
+    @Column(name = "receiver_name")
+    private String receiverName;
 
     /**
-     * 商品数量
+     * 固定电话
      */
-    @Column(name = "`count`")
-    private Integer count;
+    @Column(name = "receiver_phone")
+    private String receiverPhone;
 
     /**
-     * 商品单价
+     * 省份
      */
-    @Column(name = "price")
-    private Integer price;
+    @Column(name = "receiver_state")
+    private String receiverState;
 
     /**
-     * 商品总价
+     * 城市
      */
-    @Column(name = "total_price")
-    private Integer totalPrice;
+    @Column(name = "receiver_city")
+    private String receiverCity;
 
     /**
-     * 图片地址
+     * 区/县
      */
-    @Column(name = "pic")
-    private String pic;
+    @Column(name = "receiver_district")
+    private String receiverDistrict;
+
+    /**
+     * 地址
+     */
+    @Column(name = "receiver_address")
+    private String receiverAddress;
+
+    /**
+     * 邮政编码
+     */
+    @Column(name = "receiver_zip")
+    private String receiverZip;
 
     /**
      * 记录状态：1 正常，0 禁用，-1 删除
