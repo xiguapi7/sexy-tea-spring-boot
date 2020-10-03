@@ -24,7 +24,7 @@ public interface UserService {
 
     int insertOrUpdateSelective(User record);
 
-    Result check(String loginSessionId);
+    Result checkLogin(String loginSessionId);
 
     Result register(User user);
 

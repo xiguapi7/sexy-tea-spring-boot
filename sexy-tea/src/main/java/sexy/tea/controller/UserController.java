@@ -36,9 +36,9 @@ public class UserController {
         return service.login(user, session);
     }
 
-    @GetMapping("/check/{loginSessionId}")
-    public Result check(@PathVariable String loginSessionId) {
-        return service.check(loginSessionId);
+    @GetMapping("/checkLogin/{loginSessionId}")
+    public Result checkLogin(@PathVariable String loginSessionId) {
+        return service.checkLogin(loginSessionId);
     }
 
     @GetMapping("/logout/{loginSessionId}")

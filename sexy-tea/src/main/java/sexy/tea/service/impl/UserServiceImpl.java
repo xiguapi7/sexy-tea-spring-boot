@@ -91,7 +91,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result check(String loginSessionId) {
+    public Result checkLogin(String loginSessionId) {
         if (StringUtils.isEmpty(loginSessionId)) {
             return Result.business("loginSessionId不能为空!");
         }
