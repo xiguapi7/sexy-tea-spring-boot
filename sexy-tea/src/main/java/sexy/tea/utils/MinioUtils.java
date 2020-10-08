@@ -13,6 +13,7 @@ import java.security.InvalidKeyException;
 import java.security.NoSuchAlgorithmException;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * Minio工具类
@@ -55,6 +56,8 @@ public class MinioUtils {
     private static final MinioClient client;
 
     static {
+        log.info("静态代码块初始化MinIO客户端对象. host: {}, port: {}, defaultName: {}", host, port, defaultBucketName);
+
         // 静态代码块中实例化客户端对象
         client = MinioClient.builder()
                 .endpoint(host, port, false)
@@ -67,8 +70,6 @@ public class MinioUtils {
         }
     }
 
-    // TODO Minio工具类封装
-
     /**
      * 创建存储桶
      *
@@ -76,6 +77,7 @@ public class MinioUtils {
      */
     public static void makeBucket(String bucketName) {
         try {
+            log.info("创建存储桶. bucketName: {}", bucketName);
             client.makeBucket(MakeBucketArgs.builder().bucket(bucketName).build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidBucketNameException | InvalidKeyException | InvalidResponseException | IOException | NoSuchAlgorithmException | RegionConflictException | ServerException | XmlParserException e) {
             log.error("创建桶失败, 请检查客户端连接是否成功。参数： {}。异常信息： {}", bucketName, e.getMessage());
@@ -83,12 +85,54 @@ public class MinioUtils {
     }
 
 
-    public static void upload() {
+    /**
+     * 上传文件
+     *
+     * @param bucketName  桶名称
+     * @param objectName  对象名称
+     * @param stream      输入流
+     * @param contentType 内容类型
+     */
+    public static void upload(String bucketName, String objectName, InputStream stream, String contentType) {
+        try {
+            log.info("上传文件. bucketName: {}, objectName: {}, stream: {}, contentType: {}", bucketName, objectName, stream.available(), contentType);
+            client.putObject(PutObjectArgs.builder()
+                    .bucket(bucketName)
+                    .object(objectName)
+                    .stream(stream, stream.available(), 1)
+                    .contentType(contentType)
+                    .build());
 
+        } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidBucketNameException | InvalidKeyException | InvalidResponseException | IOException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+            e.printStackTrace();
+        }
     }
 
-    public static void uploadImage() {
+    /**
+     * 根据文件路径上传文件
+     *
+     * @param bucketName 桶名称
+     * @param objectName 对象名称
+     * @param fileName   文件路径
+     */
+    public static void upload(String bucketName, String objectName, String fileName) {
+        try {
+            log.info("上传文件. bucketName: {}, objectName: {}, fileName: {}", bucketName, objectName, fileName);
+            client.uploadObject(UploadObjectArgs.builder().bucket(bucketName).object(objectName).filename(fileName).build());
+        } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidBucketNameException | InvalidKeyException | InvalidResponseException | IOException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+            e.printStackTrace();
+        }
+    }
 
+    /**
+     * 上传图片
+     *
+     * @param bucketName 桶名称
+     * @param objectName 对象名称
+     * @param is         输入流
+     */
+    public static void uploadImage(String bucketName, String objectName, InputStream is) {
+        upload(bucketName, objectName, is, "application/octet-stream");
     }
 
     /**
@@ -100,6 +144,8 @@ public class MinioUtils {
      */
     public static void download(String bucketName, String objectName, String filePath) {
         try {
+            log.info("下载对象到本地. bucketName: {}, objectName: {}, filePath: {}", bucketName, objectName, filePath);
+
             GetObjectArgs args = GetObjectArgs.builder()
                     .bucket(bucketName)
                     .object(objectName)
@@ -109,11 +155,11 @@ public class MinioUtils {
             InputStream is = client.getObject(args);
 
             FileOutputStream fos = new FileOutputStream(filePath);
-            int index;
-            byte[] data = new byte[1024];
-            while ((index = is.read(data)) != -1) {
+            int bytesRead;
+            byte[] buf = new byte[1024];
+            while ((bytesRead = is.read(buf)) != -1) {
                 // 写数据
-                fos.write(data, 0, index);
+                fos.write(buf, 0, bytesRead);
                 fos.flush();
             }
             // 释放资源
@@ -124,8 +170,18 @@ public class MinioUtils {
         }
     }
 
+    /**
+     * 断点下载, 下载到本地
+     *
+     * @param bucketName 桶名称
+     * @param objectName 对象名称
+     * @param offset     偏移量
+     * @param length     长度
+     * @param filePath   文件路径
+     */
     public static void breakPointDownload(String bucketName, String objectName, long offset, long length, String filePath) {
         try {
+            log.info("断点下载. bucketName: {}, objectName: {}, offset: {}, length: {}, filePath: {}", bucketName, objectName, offset, length, filePath);
             // 调用statObject()来判断是否存在, 如果不存在, 方法将会抛出异常, 否则代表对象存在.
             client.statObject(StatObjectArgs.builder().bucket(bucketName).object(objectName).build());
 
@@ -140,7 +196,7 @@ public class MinioUtils {
                 fos.write(buf, 0, bytesRead);
                 fos.flush();
             }
-
+            // 释放资源
             fos.close();
             stream.close();
         } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidBucketNameException | InvalidKeyException | InvalidResponseException | IOException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
@@ -155,6 +211,7 @@ public class MinioUtils {
      */
     public static List<Bucket> listBuckets() {
         try {
+            log.info("列举所有桶对象.");
             return client.listBuckets();
         } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidBucketNameException | InvalidKeyException | InvalidResponseException | IOException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             log.error("Bucket列表出错，请检查客户端连接是否成功。异常信息： {}", e.getMessage());
@@ -170,6 +227,7 @@ public class MinioUtils {
      */
     public static boolean bucketExists(String bucketName) {
         try {
+            log.info("判断桶是否存在. bucketName: {}", bucketName);
             return client.bucketExists(BucketExistsArgs.builder().bucket(bucketName).build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidBucketNameException | InvalidKeyException | InvalidResponseException | IOException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             log.error("Bucket存在判断出错，请检查客户端连接是否成功。参数： {}。异常信息： {}", bucketName, e.getMessage());
@@ -184,6 +242,7 @@ public class MinioUtils {
      */
     public static void removeBucket(String bucketName) {
         try {
+            log.info("删除存储桶. bucketName: {}", bucketName);
             client.removeBucket(RemoveBucketArgs.builder().bucket(bucketName).build());
         } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidBucketNameException | InvalidKeyException | InvalidResponseException | IOException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
             log.error("删除存储桶失败，请检查客户端连接是否成功。参数： {}。异常信息： {}", bucketName, e.getMessage());
@@ -199,6 +258,7 @@ public class MinioUtils {
      * @return 迭代器对象. Iterable<Result<Item>>
      */
     public static Iterable<Result<Item>> listObjects(String bucketName, String prefix, boolean recursive) {
+        log.info("列出桶中所有对象. bucketName: {}, prefix: {}, recursive: {}", bucketName, prefix, recursive);
         return client.listObjects(ListObjectsArgs.builder().bucket(bucketName).prefix(prefix).recursive(recursive).build());
     }
 
@@ -212,5 +272,14 @@ public class MinioUtils {
         return listObjects(bucketName, "", true);
     }
 
-
+    public static ObjectStat statObject(String bucketName, String objectName) {
+        try {
+            log.info("获取对象元数据: bucketName: {}, objectName: {}", bucketName, objectName);
+            return client.statObject(StatObjectArgs.builder().bucket(bucketName).object(objectName).build());
+        } catch (ErrorResponseException | InsufficientDataException | InternalException | InvalidBucketNameException | InvalidKeyException | InvalidResponseException | IOException | NoSuchAlgorithmException | ServerException | XmlParserException e) {
+            log.error("获取对象元数据失败. 错误信息: {}", e.getMessage());
+            Optional<ObjectStat> optional = Optional.empty();
+            return optional.get();
+        }
+    }
 }
