@@ -27,7 +27,7 @@ public class Order implements Serializable {
      */
     @Id
     @Column(name = "id")
-    private Integer id;
+    private Long id;
 
     /**
      * 用户id

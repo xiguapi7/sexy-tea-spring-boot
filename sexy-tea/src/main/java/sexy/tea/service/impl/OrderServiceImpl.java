@@ -1,9 +1,12 @@
 package sexy.tea.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import sexy.tea.common.Result;
 import sexy.tea.mapper.OrderGoodsMapper;
 import sexy.tea.mapper.OrderMapper;
@@ -21,6 +24,7 @@ import java.util.List;
  * description:
  */
 @Service
+@Slf4j
 public class OrderServiceImpl implements OrderService {
 
     private final OrderMapper orderMapper;
@@ -29,14 +33,14 @@ public class OrderServiceImpl implements OrderService {
 
     private final OrderGoodsMapper orderGoodsMapper;
 
-    // @Value("${ord.gen}")
-    // private String genKey;
-    //
-    // @Value("${ord.default")
-    // private String defaultKey;
-    //
-    // @Value("${ord.item}")
-    // private String itemKey;
+    @Value("${order.gen}")
+    private String genKey;
+
+    @Value("${order.default")
+    private String defaultKey;
+
+    @Value("${order.item}")
+    private String itemKey;
 
     private final StringRedisTemplate template;
 
@@ -77,9 +81,21 @@ public class OrderServiceImpl implements OrderService {
     public Result createOrder(Order order, List<OrderGoods> orderGoodsList, OrderShipping orderShipping) {
 
         // TODO 订单生成
-        ValueOperations<String, String> valueOperations = template.opsForValue();
-        // String gen = valueOperations.get(genKey);
-        
+        ValueOperations<String, String> operations = template.opsForValue();
+
+        String str = operations.get(genKey);
+
+        if (StringUtils.isEmpty(str)) {
+            operations.set(genKey, defaultKey);
+        }
+
+        // 生成订单ID
+        Long orderId = operations.increment(genKey);
+
+        // 填充Order对象
+        order.setId(orderId);
+
+        // TODO Order、OrderGood、OrderShipping POJO的修改
 
         return null;
     }

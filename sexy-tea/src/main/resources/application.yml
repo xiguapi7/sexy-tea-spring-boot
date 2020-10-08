@@ -72,7 +72,7 @@ pagehelper:
   reasonable: true
   support-methods-arguments: true
   params: count=countSql
-ord:
+order:
   gen: 100
   default: 101
   item: 102
@@ -80,3 +80,5 @@ login:
   session:
     prefix: "sexyTeaSession:sessions:"
     timeout: 3600
+minio:
+  prefix: http://127.0.0.1:9000/images/

@@ -14,7 +14,6 @@ import java.util.List;
  */
 public interface OrderService {
 
-
     int updateBatch(List<Order> list);
 
     int updateBatchSelective(List<Order> list);
