@@ -13,6 +13,5 @@ class ApplicationTest {
 
     @Test
     void testCreateOrder() {
-        service.createOrder(null, null, null);
     }
 }

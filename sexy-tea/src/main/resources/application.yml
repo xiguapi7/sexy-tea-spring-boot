@@ -73,9 +73,9 @@ pagehelper:
   support-methods-arguments: true
   params: count=countSql
 order:
-  gen: 100
-  default: 101
-  item: 102
+  gen: 73356080000
+  default: 73356081000
+  item: 73356082000
 login:
   session:
     prefix: "sexyTeaSession:sessions:"

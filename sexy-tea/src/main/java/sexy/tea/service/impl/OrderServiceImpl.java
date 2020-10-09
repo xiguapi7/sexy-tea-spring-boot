@@ -8,6 +8,7 @@ import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import sexy.tea.common.Result;
+import sexy.tea.dto.OrderDto;
 import sexy.tea.mapper.OrderGoodsMapper;
 import sexy.tea.mapper.OrderMapper;
 import sexy.tea.mapper.OrderShippingMapper;
@@ -17,6 +18,7 @@ import sexy.tea.model.OrderShipping;
 import sexy.tea.service.OrderService;
 
 import java.util.List;
+import java.util.Objects;
 
 /**
  * author 大大大西西瓜皮🍉
@@ -78,26 +80,47 @@ public class OrderServiceImpl implements OrderService {
     }
 
     @Override
-    public Result createOrder(Order order, List<OrderGoods> orderGoodsList, OrderShipping orderShipping) {
+    public Result createOrder(OrderDto orderDto) {
 
-        // TODO 订单生成
+        log.info("生成订单.");
+
+        // TODO 订单生成测试
         ValueOperations<String, String> operations = template.opsForValue();
 
         String str = operations.get(genKey);
-
         if (StringUtils.isEmpty(str)) {
             operations.set(genKey, defaultKey);
         }
 
+        // 获取订单对象
+        Order order = orderDto.getOrder();
         // 生成订单ID
         Long orderId = operations.increment(genKey);
-
         // 填充Order对象
         order.setId(orderId);
+        order.setIsPay(0);
+        // 插入Order订单表
+        orderMapper.insert(order);
 
-        // TODO Order、OrderGood、OrderShipping POJO的修改
 
-        return null;
+        // 获取订单项列表
+        List<OrderGoods> orderGoodsList = orderDto.getOrderGoodsList();
+        Long orderItemId = operations.increment(Objects.requireNonNull(operations.get(itemKey)));
+        // 设置订单ID后批量插入
+        orderGoodsList.forEach(orderGoods -> {
+            orderGoods.setId(orderItemId);
+            orderGoods.setOrderId(orderId);
+            orderGoodsMapper.insert(orderGoods);
+        });
+        orderGoodsMapper.batchInsert(orderGoodsList);
+
+
+        // 获取物流信息对象
+        OrderShipping orderShipping = orderDto.getOrderShipping();
+        orderShipping.setOrderId(orderId);
+
+        // 返回OrderId
+        return Result.success(orderId);
     }
 }
 

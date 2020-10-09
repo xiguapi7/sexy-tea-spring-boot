@@ -29,13 +29,13 @@ public class OrderGoods implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
 
     /**
      * 订单id
      */
     @Column(name = "order_id")
-    private Integer orderId;
+    private Long orderId;
 
     /**
      * 商品id

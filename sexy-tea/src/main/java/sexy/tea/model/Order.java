@@ -113,6 +113,9 @@ public class Order implements Serializable {
     @Column(name = "shipping_code")
     private String shippingCode;
 
+    @Column(name = "rate")
+    private String rate;
+
     /**
      * 记录状态：1 正常，0 禁用，-1 删除
      */

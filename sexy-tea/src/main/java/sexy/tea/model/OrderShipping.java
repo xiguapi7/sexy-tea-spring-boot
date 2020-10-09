@@ -28,7 +28,7 @@ public class OrderShipping implements Serializable {
      */
     @Id
     @Column(name = "order_id")
-    private String orderId;
+    private Long orderId;
 
     /**
      * 收货人名字
