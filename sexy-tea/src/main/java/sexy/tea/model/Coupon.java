@@ -95,7 +95,7 @@ public class Coupon implements Serializable {
      * 记录状态：1 正常，0 禁用，-1 删除
      */
     @Column(name = "`status`")
-    private Byte status;
+    private Integer status;
     /**
      * 创建时间
      */

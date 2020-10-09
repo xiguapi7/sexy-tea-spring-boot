@@ -45,7 +45,7 @@ public class Order implements Serializable {
      * 是否已经支付：1 已支付，0 未支付，-1 订单失效，2 已发货，3 交易成功，4 交易失败
      */
     @Column(name = "is_pay")
-    private Boolean isPay;
+    private Integer isPay;
 
     /**
      * 用户名
@@ -117,7 +117,7 @@ public class Order implements Serializable {
      * 记录状态：1 正常，0 禁用，-1 删除
      */
     @Column(name = "`status`")
-    private Byte status;
+    private Integer status;
 
     /**
      * 更新时间
