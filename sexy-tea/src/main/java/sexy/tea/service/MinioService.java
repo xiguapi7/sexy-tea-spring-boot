@@ -1,6 +1,6 @@
 package sexy.tea.service;
 
-import sexy.tea.common.Result;
+import sexy.tea.model.common.Result;
 
 import java.io.InputStream;
 

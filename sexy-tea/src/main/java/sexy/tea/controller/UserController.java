@@ -3,8 +3,8 @@ package sexy.tea.controller;
 import cn.hutool.crypto.SecureUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
-import sexy.tea.common.Result;
 import sexy.tea.model.User;
+import sexy.tea.model.common.Result;
 import sexy.tea.service.UserService;
 
 import javax.servlet.http.HttpSession;

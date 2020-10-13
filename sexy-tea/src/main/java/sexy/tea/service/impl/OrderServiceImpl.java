@@ -7,14 +7,14 @@ import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-import sexy.tea.common.Result;
-import sexy.tea.dto.OrderDto;
 import sexy.tea.mapper.OrderGoodsMapper;
 import sexy.tea.mapper.OrderMapper;
 import sexy.tea.mapper.OrderShippingMapper;
 import sexy.tea.model.Order;
 import sexy.tea.model.OrderGoods;
 import sexy.tea.model.OrderShipping;
+import sexy.tea.model.common.Result;
+import sexy.tea.model.dto.OrderDto;
 import sexy.tea.service.OrderService;
 
 import java.util.List;

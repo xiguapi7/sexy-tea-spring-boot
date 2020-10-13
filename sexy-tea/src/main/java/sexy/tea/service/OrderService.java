@@ -1,8 +1,8 @@
 package sexy.tea.service;
 
-import sexy.tea.common.Result;
-import sexy.tea.dto.OrderDto;
 import sexy.tea.model.Order;
+import sexy.tea.model.common.Result;
+import sexy.tea.model.dto.OrderDto;
 
 import java.util.List;
 

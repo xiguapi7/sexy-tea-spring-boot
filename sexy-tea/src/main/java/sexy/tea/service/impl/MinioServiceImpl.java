@@ -6,7 +6,7 @@ import io.minio.messages.Item;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
-import sexy.tea.common.Result;
+import sexy.tea.model.common.Result;
 import sexy.tea.service.MinioService;
 import sexy.tea.utils.MinioUtils;
 

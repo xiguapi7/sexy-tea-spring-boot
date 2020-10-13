@@ -1,7 +1,7 @@
 package sexy.tea.service;
 
-import sexy.tea.common.Result;
 import sexy.tea.model.User;
+import sexy.tea.model.common.Result;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;

@@ -1,4 +1,4 @@
-package sexy.tea.common;
+package sexy.tea.model.common;
 
 import lombok.Builder;
 import lombok.Data;

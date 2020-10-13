@@ -1,7 +1,7 @@
 package sexy.tea.service;
 
-import sexy.tea.common.Result;
 import sexy.tea.model.City;
+import sexy.tea.model.common.Result;
 
 import java.util.List;
 

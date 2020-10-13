@@ -2,9 +2,9 @@ package sexy.tea.service.impl;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import sexy.tea.common.Result;
 import sexy.tea.mapper.StoreMapper;
 import sexy.tea.model.Store;
+import sexy.tea.model.common.Result;
 import sexy.tea.service.StoreService;
 import tk.mybatis.mapper.entity.Example;
 
