@@ -2,6 +2,7 @@ package sexy.tea.service;
 
 import sexy.tea.model.Food;
 import sexy.tea.model.common.Result;
+import sexy.tea.model.dto.MinioDto;
 
 import java.util.List;
 
@@ -11,7 +12,6 @@ import java.util.List;
  * description:
  */
 public interface FoodService {
-
 
     int updateBatch(List<Food> list);
 
@@ -23,5 +23,13 @@ public interface FoodService {
 
     int insertOrUpdateSelective(Food record);
 
-    Result find();
+    Result find(int pageNum, int pageSize);
+
+    Result findByPrimaryKey(Integer primaryKey);
+
+    Result saveOrUpdate(Food food);
+
+    Result uploadImage(MinioDto dto, String foodId);
+
+    Result delete(Integer id);
 }

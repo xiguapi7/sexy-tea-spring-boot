@@ -1,28 +1,26 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="sexy.tea.mapper.LoginLogMapper">
-  <resultMap id="BaseResultMap" type="sexy.tea.model.LoginLog">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
-    <!--@Table login_log-->
+<mapper namespace="sexy.tea.mapper.SysLogMapper">
+  <resultMap id="BaseResultMap" type="sexy.tea.model.SysLog">
+    <!--@mbg.generated generated on Tue Oct 13 18:00:18 CST 2020.-->
+    <!--@Table sys_log-->
     <id column="id" jdbcType="BIGINT" property="id" />
     <result column="uid" jdbcType="INTEGER" property="uid" />
     <result column="username" jdbcType="VARCHAR" property="username" />
     <result column="location" jdbcType="VARCHAR" property="location" />
     <result column="ip" jdbcType="VARCHAR" property="ip" />
     <result column="device" jdbcType="VARCHAR" property="device" />
+    <result column="operation" jdbcType="VARCHAR" property="operation" />
     <result column="operation_time" jdbcType="TIMESTAMP" property="operationTime" />
-    <result column="status" jdbcType="TINYINT" property="status" />
     <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
   </resultMap>
   <sql id="Base_Column_List">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
-    id, `uid`, username, `location`, ip, device, operation_time, `status`, create_time, 
-    update_time
+    <!--@mbg.generated generated on Tue Oct 13 18:00:18 CST 2020.-->
+    id, `uid`, username, `location`, ip, device, `operation`, operation_time, create_time
   </sql>
   <update id="updateBatch" parameterType="java.util.List">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
-    update login_log
+    <!--@mbg.generated generated on Tue Oct 13 18:00:18 CST 2020.-->
+    update sys_log
     <trim prefix="set" suffixOverrides=",">
       <trim prefix="`uid` = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
@@ -49,24 +47,19 @@
           when id = #{item.id,jdbcType=BIGINT} then #{item.device,jdbcType=VARCHAR}
         </foreach>
       </trim>
+      <trim prefix="`operation` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          when id = #{item.id,jdbcType=BIGINT} then #{item.operation,jdbcType=VARCHAR}
+        </foreach>
+      </trim>
       <trim prefix="operation_time = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           when id = #{item.id,jdbcType=BIGINT} then #{item.operationTime,jdbcType=TIMESTAMP}
         </foreach>
       </trim>
-      <trim prefix="`status` = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=BIGINT} then #{item.status,jdbcType=TINYINT}
-        </foreach>
-      </trim>
       <trim prefix="create_time = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           when id = #{item.id,jdbcType=BIGINT} then #{item.createTime,jdbcType=TIMESTAMP}
-        </foreach>
-      </trim>
-      <trim prefix="update_time = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
         </foreach>
       </trim>
     </trim>
@@ -76,8 +69,8 @@
     </foreach>
   </update>
   <update id="updateBatchSelective" parameterType="java.util.List">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
-    update login_log
+    <!--@mbg.generated generated on Tue Oct 13 18:00:18 CST 2020.-->
+    update sys_log
     <trim prefix="set" suffixOverrides=",">
       <trim prefix="`uid` = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
@@ -114,17 +107,17 @@
           </if>
         </foreach>
       </trim>
+      <trim prefix="`operation` = case" suffix="end,">
+        <foreach collection="list" index="index" item="item">
+          <if test="item.operation != null">
+            when id = #{item.id,jdbcType=BIGINT} then #{item.operation,jdbcType=VARCHAR}
+          </if>
+        </foreach>
+      </trim>
       <trim prefix="operation_time = case" suffix="end,">
         <foreach collection="list" index="index" item="item">
           <if test="item.operationTime != null">
             when id = #{item.id,jdbcType=BIGINT} then #{item.operationTime,jdbcType=TIMESTAMP}
-          </if>
-        </foreach>
-      </trim>
-      <trim prefix="`status` = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.status != null">
-            when id = #{item.id,jdbcType=BIGINT} then #{item.status,jdbcType=TINYINT}
           </if>
         </foreach>
       </trim>
@@ -135,13 +128,6 @@
           </if>
         </foreach>
       </trim>
-      <trim prefix="update_time = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.updateTime != null">
-            when id = #{item.id,jdbcType=BIGINT} then #{item.updateTime,jdbcType=TIMESTAMP}
-          </if>
-        </foreach>
-      </trim>
     </trim>
     where id in
     <foreach close=")" collection="list" item="item" open="(" separator=", ">
@@ -149,21 +135,21 @@
     </foreach>
   </update>
   <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
-    insert into login_log
-    (`uid`, username, `location`, ip, device, operation_time, `status`, create_time, 
-      update_time)
+    <!--@mbg.generated generated on Tue Oct 13 18:00:18 CST 2020.-->
+    insert into sys_log
+    (`uid`, username, `location`, ip, device, `operation`, operation_time, create_time
+      )
     values
     <foreach collection="list" item="item" separator=",">
       (#{item.uid,jdbcType=INTEGER}, #{item.username,jdbcType=VARCHAR}, #{item.location,jdbcType=VARCHAR}, 
-        #{item.ip,jdbcType=VARCHAR}, #{item.device,jdbcType=VARCHAR}, #{item.operationTime,jdbcType=TIMESTAMP}, 
-        #{item.status,jdbcType=TINYINT}, #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP}
+        #{item.ip,jdbcType=VARCHAR}, #{item.device,jdbcType=VARCHAR}, #{item.operation,jdbcType=VARCHAR}, 
+        #{item.operationTime,jdbcType=TIMESTAMP}, #{item.createTime,jdbcType=TIMESTAMP}
         )
     </foreach>
   </insert>
-  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.LoginLog" useGeneratedKeys="true">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
-    insert into login_log
+  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.SysLog" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Oct 13 18:00:18 CST 2020.-->
+    insert into sys_log
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -173,10 +159,9 @@
       `location`,
       ip,
       device,
+      `operation`,
       operation_time,
-      `status`,
       create_time,
-      update_time,
     </trim>
     values
     <trim prefix="(" suffix=")" suffixOverrides=",">
@@ -188,10 +173,9 @@
       #{location,jdbcType=VARCHAR},
       #{ip,jdbcType=VARCHAR},
       #{device,jdbcType=VARCHAR},
+      #{operation,jdbcType=VARCHAR},
       #{operationTime,jdbcType=TIMESTAMP},
-      #{status,jdbcType=TINYINT},
       #{createTime,jdbcType=TIMESTAMP},
-      #{updateTime,jdbcType=TIMESTAMP},
     </trim>
     on duplicate key update 
     <trim suffixOverrides=",">
@@ -203,15 +187,14 @@
       `location` = #{location,jdbcType=VARCHAR},
       ip = #{ip,jdbcType=VARCHAR},
       device = #{device,jdbcType=VARCHAR},
+      `operation` = #{operation,jdbcType=VARCHAR},
       operation_time = #{operationTime,jdbcType=TIMESTAMP},
-      `status` = #{status,jdbcType=TINYINT},
       create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
     </trim>
   </insert>
-  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.LoginLog" useGeneratedKeys="true">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
-    insert into login_log
+  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.SysLog" useGeneratedKeys="true">
+    <!--@mbg.generated generated on Tue Oct 13 18:00:18 CST 2020.-->
+    insert into sys_log
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="id != null">
         id,
@@ -231,17 +214,14 @@
       <if test="device != null">
         device,
       </if>
+      <if test="operation != null">
+        `operation`,
+      </if>
       <if test="operationTime != null">
         operation_time,
       </if>
-      <if test="status != null">
-        `status`,
-      </if>
       <if test="createTime != null">
         create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
       </if>
     </trim>
     values
@@ -264,17 +244,14 @@
       <if test="device != null">
         #{device,jdbcType=VARCHAR},
       </if>
+      <if test="operation != null">
+        #{operation,jdbcType=VARCHAR},
+      </if>
       <if test="operationTime != null">
         #{operationTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
       <if test="createTime != null">
         #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
     on duplicate key update 
@@ -297,17 +274,14 @@
       <if test="device != null">
         device = #{device,jdbcType=VARCHAR},
       </if>
+      <if test="operation != null">
+        `operation` = #{operation,jdbcType=VARCHAR},
+      </if>
       <if test="operationTime != null">
         operation_time = #{operationTime,jdbcType=TIMESTAMP},
       </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=TINYINT},
-      </if>
       <if test="createTime != null">
         create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
       </if>
     </trim>
   </insert>

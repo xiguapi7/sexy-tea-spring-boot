@@ -2,6 +2,7 @@ package sexy.tea.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import sexy.tea.model.common.Result;
@@ -23,8 +24,13 @@ public class CityController {
         this.service = service;
     }
 
-    @GetMapping("/items")
-    public Result items() {
-        return service.find();
+    @GetMapping("/items/{pageNum}/{pageSize}")
+    public Result items(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
+        return service.find(pageNum, pageSize);
+    }
+
+    @GetMapping("/itemByCityName/{cityName}")
+    public Result itemByCityName(@PathVariable String cityName) {
+        return service.findByCityName(cityName);
     }
 }

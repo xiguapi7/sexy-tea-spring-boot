@@ -1,7 +1,9 @@
 package sexy.tea.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 import sexy.tea.mapper.StoreMapper;
 import sexy.tea.model.Store;
 import sexy.tea.model.common.Result;
@@ -51,11 +53,25 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public Result find() {
-
+    public Result find(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(Store.class).build();
         example.createCriteria().andEqualTo("status", 1);
+        List<Store> storeList = storeMapper.selectByExample(example);
+        return Result.success(storeList);
+    }
 
+    @Override
+    public Result findByCityName(String cityName) {
+        if (StringUtils.isEmpty(cityName)) {
+            return Result.business("参数错误, cityName: " + cityName);
+        }
+
+        Example example = Example.builder(Store.class)
+                .build();
+        example.createCriteria()
+                .andEqualTo("city", cityName)
+                .andEqualTo("status", 1);
         List<Store> storeList = storeMapper.selectByExample(example);
         return Result.success(storeList);
     }

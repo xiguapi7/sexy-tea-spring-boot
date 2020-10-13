@@ -1,4 +1,4 @@
-package sexy.tea.vo;
+package sexy.tea.model.vo;
 
 import lombok.AllArgsConstructor;
 import lombok.Builder;

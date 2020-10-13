@@ -1,4 +1,4 @@
-package sexy.tea.constant;
+package sexy.tea.model.constant;
 
 /**
  * 响应结果常量类

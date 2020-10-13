@@ -1,5 +1,6 @@
 package sexy.tea.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sexy.tea.mapper.CityMapper;
@@ -51,10 +52,20 @@ public class CityServiceImpl implements CityService {
     }
 
     @Override
-    public Result find() {
-
+    public Result find(int pageNum, int pageSize) {
+        PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(City.class).build();
         example.createCriteria().andEqualTo("status", 1);
+        List<City> cityList = cityMapper.selectByExample(example);
+        return Result.success(cityList);
+    }
+
+    @Override
+    public Result findByCityName(String cityName) {
+        Example example = Example.builder(City.class).build();
+        example.createCriteria()
+                .andEqualTo("city", cityName)
+                .andEqualTo("status", 1);
         List<City> cityList = cityMapper.selectByExample(example);
         return Result.success(cityList);
     }

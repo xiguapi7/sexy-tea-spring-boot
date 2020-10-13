@@ -14,8 +14,8 @@ import org.springframework.util.StringUtils;
 import sexy.tea.mapper.UserMapper;
 import sexy.tea.model.User;
 import sexy.tea.model.common.Result;
+import sexy.tea.model.vo.UserVO;
 import sexy.tea.service.UserService;
-import sexy.tea.vo.UserVO;
 import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpSession;

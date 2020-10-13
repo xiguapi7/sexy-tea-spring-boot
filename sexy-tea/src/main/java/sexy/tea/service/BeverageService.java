@@ -2,6 +2,7 @@ package sexy.tea.service;
 
 import sexy.tea.model.Beverage;
 import sexy.tea.model.common.Result;
+import sexy.tea.model.dto.MinioDto;
 
 import java.util.List;
 
@@ -25,4 +26,10 @@ public interface BeverageService {
     Result find(int pageNum, int pageSize);
 
     Result findByPrimaryKey(Integer primaryKey);
+
+    Result saveOrUpdate(Beverage beverage);
+
+    Result uploadImage(MinioDto dto, String beverageId);
+
+    Result delete(Integer id);
 }

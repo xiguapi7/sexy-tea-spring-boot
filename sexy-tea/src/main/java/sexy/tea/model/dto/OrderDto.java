@@ -5,7 +5,7 @@ import lombok.Data;
 import sexy.tea.model.Order;
 import sexy.tea.model.OrderGoods;
 import sexy.tea.model.OrderShipping;
-import sexy.tea.vo.UserVO;
+import sexy.tea.model.vo.UserVO;
 
 import java.util.List;
 

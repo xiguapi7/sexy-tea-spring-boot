@@ -82,3 +82,4 @@ login:
     timeout: 3600
 minio:
   prefix: http://127.0.0.1:9000/images/
+  defaultBucketName: images

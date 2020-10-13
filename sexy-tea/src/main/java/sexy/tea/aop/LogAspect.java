@@ -6,11 +6,9 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 import sexy.tea.annotations.Log;
-import sexy.tea.mapper.LoginLogMapper;
 
 import java.lang.reflect.Method;
 
@@ -25,13 +23,6 @@ import java.lang.reflect.Method;
 @Component
 @Slf4j
 public class LogAspect {
-
-    private final LoginLogMapper loginLogMapper;
-
-    @Autowired
-    public LogAspect(LoginLogMapper loginLogMapper) {
-        this.loginLogMapper = loginLogMapper;
-    }
 
     @Pointcut("@annotation(sexy.tea.annotations.Log)")
     public void pointCut() {

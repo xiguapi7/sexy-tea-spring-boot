@@ -23,5 +23,7 @@ public interface CityService {
 
     int insertOrUpdateSelective(City record);
 
-    Result find();
+    Result find(int pageNum, int pageSize);
+
+    Result findByCityName(String cityName);
 }

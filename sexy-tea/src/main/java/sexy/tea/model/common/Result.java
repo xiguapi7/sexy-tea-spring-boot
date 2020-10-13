@@ -2,7 +2,7 @@ package sexy.tea.model.common;
 
 import lombok.Builder;
 import lombok.Data;
-import sexy.tea.constant.ResultConstant;
+import sexy.tea.model.constant.ResultConstant;
 
 import java.io.Serializable;
 import java.util.Optional;

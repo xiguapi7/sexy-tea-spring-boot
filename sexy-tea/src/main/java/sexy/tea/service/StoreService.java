@@ -23,5 +23,7 @@ public interface StoreService {
 
     int insertOrUpdateSelective(Store record);
 
-    Result find();
+    Result find(int pageNum, int pageSize);
+
+    Result findByCityName(String cityName);
 }
