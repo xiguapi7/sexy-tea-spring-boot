@@ -77,6 +77,13 @@
             <version>RELEASE</version>
         </dependency>-->
 
+        <!--mongo-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-data-mongodb</artifactId>
+        </dependency>
+
+
         <!--图片服务器minio支持-->
         <dependency>
             <groupId>io.minio</groupId>
