@@ -1,6 +1,7 @@
 package sexy.tea.service;
 
 import sexy.tea.model.Card;
+import sexy.tea.model.common.Result;
 
 import java.util.List;
 
@@ -10,7 +11,6 @@ import java.util.List;
  * description:
  */
 public interface CardService {
-
 
     int updateBatch(List<Card> list);
 
@@ -22,4 +22,13 @@ public interface CardService {
 
     int insertOrUpdateSelective(Card record);
 
+    Result createOrUpdate(Card card);
+
+    Result deleteById(Integer id);
+
+    Result selectByUid(Integer uid);
+
+    Result selectByCardName(String cardName);
+
+    Result selectByCardId(Integer id);
 }

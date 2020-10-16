@@ -22,4 +22,5 @@ public interface SysLogService{
 
     int insertOrUpdateSelective(SysLog record);
 
+    void insertLog(SysLog sysLog);
 }

@@ -6,9 +6,12 @@ import org.aspectj.lang.annotation.Around;
 import org.aspectj.lang.annotation.Aspect;
 import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.MethodSignature;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.LocalVariableTableParameterNameDiscoverer;
 import org.springframework.stereotype.Component;
 import sexy.tea.annotations.Log;
+import sexy.tea.model.SysLog;
+import sexy.tea.service.SysLogService;
 
 import java.lang.reflect.Method;
 
@@ -23,6 +26,13 @@ import java.lang.reflect.Method;
 @Component
 @Slf4j
 public class LogAspect {
+
+    private final SysLogService sysLogService;
+
+    @Autowired
+    public LogAspect(SysLogService sysLogService) {
+        this.sysLogService = sysLogService;
+    }
 
     @Pointcut("@annotation(sexy.tea.annotations.Log)")
     public void pointCut() {
@@ -56,13 +66,13 @@ public class LogAspect {
         MethodSignature signature = (MethodSignature) point.getSignature();
         Method method = signature.getMethod();
         Log logAnnotation = method.getAnnotation(Log.class);
-
+        String remark = "";
         if (logAnnotation != null) {
-            // TODO 填充注解上的描述, 并填充到实体中
-            String value = logAnnotation.value();
+            // 填充注解上的描述, 并填充到实体中
+            remark = logAnnotation.value();
         }
 
-        // TODO 获取请求的类名、方法名, 并填充到实体中
+        // 获取请求的类名、方法名, 并填充到实体中
         String className = point.getTarget().getClass().getName();
         String methodName = signature.getName();
 
@@ -70,17 +80,22 @@ public class LogAspect {
         Object[] args = point.getArgs();
         LocalVariableTableParameterNameDiscoverer discoverer = new LocalVariableTableParameterNameDiscoverer();
         String[] parameterNames = discoverer.getParameterNames(method);
+        String paramsStr = "";
         if (args != null && parameterNames != null) {
             StringBuilder params = new StringBuilder();
             for (int i = 0; i < args.length; i++) {
                 params.append("  ").append(parameterNames[i]).append(": ").append(args[i]);
             }
-            // TODO 保存参数字符串, 参数字符串格式如 username: root
-            String paramsStr = params.toString();
+            // 保存参数字符串, 参数字符串格式如 username: root
+            paramsStr = params.toString();
         }
 
-        // TODO 获取HTTP请求的地址、端口、方法等
-
-        // TODO 调用ORM将实体保存
+        // 实例化日志实体
+        SysLog sysLog = SysLog.builder()
+                .operation(className + "#" + methodName + "(" + paramsStr + ")")
+                .remark(remark)
+                .build();
+        sysLog.setOperationTime(time);
+        sysLogService.insertLog(sysLog);
     }
 }

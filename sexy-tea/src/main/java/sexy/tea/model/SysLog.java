@@ -10,7 +10,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
-import java.util.Date;
 
 /**
  *
@@ -35,32 +34,35 @@ public class SysLog implements Serializable {
     /**
      * 用户id
      */
-    @Column(name = "`uid`")
-    private Integer uid;
+    // @Column(name = "`uid`")
+    // private Integer uid;
 
     /**
      * 用户名字
      */
-    @Column(name = "username")
-    private String username;
+    // @Column(name = "username")
+    // private String username;
 
     /**
      * 登录地址
      */
-    @Column(name = "`location`")
-    private String location;
+    // @Column(name = "`location`")
+    // private String location;
 
     /**
      * IP地址
      */
-    @Column(name = "ip")
-    private String ip;
+    // @Column(name = "ip")
+    // private String ip;
 
     /**
      * 设备
      */
-    @Column(name = "device")
-    private String device;
+    // @Column(name = "device")
+    // private String device;
+
+    @Column(name = "`remark`")
+    private String remark;
 
     /**
      * 操作
@@ -72,13 +74,13 @@ public class SysLog implements Serializable {
      * 操作时间
      */
     @Column(name = "operation_time")
-    private Date operationTime;
+    private Long operationTime;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
-    private Date createTime;
+    private Long createTime;
 
     private static final long serialVersionUID = 1L;
 }

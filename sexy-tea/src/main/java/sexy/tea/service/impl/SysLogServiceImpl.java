@@ -1,6 +1,9 @@
 package sexy.tea.service.impl;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import sexy.tea.exception.BusinessException;
 import sexy.tea.mapper.SysLogMapper;
 import sexy.tea.model.SysLog;
 import sexy.tea.service.SysLogService;
@@ -14,6 +17,7 @@ import java.util.List;
  * description: 
  */
 @Service
+@Slf4j
 public class SysLogServiceImpl implements SysLogService{
 
     @Resource
@@ -44,4 +48,12 @@ public class SysLogServiceImpl implements SysLogService{
         return sysLogMapper.insertOrUpdateSelective(record);
     }
 
+    @Transactional(rollbackFor = BusinessException.class)
+    @Override
+    public void insertLog(SysLog sysLog) {
+        if (sysLog == null) {
+            log.info("日志记录异常.");
+        }
+        sysLogMapper.insert(sysLog);
+    }
 }
