@@ -35,7 +35,7 @@ public class Beverage implements Serializable {
      * 饮料编号
      */
     @Column(name = "beverage_id")
-    private Integer beverageId;
+    private String beverageId;
     /**
      * 饮料名称
      */

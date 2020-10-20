@@ -19,6 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * author 大大大西西瓜皮🍉
@@ -95,6 +96,7 @@ public class FoodServiceImpl implements FoodService {
         }
         if (food.getId() == null || food.getId() <= 0) {
             // 插入数据
+            food.setFoodId(UUID.randomUUID().toString().replace("-", ""));
             foodMapper.insert(food);
         } else {
             // 更新数据

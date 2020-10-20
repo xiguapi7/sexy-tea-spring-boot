@@ -9,7 +9,7 @@ import java.util.List;
  * date 18:00 2020-10-13
  * description: 
  */
-public interface SysLogService{
+public interface SysLogService {
 
 
     int updateBatch(List<SysLog> list);

@@ -7,6 +7,8 @@ import sexy.tea.model.Beverage;
 import java.util.List;
 
 /**
+ *
+ *
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
@@ -22,4 +24,6 @@ public interface BeverageMapper extends tk.mybatis.mapper.common.Mapper<Beverage
     int insertOrUpdate(Beverage record);
 
     int insertOrUpdateSelective(Beverage record);
+
+    List<Beverage> findByName(String name);
 }

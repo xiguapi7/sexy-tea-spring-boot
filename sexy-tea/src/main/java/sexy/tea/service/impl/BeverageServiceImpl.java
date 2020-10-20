@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import sexy.tea.exception.BusinessException;
 import sexy.tea.mapper.BeverageMapper;
 import sexy.tea.model.Beverage;
@@ -18,6 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * author 大大大西西瓜皮🍉
@@ -97,32 +99,35 @@ public class BeverageServiceImpl implements BeverageService {
         }
         if (beverage.getId() == null || beverage.getId() <= 0) {
             // 插入数据
-            beverageMapper.insert(beverage);
+            String beverageId = UUID.randomUUID().toString().replace("-", "");
+            // 生成随机的饮品ID
+            beverage.setBeverageId(beverageId);
+            beverageMapper.insertSelective(beverage);
         } else {
             // 更新数据
             beverageMapper.updateByPrimaryKeySelective(beverage);
         }
-        return Result.success(beverage.getBeverageId());
+        return Result.success(beverage);
     }
 
     @Override
-    public Result uploadImage(MinioDto dto, String beverageId) {
+    public Result uploadImage(MinioDto dto, String id) {
         // 根据 beverage_id 查询实体记录
         Example example = Example.builder(Beverage.class).build();
         example.createCriteria()
-                .andEqualTo("beverage_id", beverageId)
+                .andEqualTo("id", id)
                 .andEqualTo("status", 1);
         Beverage beverage = beverageMapper.selectOneByExample(example);
         // 校验
         if (beverage == null) {
-            return Result.business("参数错误, beverageId: " + beverageId);
+            return Result.business("参数错误, id: " + id);
         }
         // 饮料名称
         String beverageName = beverage.getBeverageName();
         // 图片
         try {
             InputStream is = dto.getFile().getInputStream();
-            MinioUtils.upload(defaultBucketName, beverageName, is, dto.getContentType());
+            MinioUtils.upload(defaultBucketName, beverageName + dto.getSuffix(), is, dto.getContentType());
         } catch (IOException e) {
             log.error("上传失败, 错误信息：{}", e.getMessage());
         }
@@ -142,5 +147,19 @@ public class BeverageServiceImpl implements BeverageService {
         }
         int row = beverageMapper.deleteByPrimaryKey(id);
         return Result.success("删除成功, 受影响的行数: " + row);
+    }
+
+    @Override
+    public Result findByName(String name, int pageNum, int pageSize) {
+        if (StringUtils.isEmpty(name)) {
+            return Result.business("参数错误");
+        }
+        name += "%";
+        PageHelper.startPage(pageNum, pageSize);
+        List<Beverage> beverage = beverageMapper.findByName(name);
+        if (beverage == null) {
+            return Result.business("查询的饮品不存在");
+        }
+        return Result.success(beverage);
     }
 }

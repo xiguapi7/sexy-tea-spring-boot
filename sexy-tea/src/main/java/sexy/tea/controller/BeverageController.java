@@ -2,16 +2,16 @@ package sexy.tea.controller;
 
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.multipart.MultipartHttpServletRequest;
 import sexy.tea.model.Beverage;
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.MinioDto;
 import sexy.tea.service.BeverageService;
+import sexy.tea.utils.UploadUtils;
 
 import javax.servlet.http.HttpServletRequest;
 
 /**
+ * 饮品控制器
+ *
  * @author 大大大西西瓜皮🍉
  * @date 15:15 2020-09-26
  * description:
@@ -37,6 +37,13 @@ public class BeverageController {
         return service.findByPrimaryKey(id);
     }
 
+    @GetMapping("/itemsByName/{name}/{pageNum}/{pageSize}")
+    public Result itemsByName(@PathVariable("name") String name,
+                              @PathVariable("pageNum") int pageNum,
+                              @PathVariable("pageSize") int pageSize) {
+        return service.findByName(name, pageNum, pageSize);
+    }
+
     @PostMapping("/save")
     public Result save(@RequestBody Beverage beverage) {
         return service.saveOrUpdate(beverage);
@@ -54,35 +61,6 @@ public class BeverageController {
 
     @PostMapping("/upload")
     public Result upload(HttpServletRequest request) {
-        // 转换为MultipartHttpServletRequest
-        if (request instanceof MultipartHttpServletRequest) {
-
-            MultipartHttpServletRequest multipartHttpServletRequest = (MultipartHttpServletRequest) request;
-            // 通过表单中的参数来接收文件流（可用 file.getInputStream() 来接收输入流）
-            MultipartFile file = multipartHttpServletRequest.getFile("file");
-            String originalFilename = file.getOriginalFilename();
-            long size = file.getSize();
-
-            log.info("上传文件的名称: {}", originalFilename);
-            log.info("上传文件的大小: {}", size);
-
-            String name = multipartHttpServletRequest.getParameter("name");
-            String content = multipartHttpServletRequest.getParameter("content");
-            // 获取饮料ID
-            String beverageId = multipartHttpServletRequest.getParameter("beverageId");
-
-            log.info("name: {}", name);
-            log.info("content: {}", content);
-
-            MinioDto dto = MinioDto.builder()
-                    .file(file)
-                    .contentType("application/octet-stream")
-                    .originFilename(originalFilename)
-                    .suffix("")
-                    .build();
-
-            return service.uploadImage(dto, beverageId);
-        }
-        return Result.business("上传失败.");
+        return UploadUtils.upload(request, service);
     }
 }

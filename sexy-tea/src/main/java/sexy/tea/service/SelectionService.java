@@ -2,7 +2,6 @@ package sexy.tea.service;
 
 import sexy.tea.model.Selection;
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.MinioDto;
 
 import java.util.List;
 
@@ -11,7 +10,7 @@ import java.util.List;
  * date 15:10 2020-09-26
  * description:
  */
-public interface SelectionService {
+public interface SelectionService extends UploadService {
 
 
     int updateBatch(List<Selection> list);
@@ -30,7 +29,9 @@ public interface SelectionService {
 
     Result saveOrUpdate(Selection selection);
 
-    Result uploadImage(MinioDto dto, String productId);
+    // Result uploadImage(MinioDto dto, String productId);
 
     Result delete(Integer id);
+
+    Result itemsByName(String name, int pageNum, int pageSize);
 }

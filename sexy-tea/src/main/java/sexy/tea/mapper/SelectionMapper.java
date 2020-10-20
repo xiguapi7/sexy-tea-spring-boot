@@ -22,4 +22,6 @@ public interface SelectionMapper extends tk.mybatis.mapper.common.Mapper<Selecti
     int insertOrUpdate(Selection record);
 
     int insertOrUpdateSelective(Selection record);
+
+    List<Selection> findByName(@Param("name") String name);
 }

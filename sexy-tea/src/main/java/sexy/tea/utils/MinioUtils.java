@@ -99,7 +99,7 @@ public class MinioUtils {
             client.putObject(PutObjectArgs.builder()
                     .bucket(bucketName)
                     .object(objectName)
-                    .stream(stream, stream.available(), 1)
+                    .stream(stream, stream.available(), 24 * 1024 * 1024)
                     .contentType(contentType)
                     .build());
 
@@ -132,7 +132,7 @@ public class MinioUtils {
      * @param is         输入流
      */
     public static void uploadImage(String bucketName, String objectName, InputStream is) {
-        upload(bucketName, objectName, is, "application/octet-stream");
+        upload(bucketName, objectName, is, "image/jpeg");
     }
 
     /**

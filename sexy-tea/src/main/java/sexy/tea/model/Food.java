@@ -35,7 +35,7 @@ public class Food implements Serializable {
      * 食品id
      */
     @Column(name = "food_id")
-    private Integer foodId;
+    private String foodId;
     /**
      * 食品名字
      */

@@ -21,6 +21,8 @@ import java.io.InputStream;
 import java.util.List;
 
 /**
+ * 商品接口实现类
+ *
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
@@ -108,7 +110,7 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         // 根据 product_id 查询实体记录
         Example example = Example.builder(Beverage.class).build();
         example.createCriteria()
-                .andEqualTo("productId", productId)
+                .andEqualTo("product_id", productId)
                 .andEqualTo("status", 1);
         Merchandise merchandise = merchandiseMapper.selectOneByExample(example);
         // 校验
@@ -116,15 +118,14 @@ public class MerchandiseServiceImpl implements MerchandiseService {
             return Result.business("参数错误, productId: " + productId);
         }
         // 精选商品名称
-        String productName = merchandise.getProductName();
-        // 图片
+        // String productName = merchandise.getProductName();
         try {
             InputStream is = dto.getFile().getInputStream();
-            MinioUtils.upload(defaultBucketName, productName, is, dto.getContentType());
+            MinioUtils.upload(defaultBucketName, productId + dto.getSuffix(), is, dto.getContentType());
         } catch (IOException e) {
             log.error("上传失败, 错误信息：{}", e.getMessage());
         }
-        String url = prefix + productName + dto.getSuffix();
+        String url = prefix + productId + dto.getSuffix();
         // 更新图片地址
         merchandise.setProductImage(url);
         merchandiseMapper.updateByPrimaryKey(merchandise);

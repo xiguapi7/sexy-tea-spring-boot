@@ -6,9 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import sexy.tea.exception.BusinessException;
 import sexy.tea.mapper.SelectionMapper;
-import sexy.tea.model.Beverage;
 import sexy.tea.model.Selection;
 import sexy.tea.model.common.Result;
 import sexy.tea.model.dto.MinioDto;
@@ -19,6 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * author 大大大西西瓜皮🍉
@@ -96,18 +97,19 @@ public class SelectionServiceImpl implements SelectionService {
         }
         if (selection.getId() == null || selection.getId() <= 0) {
             // 插入数据
-            selectionMapper.insert(selection);
+            selection.setProductId(UUID.randomUUID().toString().replace("-", ""));
+            selectionMapper.insertSelective(selection);
         } else {
             // 更新数据
             selectionMapper.updateByPrimaryKeySelective(selection);
         }
-        return Result.success(selection.getProductId());
+        return Result.success(selection);
     }
 
     @Override
     public Result uploadImage(MinioDto dto, String productId) {
         // 根据 product_id 查询实体记录
-        Example example = Example.builder(Beverage.class).build();
+        Example example = Example.builder(Selection.class).build();
         example.createCriteria()
                 .andEqualTo("productId", productId)
                 .andEqualTo("status", 1);
@@ -117,15 +119,15 @@ public class SelectionServiceImpl implements SelectionService {
             return Result.business("参数错误, productId: " + productId);
         }
         // 精选商品名称
-        String productName = selection.getProductName();
+        // String productName = selection.getProductName();
         // 图片
         try {
             InputStream is = dto.getFile().getInputStream();
-            MinioUtils.upload(defaultBucketName, productName, is, dto.getContentType());
+            MinioUtils.upload(defaultBucketName, productId + dto.getSuffix(), is, dto.getContentType());
         } catch (IOException e) {
             log.error("上传失败, 错误信息：{}", e.getMessage());
         }
-        String url = prefix + productName + dto.getSuffix();
+        String url = prefix + productId + dto.getSuffix();
         // 更新图片地址
         selection.setProductImage(url);
         selectionMapper.updateByPrimaryKey(selection);
@@ -141,5 +143,19 @@ public class SelectionServiceImpl implements SelectionService {
         }
         int row = selectionMapper.deleteByPrimaryKey(id);
         return Result.success("删除成功, 受影响的行数: " + row);
+    }
+
+    @Override
+    public Result itemsByName(String name, int pageNum, int pageSize) {
+        if (StringUtils.isEmpty(name)) {
+            return Result.business("参数错误");
+        }
+        name += "%";
+        PageHelper.startPage(pageNum, pageSize);
+        List<Selection> selections = selectionMapper.findByName(name);
+        if (selections == null) {
+            return Result.business("查询的饮品不存在");
+        }
+        return Result.success(selections);
     }
 }
