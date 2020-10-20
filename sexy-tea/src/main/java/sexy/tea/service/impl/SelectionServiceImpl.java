@@ -145,7 +145,7 @@ public class SelectionServiceImpl implements SelectionService {
     }
 
     @Override
-    public Result itemsByName(String name, int pageNum, int pageSize) {
+    public Result findByName(String name, int pageNum, int pageSize) {
         if (StringUtils.isEmpty(name)) {
             return Result.business("参数错误");
         }

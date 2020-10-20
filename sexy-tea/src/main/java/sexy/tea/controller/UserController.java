@@ -45,4 +45,14 @@ public class UserController {
     public Result logout(@PathVariable String loginSessionId) {
         return service.logout(loginSessionId);
     }
+
+    @GetMapping("/userList/{name}")
+    public Result userList(@PathVariable String name) {
+        return service.userList(name);
+    }
+
+    @DeleteMapping("/delete/{id}")
+    public Result delete(@PathVariable Integer id) {
+        return service.removeUser(id);
+    }
 }

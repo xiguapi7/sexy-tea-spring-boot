@@ -31,4 +31,10 @@ public interface UserService {
     Result login(User user, String role, HttpSession session);
 
     Result logout(String loginSessionId);
+
+    Result userList(String name);
+
+    Result removeUser(Integer id);
+
+    Result batchRemoveUser(List<Integer> ids);
 }

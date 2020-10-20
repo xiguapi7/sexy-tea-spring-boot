@@ -37,6 +37,13 @@ public class MerchandiseController {
         return service.findByPrimaryKey(id);
     }
 
+    @GetMapping("/itemsByName/{name}/{pageNum}/{pageSize}")
+    public Result itemsByName(@PathVariable("name") String name,
+                              @PathVariable("pageNum") int pageNum,
+                              @PathVariable("pageSize") int pageSize) {
+        return service.findByName(name, pageNum, pageSize);
+    }
+
     @PostMapping("/save")
     public Result save(@RequestBody Merchandise merchandise) {
         return service.saveOrUpdate(merchandise);

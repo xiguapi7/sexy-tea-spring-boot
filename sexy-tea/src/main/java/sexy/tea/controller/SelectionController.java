@@ -39,7 +39,7 @@ public class SelectionController {
 
     @GetMapping("/itemsByName/{name}/{pageNum}/{pageSize}")
     public Result itemsByName(@PathVariable String name, @PathVariable int pageNum, @PathVariable int pageSize) {
-        return service.itemsByName(name, pageNum, pageSize);
+        return service.findByName(name, pageNum, pageSize);
     }
 
     @PostMapping("/save")

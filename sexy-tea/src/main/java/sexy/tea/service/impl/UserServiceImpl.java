@@ -77,7 +77,12 @@ public class UserServiceImpl implements UserService {
 
         // md5加密
         user.setPassword(SecureUtil.md5(user.getPassword()));
-        user.setRole("user");
+        if (user.getRole() == null) {
+            user.setRole("user");
+        }
+        if (user.getNickname() == null) {
+            user.setNickname(user.getUsername());
+        }
 
         Example example = Example.builder(User.class).build();
         example.createCriteria().andEqualTo("username", user.getUsername());
@@ -149,5 +154,39 @@ public class UserServiceImpl implements UserService {
         }
         template.delete(key);
         return Result.success("登出成功!");
+    }
+
+    @Override
+    public Result userList(String name) {
+        Example example = Example.builder(User.class).build();
+        if (StringUtils.isEmpty(name)) {
+            example.createCriteria()
+                    .andEqualTo("status", 1);
+        } else {
+            example.createCriteria()
+                    .andEqualTo("status", 1)
+                    .andEqualTo("name", name);
+        }
+        return Result.success(userMapper.selectByExample(example));
+    }
+
+    @Override
+    public Result removeUser(Integer id) {
+        if (id == null || id <=0) {
+            return Result.business("参数错误");
+        }
+        User user = userMapper.selectByPrimaryKey(id);
+        if (user == null || user.getId() == null) {
+            return Result.business("参数错误");
+        }
+        user.setStatus(-1);
+        userMapper.updateByPrimaryKey(user);
+        return Result.success("删除成功");
+    }
+
+    @Override
+    public Result batchRemoveUser(List<Integer> ids) {
+        ids.forEach(this::removeUser);
+        return Result.success("批量删除成功");
     }
 }
