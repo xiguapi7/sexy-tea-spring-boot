@@ -120,7 +120,7 @@ public class OrderServiceImpl implements OrderService {
         orderShipping.setOrderId(orderId);
 
         // 返回OrderId
-        return Result.success(orderId);
+        return Result.success("创建订单号", orderId);
     }
 }
 

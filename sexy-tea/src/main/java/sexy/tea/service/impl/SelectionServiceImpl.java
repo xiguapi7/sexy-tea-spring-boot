@@ -19,6 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -76,7 +77,7 @@ public class SelectionServiceImpl implements SelectionService {
         example.createCriteria().andEqualTo("status", 1);
 
         List<Selection> selectionList = selectionMapper.selectByExample(example);
-        return Result.success(selectionList);
+        return Result.success("列表查询", selectionList);
     }
 
     @Override
@@ -85,7 +86,7 @@ public class SelectionServiceImpl implements SelectionService {
         if (selection == null || primaryKey <= 0) {
             return Result.notFound();
         }
-        return Result.success(selection);
+        return Result.success("主键: " + primaryKey, selection);
     }
 
     @Transactional(rollbackFor = BusinessException.class)
@@ -93,7 +94,7 @@ public class SelectionServiceImpl implements SelectionService {
     public Result saveOrUpdate(Selection selection) {
         if (selection == null) {
             // 异常
-            return Result.business("参数异常!");
+            return Result.business("参数异常!", Optional.empty());
         }
         if (selection.getId() == null || selection.getId() <= 0) {
             // 插入数据
@@ -103,7 +104,7 @@ public class SelectionServiceImpl implements SelectionService {
             // 更新数据
             selectionMapper.updateByPrimaryKeySelective(selection);
         }
-        return Result.success(selection);
+        return Result.success("更改成功", selection);
     }
 
     @Override
@@ -116,7 +117,7 @@ public class SelectionServiceImpl implements SelectionService {
         Selection selection = selectionMapper.selectOneByExample(example);
         // 校验
         if (selection == null) {
-            return Result.business("参数错误, id: " + id);
+            return Result.business("参数错误, id: " + id, Optional.empty());
         }
         String name = selection.getProductId() + dto.getSuffix();
         // 图片
@@ -130,7 +131,7 @@ public class SelectionServiceImpl implements SelectionService {
         // 更新图片地址
         selection.setProductImage(url);
         selectionMapper.updateByPrimaryKey(selection);
-        return Result.success("图片上传成功, 地址为： " + url);
+        return Result.success("图片上传成功, 地址为： " + url, Optional.empty());
     }
 
     @Transactional(rollbackFor = BusinessException.class)
@@ -138,23 +139,23 @@ public class SelectionServiceImpl implements SelectionService {
     public Result delete(Integer id) {
         if (id == null || id <= 0) {
             // 校验
-            return Result.business("参数错误");
+            return Result.business("参数错误", Optional.empty());
         }
         int row = selectionMapper.deleteByPrimaryKey(id);
-        return Result.success("删除成功, 受影响的行数: " + row);
+        return Result.success("删除成功, 受影响的行数: " + row, Optional.empty());
     }
 
     @Override
     public Result findByName(String name, int pageNum, int pageSize) {
         if (StringUtils.isEmpty(name)) {
-            return Result.business("参数错误");
+            return Result.business("参数错误", Optional.empty());
         }
         name += "%";
         PageHelper.startPage(pageNum, pageSize);
         List<Selection> selections = selectionMapper.findByName(name);
         if (selections == null) {
-            return Result.business("查询的饮品不存在");
+            return Result.business("查询的饮品不存在", Optional.empty());
         }
-        return Result.success(selections);
+        return Result.success("关键词: " + name, selections);
     }
 }

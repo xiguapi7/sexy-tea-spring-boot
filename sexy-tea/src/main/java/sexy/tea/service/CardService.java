@@ -22,13 +22,13 @@ public interface CardService {
 
     int insertOrUpdateSelective(Card record);
 
-    Result createOrUpdate(Card card);
+    Result saveOrUpdate(Card card);
 
     Result deleteById(Integer id);
 
-    Result selectByUid(Integer uid);
+    Result findByUid(Integer uid);
 
-    Result selectByCardName(String cardName);
+    Result findByCardName(String cardName);
 
-    Result selectByCardId(Integer id);
+    Result findByCardId(Integer id);
 }

@@ -11,6 +11,7 @@ import sexy.tea.service.StoreService;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * author 大大大西西瓜皮🍉
@@ -58,13 +59,13 @@ public class StoreServiceImpl implements StoreService {
         Example example = Example.builder(Store.class).build();
         example.createCriteria().andEqualTo("status", 1);
         List<Store> storeList = storeMapper.selectByExample(example);
-        return Result.success(storeList);
+        return Result.success("列表查询", storeList);
     }
 
     @Override
     public Result findByCityName(String cityName) {
         if (StringUtils.isEmpty(cityName)) {
-            return Result.business("参数错误, cityName: " + cityName);
+            return Result.business("参数错误, cityName: " + cityName, Optional.empty());
         }
 
         Example example = Example.builder(Store.class)
@@ -73,6 +74,6 @@ public class StoreServiceImpl implements StoreService {
                 .andEqualTo("city", cityName)
                 .andEqualTo("status", 1);
         List<Store> storeList = storeMapper.selectByExample(example);
-        return Result.success(storeList);
+        return Result.success("关键词:" + cityName, storeList);
     }
 }

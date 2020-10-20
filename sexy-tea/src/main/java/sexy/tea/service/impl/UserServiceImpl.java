@@ -20,6 +20,7 @@ import tk.mybatis.mapper.entity.Example;
 
 import javax.servlet.http.HttpSession;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.TimeUnit;
 
 /**
@@ -88,33 +89,33 @@ public class UserServiceImpl implements UserService {
         example.createCriteria().andEqualTo("username", user.getUsername());
         User res = userMapper.selectOneByExample(example);
         if (res != null) {
-            return Result.business("用户名已存在！");
+            return Result.business("用户名已存在！", Optional.empty());
         }
         // 注册
         userMapper.insertSelective(user);
-        return Result.success("注册成功");
+        return Result.success("注册成功", Optional.empty());
     }
 
     @Override
     public Result checkLogin(String loginSessionId) {
         if (StringUtils.isEmpty(loginSessionId)) {
-            return Result.business("loginSessionId不能为空!");
+            return Result.business("loginSessionId不能为空!", Optional.empty());
         }
 
         String key = prefix + loginSessionId;
         ValueOperations<String, String> operations = template.opsForValue();
         String userVOJSONString = operations.get(key);
         if (StringUtils.isEmpty(userVOJSONString)) {
-            return Result.notLogin("用户未登录!");
+            return Result.notLogin("用户未登录!", Optional.empty());
         }
-        return Result.success(userVOJSONString);
+        return Result.success("用户已登录", userVOJSONString);
     }
 
     @Override
     public Result login(User user, String role, HttpSession session) {
 
         if (StringUtils.isEmpty(user.getUsername()) || StringUtils.isEmpty(user.getPassword())) {
-            return Result.argumentError("用户名或密码不能为空");
+            return Result.argumentError("用户名或密码不能为空", Optional.empty());
         }
 
         Example example = Example.builder(User.class).build();
@@ -124,8 +125,8 @@ public class UserServiceImpl implements UserService {
                 .andEqualTo("role", role)
                 .andEqualTo("status", 1);
         user = userMapper.selectOneByExample(example);
-        if (user.getId() == null) {
-            return Result.business("用户验证失败，请检查用户名和密码是否正确！");
+        if (user == null || user.getId() == null) {
+            return Result.business("用户验证失败，请检查用户名和密码是否正确！", Optional.empty());
         }
         UserVO userVO = new UserVO();
         BeanUtils.copyProperties(user, userVO);
@@ -140,7 +141,7 @@ public class UserServiceImpl implements UserService {
             log.error("UserVO-JSON转换异常, " + e.getMessage());
         }
 
-        return Result.success(userVO);
+        return Result.success("登录成功", userVO);
     }
 
     @Override
@@ -150,10 +151,10 @@ public class UserServiceImpl implements UserService {
         ValueOperations<String, String> operations = template.opsForValue();
         String userVOJSONString = operations.get(key);
         if (StringUtils.isEmpty(userVOJSONString)) {
-            return Result.business("登出异常!传入loginSessionId不存在.");
+            return Result.business("登出异常!传入loginSessionId不存在.", Optional.empty());
         }
         template.delete(key);
-        return Result.success("登出成功!");
+        return Result.success("登出成功!", Optional.empty());
     }
 
     @Override
@@ -167,26 +168,26 @@ public class UserServiceImpl implements UserService {
                     .andEqualTo("status", 1)
                     .andEqualTo("name", name);
         }
-        return Result.success(userMapper.selectByExample(example));
+        return Result.success("用户列表查询", userMapper.selectByExample(example));
     }
 
     @Override
     public Result removeUser(Integer id) {
-        if (id == null || id <=0) {
-            return Result.business("参数错误");
+        if (id == null || id <= 0) {
+            return Result.business("参数错误", Optional.empty());
         }
         User user = userMapper.selectByPrimaryKey(id);
         if (user == null || user.getId() == null) {
-            return Result.business("参数错误");
+            return Result.business("参数错误", Optional.empty());
         }
         user.setStatus(-1);
         userMapper.updateByPrimaryKey(user);
-        return Result.success("删除成功");
+        return Result.success("删除成功", Optional.empty());
     }
 
     @Override
     public Result batchRemoveUser(List<Integer> ids) {
         ids.forEach(this::removeUser);
-        return Result.success("批量删除成功");
+        return Result.success("批量删除成功", Optional.empty());
     }
 }

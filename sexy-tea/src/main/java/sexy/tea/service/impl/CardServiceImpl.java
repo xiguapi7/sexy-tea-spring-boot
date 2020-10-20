@@ -12,6 +12,7 @@ import sexy.tea.service.CardService;
 import tk.mybatis.mapper.entity.Example;
 
 import java.util.List;
+import java.util.Optional;
 
 /**
  * author 大大大西西瓜皮🍉
@@ -55,49 +56,49 @@ public class CardServiceImpl implements CardService {
 
     @Transactional(rollbackFor = BusinessException.class)
     @Override
-    public Result createOrUpdate(Card card) {
+    public Result saveOrUpdate(Card card) {
         if (card == null || card.getUid() == null || card.getUid() <= 0) {
-            return Result.business("参数错误");
+            return Result.business("参数错误", Optional.empty());
         }
         cardMapper.insertOrUpdateSelective(card);
-        return Result.success(card);
+        return Result.success("更改成功", card);
     }
 
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result deleteById(Integer id) {
-        if (id == null || id <=0) {
-            return Result.business("参数错误");
+        if (id == null || id <= 0) {
+            return Result.business("参数错误", Optional.empty());
         }
         int row = cardMapper.deleteByPrimaryKey(id);
-        return row <= 0 ? Result.business("注销星礼卡失败") : Result.success("注销星礼卡成功");
+        return row <= 0 ? Result.business("注销星礼卡失败", Optional.empty()) : Result.success("注销星礼卡成功", Optional.empty());
     }
 
     @Override
-    public Result selectByUid(Integer uid) {
-        if (uid == null || uid <=0 ) {
-            return Result.business("参数错误");
+    public Result findByUid(Integer uid) {
+        if (uid == null || uid <= 0) {
+            return Result.business("参数错误", Optional.empty());
         }
         Example example = Example.builder(Card.class).build();
         example.createCriteria().andEqualTo("status", 1).andEqualTo("uid", uid);
-        return Result.success(cardMapper.selectByExample(example));
+        return Result.success("uid: " + uid, cardMapper.selectByExample(example));
     }
 
     @Override
-    public Result selectByCardName(String cardName) {
+    public Result findByCardName(String cardName) {
         if (StringUtils.isEmpty(cardName)) {
-            return Result.business("参数错误");
+            return Result.business("参数错误", Optional.empty());
         }
         Example example = Example.builder(Card.class).build();
         example.createCriteria().andEqualTo("status", 1).andEqualTo("card_name", cardName);
-        return Result.success(cardMapper.selectByExample(example));
+        return Result.success("关键词: " + cardName, cardMapper.selectByExample(example));
     }
 
     @Override
-    public Result selectByCardId(Integer id) {
-        if (id == null || id <=0 ) {
-            return Result.business("参数错误");
+    public Result findByCardId(Integer cardId) {
+        if (cardId == null || cardId <= 0) {
+            return Result.business("参数错误", Optional.empty());
         }
-        return Result.success(cardMapper.selectByPrimaryKey(id));
+        return Result.success("cardId: " + cardId, cardMapper.selectByPrimaryKey(cardId));
     }
 }

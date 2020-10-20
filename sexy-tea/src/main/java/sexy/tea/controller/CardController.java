@@ -24,26 +24,26 @@ public class CardController {
 
     @GetMapping("/selectById/{id}")
     public Result selectById(@PathVariable Integer id) {
-        return service.selectByCardId(id);
+        return service.findByCardId(id);
     }
 
     @GetMapping("/selectByUid/{uid}")
     public Result selectByUid(@PathVariable Integer uid) {
-        return service.selectByUid(uid);
+        return service.findByUid(uid);
     }
 
     @GetMapping("/selectByCardName/{cardName}")
     public Result selectByCardName(@PathVariable String cardName) {
-        return service.selectByCardName(cardName);
+        return service.findByCardName(cardName);
     }
 
     @PostMapping("/save")
     public Result save(@RequestBody Card card) {
-        return service.createOrUpdate(card);
+        return service.saveOrUpdate(card);
     }
 
     @PutMapping("/update")
     public Result update(@RequestBody Card card) {
-        return service.createOrUpdate(card);
+        return service.saveOrUpdate(card);
     }
 }

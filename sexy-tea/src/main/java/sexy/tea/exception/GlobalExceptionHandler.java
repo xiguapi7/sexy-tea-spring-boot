@@ -27,7 +27,7 @@ public class GlobalExceptionHandler {
         if (e instanceof BusinessException) {
             log.error("业务异常：" + e.getMessage(), this.getClass());
             BusinessException businessException = (BusinessException) e;
-            return Result.business(businessException.getMessage());
+            return Result.business("业务异常：" + e.getMessage(), businessException.getMessage());
         }
         //未知错误
         return Result.result(-10, "系统异常：\\n" + e, request.getRequestURL().toString());

@@ -20,6 +20,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * 商品接口实现类
@@ -77,7 +78,7 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         example.createCriteria().andEqualTo("status", 1);
 
         List<Merchandise> merchandiseList = merchandiseMapper.selectByExample(example);
-        return Result.success(merchandiseList);
+        return Result.success("查询商品", merchandiseList);
     }
 
     @Override
@@ -86,7 +87,7 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         if (merchandise == null || primaryKey <= 0) {
             return Result.notFound();
         }
-        return Result.success(merchandise);
+        return Result.success("主键: " + primaryKey, merchandise);
     }
 
     @Transactional(rollbackFor = BusinessException.class)
@@ -94,7 +95,7 @@ public class MerchandiseServiceImpl implements MerchandiseService {
     public Result saveOrUpdate(Merchandise merchandise) {
         if (merchandise == null) {
             // 异常
-            return Result.business("参数异常!");
+            return Result.business("参数异常!", Optional.empty());
         }
         if (merchandise.getId() == null || merchandise.getId() <= 0) {
             // 插入数据
@@ -103,7 +104,7 @@ public class MerchandiseServiceImpl implements MerchandiseService {
             // 更新数据
             merchandiseMapper.updateByPrimaryKeySelective(merchandise);
         }
-        return Result.success(merchandise.getProductId());
+        return Result.success("更改成功", merchandise.getProductId());
     }
 
     @Override
@@ -116,7 +117,7 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         Merchandise merchandise = merchandiseMapper.selectOneByExample(example);
         // 校验
         if (merchandise == null) {
-            return Result.business("参数错误, id: " + id);
+            return Result.business("参数错误, id: " + id, Optional.empty());
         }
         String name = merchandise.getProductId() + dto.getSuffix();
         try {
@@ -129,7 +130,7 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         // 更新图片地址
         merchandise.setProductImage(url);
         merchandiseMapper.updateByPrimaryKey(merchandise);
-        return Result.success("图片上传成功, 地址为： " + url);
+        return Result.success("图片上传成功, 地址为： " + url, Optional.empty());
     }
 
     @Transactional(rollbackFor = BusinessException.class)
@@ -137,23 +138,23 @@ public class MerchandiseServiceImpl implements MerchandiseService {
     public Result delete(Integer id) {
         if (id == null || id <= 0) {
             // 校验
-            return Result.business("参数错误");
+            return Result.business("参数错误", Optional.empty());
         }
         int row = merchandiseMapper.deleteByPrimaryKey(id);
-        return Result.success("删除成功, 受影响的行数: " + row);
+        return Result.success("删除成功, 受影响的行数: " + row, Optional.empty());
     }
 
     @Override
     public Result findByName(String name, int pageNum, int pageSize) {
         if (StringUtils.isEmpty(name)) {
-            return Result.business("参数错误");
+            return Result.business("参数错误", Optional.empty());
         }
         name = "%" + name + "%";
         PageHelper.startPage(pageNum, pageSize);
         List<Merchandise> merchandiseList = merchandiseMapper.findByName(name);
         if (merchandiseList == null) {
-            return Result.business("查询的食品不存在");
+            return Result.business("查询的食品不存在", Optional.empty());
         }
-        return Result.success(merchandiseList);
+        return Result.success("关键词:" + name, merchandiseList);
     }
 }

@@ -19,6 +19,7 @@ import tk.mybatis.mapper.entity.Example;
 import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 /**
@@ -76,7 +77,7 @@ public class BeverageServiceImpl implements BeverageService {
         example.createCriteria().andEqualTo("status", 1);
 
         List<Beverage> beverageList = beverageMapper.selectByExample(example);
-        return Result.success(beverageList);
+        return Result.success("饮品查询", beverageList);
     }
 
     @Override
@@ -87,7 +88,7 @@ public class BeverageServiceImpl implements BeverageService {
         if (beverage == null || primaryKey <= 0) {
             return Result.notFound();
         }
-        return Result.success(beverage);
+        return Result.success("主键查询饮品", beverage);
     }
 
     @Transactional(rollbackFor = BusinessException.class)
@@ -95,7 +96,7 @@ public class BeverageServiceImpl implements BeverageService {
     public Result saveOrUpdate(Beverage beverage) {
         if (beverage == null) {
             // 异常
-            return Result.business("参数异常!");
+            return Result.business("参数异常!", Optional.empty());
         }
         if (beverage.getId() == null || beverage.getId() <= 0) {
             // 插入数据
@@ -107,7 +108,7 @@ public class BeverageServiceImpl implements BeverageService {
             // 更新数据
             beverageMapper.updateByPrimaryKeySelective(beverage);
         }
-        return Result.success(beverage);
+        return Result.success("更改成功", beverage);
     }
 
     @Override
@@ -120,7 +121,7 @@ public class BeverageServiceImpl implements BeverageService {
         Beverage beverage = beverageMapper.selectOneByExample(example);
         // 校验
         if (beverage == null) {
-            return Result.business("参数错误, id: " + id);
+            return Result.business("参数错误, id: " + id, Optional.empty());
         }
         String name = beverage.getBeverageId() + dto.getSuffix();
         // 图片
@@ -134,7 +135,7 @@ public class BeverageServiceImpl implements BeverageService {
         // 更新图片地址
         beverage.setBeverageImage(url);
         beverageMapper.updateByPrimaryKey(beverage);
-        return Result.success("图片上传成功, 地址为： " + url);
+        return Result.success("图片上传成功, 地址为： " + url, Optional.empty());
     }
 
     @Transactional(rollbackFor = BusinessException.class)
@@ -142,24 +143,24 @@ public class BeverageServiceImpl implements BeverageService {
     public Result delete(Integer id) {
         if (id == null || id <= 0) {
             // 校验
-            return Result.business("参数错误");
+            return Result.business("参数错误", Optional.empty());
         }
         int row = beverageMapper.deleteByPrimaryKey(id);
-        return Result.success("删除成功, 受影响的行数: " + row);
+        return Result.success("删除成功, 受影响的行数: " + row, Optional.empty());
     }
 
     @Override
     public Result findByName(String name, int pageNum, int pageSize) {
         if (StringUtils.isEmpty(name)) {
-            return Result.business("参数错误");
+            return Result.business("参数错误", Optional.empty());
         }
         name = "%" + name + "%";
         PageHelper.startPage(pageNum, pageSize);
         List<Beverage> beverage = beverageMapper.findByName(name);
         if (beverage == null) {
-            return Result.business("查询的饮品不存在");
+            return Result.business("查询的饮品不存在", Optional.empty());
         }
-        return Result.success(beverage);
+        return Result.success("关键词: " + name, beverage);
     }
 
 

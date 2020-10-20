@@ -57,7 +57,7 @@ public class CityServiceImpl implements CityService {
         Example example = Example.builder(City.class).build();
         example.createCriteria().andEqualTo("status", 1);
         List<City> cityList = cityMapper.selectByExample(example);
-        return Result.success(cityList);
+        return Result.success("查询城市", cityList);
     }
 
     @Override
@@ -67,6 +67,6 @@ public class CityServiceImpl implements CityService {
                 .andEqualTo("city", cityName)
                 .andEqualTo("status", 1);
         List<City> cityList = cityMapper.selectByExample(example);
-        return Result.success(cityList);
+        return Result.success("关键词:" + cityName, cityList);
     }
 }

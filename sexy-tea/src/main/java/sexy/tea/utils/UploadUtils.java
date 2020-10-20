@@ -8,6 +8,7 @@ import sexy.tea.model.dto.MinioDto;
 import sexy.tea.service.UploadService;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.Optional;
 
 /**
  * @author 大大大西西瓜皮🍉
@@ -53,6 +54,6 @@ public class UploadUtils {
 
             return service.uploadImage(dto, id);
         }
-        return Result.business("上传失败.");
+        return Result.business("上传失败.", Optional.empty());
     }
 }

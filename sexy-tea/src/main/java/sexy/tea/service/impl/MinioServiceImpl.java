@@ -37,18 +37,18 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public Result statObject(String bucketName, String objectName) {
         ObjectStat stat = MinioUtils.statObject(bucketName, objectName);
-        return Result.success(stat);
+        return Result.success("获取对象信息, 桶: " + bucketName + ", 对象名称: " + objectName, stat);
     }
 
     @Override
     public Result listObjects(String bucketName, String prefix, boolean recursive) {
         // TODO 功能待测试
-        return Result.success(this.getList(MinioUtils.listObjects(bucketName, prefix, recursive)));
+        return Result.success("桶:" + bucketName + ", 前缀:" + prefix, this.getList(MinioUtils.listObjects(bucketName, prefix, recursive)));
     }
 
     @Override
     public Result listObjects(String bucketName) {
-        return Result.success(this.getList(MinioUtils.listObjects(bucketName)));
+        return Result.success("桶:" + bucketName, this.getList(MinioUtils.listObjects(bucketName)));
     }
 
     @Override
@@ -59,12 +59,12 @@ public class MinioServiceImpl implements MinioService {
 
     @Override
     public Result bucketExists(String bucketName) {
-        return Result.success(MinioUtils.bucketExists(bucketName));
+        return Result.success("桶:" + bucketName, MinioUtils.bucketExists(bucketName));
     }
 
     @Override
     public Result listBuckets() {
-        return Result.success(MinioUtils.listBuckets());
+        return Result.success("所有桶对象", MinioUtils.listBuckets());
     }
 
     @Override
@@ -82,19 +82,19 @@ public class MinioServiceImpl implements MinioService {
     @Override
     public Result uploadImage(String bucketName, String objectName, InputStream is) {
         MinioUtils.uploadImage(bucketName, objectName, is);
-        return Result.success(prefix + objectName);
+        return Result.success("上传图片, 桶: " + bucketName + ", 对象名称: " + objectName, prefix + objectName);
     }
 
     @Override
     public Result upload(String bucketName, String objectName, String fileName) {
         MinioUtils.upload(bucketName, objectName, fileName);
-        return Result.success(prefix + objectName);
+        return Result.success("上传文件, 桶: " + bucketName + ", 对象名称: " + objectName + ", 文件名称: " + fileName, prefix + objectName);
     }
 
     @Override
     public Result upload(String bucketName, String objectName, InputStream stream, String contentType) {
         MinioUtils.upload(bucketName, objectName, stream, contentType);
-        return Result.success(prefix + objectName);
+        return Result.success("上传文件, 桶: " + bucketName + ", 对象名称: " + objectName, prefix + objectName);
     }
 
     @Override

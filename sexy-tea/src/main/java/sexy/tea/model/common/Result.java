@@ -39,52 +39,68 @@ public class Result implements Serializable {
         return result(ResultConstant.SUCCESS, ResultConstant.SUCCESS_MSG, Optional.empty());
     }
 
-    public static Result success(Object data) {
-        return result(ResultConstant.SUCCESS, ResultConstant.SUCCESS_MSG, data);
+    public static Result success(String msg, Object data) {
+        return result(ResultConstant.SUCCESS, msg, data);
     }
 
-    public static Result notFound(Object data) {
-        return result(ResultConstant.NOT_FOUND, ResultConstant.NOT_FOUND_MSG, data);
+
+    public static Result notFound(String msg, Object data) {
+        return result(ResultConstant.NOT_FOUND, msg, data);
     }
 
     public static Result notFound() {
         return result(ResultConstant.NOT_FOUND, ResultConstant.NOT_FOUND_MSG, Optional.empty());
     }
 
-    public static Result serverError(Object data) {
-        return result(ResultConstant.SERVER_ERROR, ResultConstant.SERVER_ERROR_MSG, data);
+
+
+
+    public static Result serverError(String msg, Object data) {
+        return result(ResultConstant.SERVER_ERROR, msg, data);
     }
 
     public static Result serverError() {
         return result(ResultConstant.SERVER_ERROR, ResultConstant.SERVER_ERROR_MSG, Optional.empty());
     }
 
-    public static Result networkError(Object data) {
-        return result(ResultConstant.NETWORK_ERROR, ResultConstant.NETWORK_ERROR_MSG, data);
+
+
+
+    public static Result networkError(String msg, Object data) {
+        return result(ResultConstant.NETWORK_ERROR, msg, data);
     }
 
     public static Result networkError() {
         return result(ResultConstant.NETWORK_ERROR, ResultConstant.NETWORK_ERROR_MSG, Optional.empty());
     }
 
-    public static Result business(Object data) {
-        return result(ResultConstant.BUSINESS_EXCEPTION, ResultConstant.BUSINESS_EXCEPTION_MSG, data);
+
+
+
+    public static Result business(String msg, Object data) {
+        return result(ResultConstant.BUSINESS_EXCEPTION, msg, data);
     }
 
     public static Result business() {
         return result(ResultConstant.BUSINESS_EXCEPTION, ResultConstant.BUSINESS_EXCEPTION_MSG, Optional.empty());
     }
 
-    public static Result notLogin(Object data) {
-        return result(ResultConstant.NOT_LOGIN, ResultConstant.NOT_LOGIN_MSG, data);
+
+
+
+    public static Result notLogin(String msg, Object data) {
+        return result(ResultConstant.NOT_LOGIN, msg, data);
     }
 
     public static Result notLogin() {
         return result(ResultConstant.NOT_LOGIN, ResultConstant.NOT_LOGIN_MSG, Optional.empty());
     }
 
-    public static Result argumentError(Object data) {
-        return result(ResultConstant.ARGUMENT_ERROR, ResultConstant.ARGUMENT_ERROR_MSG, data);
+
+
+
+    public static Result argumentError(String msg, Object data) {
+        return result(ResultConstant.ARGUMENT_ERROR, msg, data);
     }
 
     public static Result argumentError() {
