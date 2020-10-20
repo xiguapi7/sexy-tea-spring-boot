@@ -284,4 +284,11 @@
       </if>
     </trim>
   </insert>
+
+    <select id="findByName" resultMap="BaseResultMap" parameterType="String">
+        SELECT *
+        FROM food
+        WHERE `status` = 1
+        AND food_name LIKE #{name}
+    </select>
 </mapper>

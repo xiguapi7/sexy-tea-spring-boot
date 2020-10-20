@@ -22,4 +22,6 @@ public interface MerchandiseMapper extends tk.mybatis.mapper.common.Mapper<Merch
     int insertOrUpdate(Merchandise record);
 
     int insertOrUpdateSelective(Merchandise record);
+
+    List<Merchandise> findByName(String name);
 }

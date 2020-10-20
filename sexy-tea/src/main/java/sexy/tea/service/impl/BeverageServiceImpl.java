@@ -122,16 +122,15 @@ public class BeverageServiceImpl implements BeverageService {
         if (beverage == null) {
             return Result.business("参数错误, id: " + id);
         }
-        // 饮料名称
-        String beverageName = beverage.getBeverageName();
+        String name = beverage.getBeverageId() + dto.getSuffix();
         // 图片
         try {
             InputStream is = dto.getFile().getInputStream();
-            MinioUtils.upload(defaultBucketName, beverageName + dto.getSuffix(), is, dto.getContentType());
+            MinioUtils.upload(defaultBucketName, name, is, dto.getContentType());
         } catch (IOException e) {
             log.error("上传失败, 错误信息：{}", e.getMessage());
         }
-        String url = prefix + beverageName + dto.getSuffix();
+        String url = prefix + name;
         // 更新图片地址
         beverage.setBeverageImage(url);
         beverageMapper.updateByPrimaryKey(beverage);
@@ -154,7 +153,7 @@ public class BeverageServiceImpl implements BeverageService {
         if (StringUtils.isEmpty(name)) {
             return Result.business("参数错误");
         }
-        name += "%";
+        name = "%" + name + "%";
         PageHelper.startPage(pageNum, pageSize);
         List<Beverage> beverage = beverageMapper.findByName(name);
         if (beverage == null) {
@@ -162,4 +161,6 @@ public class BeverageServiceImpl implements BeverageService {
         }
         return Result.success(beverage);
     }
+
+
 }

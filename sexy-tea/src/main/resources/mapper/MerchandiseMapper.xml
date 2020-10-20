@@ -285,4 +285,11 @@
       </if>
     </trim>
   </insert>
+
+    <select id="findByName" resultMap="BaseResultMap" parameterType="String">
+        SELECT *
+        FROM merchandise
+        WHERE `status` = 1
+        AND product_name LIKE #{name}
+    </select>
 </mapper>

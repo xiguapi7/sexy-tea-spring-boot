@@ -31,4 +31,6 @@ public interface FoodService extends UploadService {
     // Result uploadImage(MinioDto dto, String foodId);
 
     Result delete(Integer id);
+
+    Result findByName(String name, int pageNum, int pageSize);
 }

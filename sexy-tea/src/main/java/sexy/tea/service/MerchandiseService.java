@@ -32,4 +32,6 @@ public interface MerchandiseService extends UploadService {
     // Result uploadImage(MinioDto dto, String productId);
 
     Result delete(Integer id);
+
+    Result findByName(String name, int pageNum, int pageSize);
 }

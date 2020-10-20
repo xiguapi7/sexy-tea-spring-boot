@@ -35,7 +35,7 @@ public class Merchandise implements Serializable {
      * 商品编号
      */
     @Column(name = "product_id")
-    private Integer productId;
+    private String productId;
     /**
      * 商品名称
      */

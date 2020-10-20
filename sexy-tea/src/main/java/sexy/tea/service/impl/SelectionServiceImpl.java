@@ -107,27 +107,26 @@ public class SelectionServiceImpl implements SelectionService {
     }
 
     @Override
-    public Result uploadImage(MinioDto dto, String productId) {
+    public Result uploadImage(MinioDto dto, String id) {
         // 根据 product_id 查询实体记录
         Example example = Example.builder(Selection.class).build();
         example.createCriteria()
-                .andEqualTo("productId", productId)
+                .andEqualTo("id", id)
                 .andEqualTo("status", 1);
         Selection selection = selectionMapper.selectOneByExample(example);
         // 校验
         if (selection == null) {
-            return Result.business("参数错误, productId: " + productId);
+            return Result.business("参数错误, id: " + id);
         }
-        // 精选商品名称
-        // String productName = selection.getProductName();
+        String name = selection.getProductId() + dto.getSuffix();
         // 图片
         try {
             InputStream is = dto.getFile().getInputStream();
-            MinioUtils.upload(defaultBucketName, productId + dto.getSuffix(), is, dto.getContentType());
+            MinioUtils.upload(defaultBucketName, name, is, dto.getContentType());
         } catch (IOException e) {
             log.error("上传失败, 错误信息：{}", e.getMessage());
         }
-        String url = prefix + productId + dto.getSuffix();
+        String url = prefix + name;
         // 更新图片地址
         selection.setProductImage(url);
         selectionMapper.updateByPrimaryKey(selection);

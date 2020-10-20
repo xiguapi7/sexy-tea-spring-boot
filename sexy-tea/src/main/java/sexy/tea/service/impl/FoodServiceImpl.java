@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import sexy.tea.exception.BusinessException;
 import sexy.tea.mapper.FoodMapper;
 import sexy.tea.model.Beverage;
@@ -106,26 +107,25 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Result uploadImage(MinioDto dto, String foodId) {
+    public Result uploadImage(MinioDto dto, String id) {
         Example example = Example.builder(Beverage.class).build();
         example.createCriteria()
-                .andEqualTo("food_id", foodId)
+                .andEqualTo("id", id)
                 .andEqualTo("status", 1);
         Food food = foodMapper.selectOneByExample(example);
         // 校验
         if (food == null) {
-            return Result.business("参数错误, foodId: " + foodId);
+            return Result.business("参数错误, id: " + id);
         }
-        // 饮料名称
-        String foodName = food.getFoodName();
+        String name = food.getId() + dto.getSuffix();
         // 图片
         try {
             InputStream is = dto.getFile().getInputStream();
-            MinioUtils.upload(defaultBucketName, foodName, is, dto.getContentType());
+            MinioUtils.upload(defaultBucketName, name, is, dto.getContentType());
         } catch (IOException e) {
             log.error("上传失败, 错误信息：{}", e.getMessage());
         }
-        String url = prefix + foodName + dto.getSuffix();
+        String url = prefix + name;
         // 更新图片地址
         food.setFoodImage(url);
         foodMapper.updateByPrimaryKey(food);
@@ -141,5 +141,19 @@ public class FoodServiceImpl implements FoodService {
         }
         int row = foodMapper.deleteByPrimaryKey(id);
         return Result.success("删除成功, 受影响的行数: " + row);
+    }
+
+    @Override
+    public Result findByName(String name, int pageNum, int pageSize) {
+        if (StringUtils.isEmpty(name)) {
+            return Result.business("参数错误");
+        }
+        name = "%" + name + "%";
+        PageHelper.startPage(pageNum, pageSize);
+        List<Food> food = foodMapper.findByName(name);
+        if (food == null) {
+            return Result.business("查询的食品不存在");
+        }
+        return Result.success(food);
     }
 }

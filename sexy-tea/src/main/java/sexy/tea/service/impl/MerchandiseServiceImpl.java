@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.util.StringUtils;
 import sexy.tea.exception.BusinessException;
 import sexy.tea.mapper.MerchandiseMapper;
 import sexy.tea.model.Beverage;
@@ -22,7 +23,7 @@ import java.util.List;
 
 /**
  * 商品接口实现类
- *
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
@@ -106,26 +107,25 @@ public class MerchandiseServiceImpl implements MerchandiseService {
     }
 
     @Override
-    public Result uploadImage(MinioDto dto, String productId) {
+    public Result uploadImage(MinioDto dto, String id) {
         // 根据 product_id 查询实体记录
         Example example = Example.builder(Beverage.class).build();
         example.createCriteria()
-                .andEqualTo("product_id", productId)
+                .andEqualTo("id", id)
                 .andEqualTo("status", 1);
         Merchandise merchandise = merchandiseMapper.selectOneByExample(example);
         // 校验
         if (merchandise == null) {
-            return Result.business("参数错误, productId: " + productId);
+            return Result.business("参数错误, id: " + id);
         }
-        // 精选商品名称
-        // String productName = merchandise.getProductName();
+        String name = merchandise.getProductId() + dto.getSuffix();
         try {
             InputStream is = dto.getFile().getInputStream();
-            MinioUtils.upload(defaultBucketName, productId + dto.getSuffix(), is, dto.getContentType());
+            MinioUtils.upload(defaultBucketName, name, is, dto.getContentType());
         } catch (IOException e) {
             log.error("上传失败, 错误信息：{}", e.getMessage());
         }
-        String url = prefix + productId + dto.getSuffix();
+        String url = prefix + name;
         // 更新图片地址
         merchandise.setProductImage(url);
         merchandiseMapper.updateByPrimaryKey(merchandise);
@@ -141,5 +141,19 @@ public class MerchandiseServiceImpl implements MerchandiseService {
         }
         int row = merchandiseMapper.deleteByPrimaryKey(id);
         return Result.success("删除成功, 受影响的行数: " + row);
+    }
+
+    @Override
+    public Result findByName(String name, int pageNum, int pageSize) {
+        if (StringUtils.isEmpty(name)) {
+            return Result.business("参数错误");
+        }
+        name = "%" + name + "%";
+        PageHelper.startPage(pageNum, pageSize);
+        List<Merchandise> merchandiseList = merchandiseMapper.findByName(name);
+        if (merchandiseList == null) {
+            return Result.business("查询的食品不存在");
+        }
+        return Result.success(merchandiseList);
     }
 }
