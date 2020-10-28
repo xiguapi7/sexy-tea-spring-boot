@@ -12,5 +12,5 @@ import sexy.tea.model.dto.MinioDto;
  */
 public interface UploadService {
 
-    Result uploadImage(MinioDto dto, String productId);
+    Result uploadImage(MinioDto dto, Long id);
 }

@@ -28,7 +28,7 @@ public class CardController {
     }
 
     @GetMapping("/selectByUid/{uid}")
-    public Result selectByUid(@PathVariable Integer uid) {
+    public Result selectByUid(@PathVariable Long uid) {
         return service.findByUid(uid);
     }
 

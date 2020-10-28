@@ -24,9 +24,9 @@ public interface CardService {
 
     Result saveOrUpdate(Card card);
 
-    Result deleteById(Integer id);
+    Result deleteById(Long id);
 
-    Result findByUid(Integer uid);
+    Result findByUid(Long uid);
 
     Result findByCardName(String cardName);
 

@@ -31,7 +31,7 @@ public class Food implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
     /**
      * 食品id
      */

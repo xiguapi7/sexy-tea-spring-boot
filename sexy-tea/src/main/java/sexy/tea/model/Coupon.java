@@ -31,7 +31,7 @@ public class Coupon implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
     /**
      * 优惠券标题
      */

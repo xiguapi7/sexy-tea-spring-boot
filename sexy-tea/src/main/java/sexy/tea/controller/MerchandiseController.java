@@ -61,6 +61,6 @@ public class MerchandiseController {
 
     @PostMapping("/upload")
     public Result upload(HttpServletRequest request) {
-        return UploadUtils.upload(request, service);
+        return UploadUtils.upload(request);
     }
 }

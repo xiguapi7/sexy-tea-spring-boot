@@ -115,7 +115,7 @@ public class MerchandiseServiceImpl implements MerchandiseService {
     }
 
     @Override
-    public Result uploadImage(MinioDto dto, String id) {
+    public Result uploadImage(MinioDto dto, Long id) {
         // 根据 product_id 查询实体记录
         Example example = Example.builder(Beverage.class).build();
         example.createCriteria()

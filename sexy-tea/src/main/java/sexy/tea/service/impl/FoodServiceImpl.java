@@ -88,7 +88,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Result findByPrimaryKey(Integer primaryKey) {
+    public Result findByPrimaryKey(Long primaryKey) {
         Food food = foodMapper.selectByPrimaryKey(primaryKey);
         if (food == null || food.getId() == null) {
             return Result.business("查询失败, id: " + primaryKey, Optional.empty());
@@ -115,7 +115,7 @@ public class FoodServiceImpl implements FoodService {
     }
 
     @Override
-    public Result uploadImage(MinioDto dto, String id) {
+    public Result uploadImage(MinioDto dto, Long id) {
         Example example = Example.builder(Beverage.class).build();
         example.createCriteria()
                 .andEqualTo("id", id)
@@ -142,7 +142,7 @@ public class FoodServiceImpl implements FoodService {
 
     @Transactional(rollbackFor = BusinessException.class)
     @Override
-    public Result delete(Integer id) {
+    public Result delete(Long id) {
         if (id == null || id <= 0) {
             // 校验
             return Result.business("参数错误", Optional.empty());

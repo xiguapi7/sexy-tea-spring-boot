@@ -59,6 +59,6 @@ public class SelectionController {
 
     @PostMapping("/upload")
     public Result upload(HttpServletRequest request) {
-        return UploadUtils.upload(request, service);
+        return UploadUtils.upload(request);
     }
 }

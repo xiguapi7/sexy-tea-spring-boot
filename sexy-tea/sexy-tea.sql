@@ -3,15 +3,15 @@
 
  Source Server         : localhost
  Source Server Type    : MySQL
- Source Server Version : 80020
+ Source Server Version : 80022
  Source Host           : localhost:3306
  Source Schema         : sexy-tea
 
  Target Server Type    : MySQL
- Target Server Version : 80020
+ Target Server Version : 80022
  File Encoding         : 65001
 
- Date: 13/10/2020 15:07:15
+ Date: 28/10/2020 19:46:12
 */
 
 SET NAMES utf8mb4;
@@ -22,101 +22,100 @@ SET FOREIGN_KEY_CHECKS = 0;
 -- ----------------------------
 DROP TABLE IF EXISTS `beverage`;
 CREATE TABLE `beverage`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '饮料表id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '饮料表id',
   `beverage_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '饮料编号',
   `beverage_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '饮料名称',
   `beverage_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '饮料图片',
-  `type` tinyint(0) NULL DEFAULT NULL COMMENT '类型：1 奶茶，2 咖啡',
-  `category` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '主分类',
-  `sub_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '子分类',
-  `status` int(0) NOT NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `price` double(10, 2) NOT NULL DEFAULT 0.00 COMMENT '价格',
+  `type` int NULL DEFAULT NULL COMMENT '类型：1 奶茶，2 咖啡',
+  `status` int NOT NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 63 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of beverage
 -- ----------------------------
-INSERT INTO `beverage` VALUES (1, '20080002', '橘香茉吉托', 'citrus-mint-mojito.jpg', 1, 'Beverages', 'mixology', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:07');
-INSERT INTO `beverage` VALUES (2, '20080003', '酸柠浮冷萃', 'cold-brew-lemon-sour.jpg', 1, 'Beverages', 'mixology', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:09');
-INSERT INTO `beverage` VALUES (3, '20080004', '醋意桃桃', 'peach-shrub-fizz.jpg', 1, 'Beverages', 'mixology', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:08');
-INSERT INTO `beverage` VALUES (4, '20080005', '石榴仲夏梦', 'pomegranate-pearl-fizz.jpg', 1, 'Beverages', 'mixology', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:10');
-INSERT INTO `beverage` VALUES (5, '20080006', '气炫冰山美式', 'sparkling-espresso-tonic.jpg', 1, 'Beverages', 'mixology', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:10');
-INSERT INTO `beverage` VALUES (6, '20080007', '璃光石榴冷萃', 'sparkling-pink-pom-cold-brew.jpg', 1, 'Beverages', 'mixology', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:11');
-INSERT INTO `beverage` VALUES (7, '20080008', '橙柚派对', 'triple-citrus.jpg', 1, 'Beverages', 'mixology', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:11');
-INSERT INTO `beverage` VALUES (8, '20010001', '阿馥奇朵?', 'affogato.jpg', 1, 'Beverages', 'icecream', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:12');
-INSERT INTO `beverage` VALUES (9, '20010002', '麦芽雪冷萃?', 'cold-brew-malt.jpg', 1, 'Beverages', 'icecream', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:13');
-INSERT INTO `beverage` VALUES (10, '20010003', '冷萃浮乐朵?', 'cold-brew-float.jpg', 1, 'Beverages', 'icecream', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:14');
-INSERT INTO `beverage` VALUES (11, '20010004', '气致?冷萃浮乐朵?', 'instore-nitro-cold-brew-float.jpg', 1, 'Beverages', 'icecream', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:14');
-INSERT INTO `beverage` VALUES (12, '20020001', '冷萃冰咖啡', 'cold-brew.jpg', 1, 'Beverages', 'coldextra', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:15');
-INSERT INTO `beverage` VALUES (13, '20020002', '轻甜奶油冷萃', 'vanilla-flavor-sweet-cream-cold-brew.jpg', 1, 'Beverages', 'coldextra', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:15');
-INSERT INTO `beverage` VALUES (14, '20020003', '绵云冷萃', 'cold-foam-cold-brew.jpg', 1, 'Beverages', 'coldextra', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:16');
-INSERT INTO `beverage` VALUES (15, '20030001', '美式咖啡（热/冷）', 'caffe-americano.jpg', 1, 'Beverages', 'espresso', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:17');
-INSERT INTO `beverage` VALUES (16, '20030002', '拿铁（热/冷）', 'caffe-latte.jpg', 1, 'Beverages', 'espresso', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:17');
-INSERT INTO `beverage` VALUES (17, '20030003', '摩卡（热/冷)', 'caffe-mocha.jpg', 1, 'Beverages', 'espresso', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:17');
-INSERT INTO `beverage` VALUES (18, '20030004', '卡布奇诺（热/冷）', 'cappuccino.jpg', 1, 'Beverages', 'espresso', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:18');
-INSERT INTO `beverage` VALUES (19, '20030005', '焦糖玛奇朵（热/冷）', 'caramel-macchiato.jpg', 1, 'Beverages', 'espresso', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:20');
-INSERT INTO `beverage` VALUES (20, '20030006', '浓缩咖啡', 'espresso.jpg', 1, 'Beverages', 'espresso', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:19');
-INSERT INTO `beverage` VALUES (21, '20030007', '馥芮白?', 'flat-white.jpg', 1, 'Beverages', 'espresso', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:21');
-INSERT INTO `beverage` VALUES (22, '20030008', '榛果风味拿铁（热/冷）', 'hazelnut-flavored-latte.jpg', 1, 'Beverages', 'espresso', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:21');
-INSERT INTO `beverage` VALUES (23, '20030009', '香草风味拿铁（热/冷）', 'vanilla-flavored-latte.jpg', 1, 'Beverages', 'espresso', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:15');
-INSERT INTO `beverage` VALUES (24, '20040001', '焦糖浓缩咖啡星冰乐', 'caramel-espresso-frappuccino.jpg', 1, 'Beverages', 'frappu', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:22');
-INSERT INTO `beverage` VALUES (25, '20040002', '抹茶星冰乐', 'green-tea-frappuccino.jpg', 1, 'Beverages', 'frappu', 1, '2020-09-24 02:39:36', '2020-09-25 14:06:22');
-INSERT INTO `beverage` VALUES (26, '20040003', '芒果西番莲果茶星冰乐', 'mango-passion-tea.jpg', 1, 'Beverages', 'frappu', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:22');
-INSERT INTO `beverage` VALUES (27, '20040004', '摩卡星冰乐', 'mocha-frappuccino.jpg', 1, 'Beverages', 'frappu', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:23');
-INSERT INTO `beverage` VALUES (28, '20040005', '摩卡可可碎片星冰乐', 'mocha-java-chip-frappuccino.jpg', 1, 'Beverages', 'frappu', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:23');
-INSERT INTO `beverage` VALUES (29, '20040006', '香草风味星冰乐', 'vanilla-flavored-cream-frappuccino-blended-beverage.jpg', 1, 'Beverages', 'frappu', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:24');
-INSERT INTO `beverage` VALUES (30, '20050001', '气致?冷萃咖啡', 'nitro-cold-brew.jpg', 1, 'Beverages', 'gas-coldextra', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:24');
-INSERT INTO `beverage` VALUES (31, '20060001', '经典巧克力饮品（热/冷）', 'signature-chocolate-beverage.jpg', 1, 'Beverages', 'chocolate', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:25');
-INSERT INTO `beverage` VALUES (32, '20070001', '红茶拿铁（热/冷）', 'black-tea-latte.jpg', 1, 'Beverages', 'chawana', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:25');
-INSERT INTO `beverage` VALUES (33, '20070002', '抹茶拿铁（热/冷）', 'green-tea-latte.jpg', 1, 'Beverages', 'chawana', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:25');
-INSERT INTO `beverage` VALUES (34, '20070003', '茶瓦纳? 冰摇柚柚蜂蜜红茶', 'iced-shaken-honey-ruby-grapefruit-black-tea.jpg', 1, 'Beverages', 'chawana', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:26');
-INSERT INTO `beverage` VALUES (35, '20070004', '冰摇红莓黑加仑茶', 'blackcurrant-raspberry.jpg', 1, 'Beverages', 'chawana', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:26');
-INSERT INTO `beverage` VALUES (36, '20070005', '冰摇芒果花草茶', 'iced-shaken-mango-herbal-juiced-tea.jpg', 1, 'Beverages', 'chawana', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:36');
-INSERT INTO `beverage` VALUES (37, '20070006', '茶瓦纳? 冰摇桃桃绿茶/冰摇桃桃乌龙茶', 'iced-shaken-peach-green-tea.jpg', 1, 'Beverages', 'chawana', 1, '2020-09-24 02:39:36', '2020-09-25 14:08:26');
-INSERT INTO `beverage` VALUES (38, '20080001', '蓝莓星空', 'blueberry-passion-pearl-fizz.jpg', 1, 'Beverages', 'mixology', 1, '2020-09-24 02:39:36', '2020-09-25 14:16:07');
-INSERT INTO `beverage` VALUES (39, '40010001', '星巴克?凤舞祥云综合咖啡豆', 'south-of-the-clouds.jpg', 2, 'Coffee', 'baking-M', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:36');
-INSERT INTO `beverage` VALUES (40, '40010002', '星巴克?派克市场烘焙咖啡豆', 'pike-place-roast-coffee-beans.png', 2, 'Coffee', 'baking-M', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:37');
-INSERT INTO `beverage` VALUES (41, '40010003', '星巴克?肯亚咖啡豆', 'kenya-coffee-beans.png', 2, 'Coffee', 'baking-M', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:37');
-INSERT INTO `beverage` VALUES (42, '40010004', '星巴克?首选咖啡豆', 'house-blend-coffee-beans.png', 2, 'Coffee', 'baking-M', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:38');
-INSERT INTO `beverage` VALUES (43, '40010005', '星巴克?危地马拉安提瓜咖啡豆', 'guatemala-antigua-coffee-beans.png', 2, 'Coffee', 'baking-M', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:38');
-INSERT INTO `beverage` VALUES (44, '40010006', '星巴克?埃塞俄比亚咖啡豆', 'ethiopia-coffee-beans.png', 2, 'Coffee', 'baking-M', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:38');
-INSERT INTO `beverage` VALUES (45, '40010007', '星巴克?哥伦比亚咖啡豆', 'colombia.jpg', 2, 'Coffee', 'baking-M', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:39');
-INSERT INTO `beverage` VALUES (46, '40010008', '星巴克?早餐综合咖啡豆', 'breakfast-blend-coffee-beans.png', 2, 'Coffee', 'baking-M', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:39');
-INSERT INTO `beverage` VALUES (47, '40020001', '星巴克?苏门答腊咖啡豆', 'sumatra-coffee-beans.png', 2, 'Coffee', 'baking-D', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:39');
-INSERT INTO `beverage` VALUES (48, '40020002', '星巴克?低因祥龙综合咖啡豆', 'komodo-dragon-blend-coffee-beans.png', 2, 'Coffee', 'baking-D', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:41');
-INSERT INTO `beverage` VALUES (49, '40020003', '星巴克?意式烘焙咖啡豆', 'italian-roast-coffee-beans.png', 2, 'Coffee', 'baking-D', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:40');
-INSERT INTO `beverage` VALUES (50, '40020004', '星巴克?浓缩烘焙咖啡豆', 'espresso-roast-coffee-beans.png', 2, 'Coffee', 'baking-D', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:40');
-INSERT INTO `beverage` VALUES (51, '40020005', '星巴克?佛罗娜咖啡豆', 'caffe-verona-coffee-beans.png', 2, 'Coffee', 'baking-D', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:42');
-INSERT INTO `beverage` VALUES (52, '40030001', '星巴克VIA?香草拿铁风味免煮咖啡固体饮料', 'via-vanilla-latte.jpg', 2, 'Coffee', 'via-dairy', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:44');
-INSERT INTO `beverage` VALUES (53, '40030002', '星巴克VIA?焦糖拿铁风味免煮咖啡固体饮料', 'via-caramel-latte.jpg', 2, 'Coffee', 'via-dairy', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:45');
-INSERT INTO `beverage` VALUES (54, '40030003', '星巴克VIA?摩卡风味免煮咖啡固体饮料', 'via-caffe-mocha.jpg', 2, 'Coffee', 'via-dairy', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:45');
-INSERT INTO `beverage` VALUES (55, '40040001', '星巴克VIA?意式烘焙免煮咖啡', 'via-italian-roast.jpg', 2, 'Coffee', 'via-black', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:46');
-INSERT INTO `beverage` VALUES (56, '40040002', '星巴克VIA?哥伦比亚免煮咖啡', 'via-colombia.jpg', 2, 'Coffee', 'via-black', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:46');
-INSERT INTO `beverage` VALUES (57, '40040001', '星巴克臻选? 日晒巴西格兰玛瀑布农场', 'reserve-sun-dried-brazil-cachoeirab-grama-farm.jpg', 2, 'Coffee', 'selection', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:46');
-INSERT INTO `beverage` VALUES (58, '40040002', '星巴克臻选? 夏威夷卡乌咖啡豆', 'reserve-hawaii-kau.jpg', 2, 'Coffee', 'selection', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:47');
-INSERT INTO `beverage` VALUES (59, '40040003', '星巴克臻选? 哥伦比亚佩德雷加尔', 'reserve-colombia-pedregal.jpg', 2, 'Coffee', 'selection', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:48');
-INSERT INTO `beverage` VALUES (60, '40040004', '星巴克臻选? 臻选2018圣诞专享咖啡豆', 'reserve-christmas-blend-2018.jpg', 2, 'Coffee', 'selection', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:48');
-INSERT INTO `beverage` VALUES (61, '40050001', '星巴克ORIGAMI?便携式滴滤咖啡（研磨咖啡粉）星巴克?派克市场烘焙咖啡系列', 'origami-pike-place.jpg', 2, 'Coffee', 'origami-M', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:49');
-INSERT INTO `beverage` VALUES (62, '40060001', '星巴克ORIGAMI?便携式滴滤咖啡（研磨咖啡粉）星巴克?佛罗娜烘焙咖啡系列', 'origami-verona.jpg', 2, 'Coffee', 'origami-D', 1, '2020-09-25 14:16:20', '2020-09-25 14:16:50');
+INSERT INTO `beverage` VALUES (1, '20080002', '橘香茉吉托', 'citrus-mint-mojito.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:07:01');
+INSERT INTO `beverage` VALUES (2, '20080003', '酸柠浮冷萃', 'cold-brew-lemon-sour.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (3, '20080004', '醋意桃桃', 'peach-shrub-fizz.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (4, '20080005', '石榴仲夏梦', 'pomegranate-pearl-fizz.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (5, '20080006', '气炫冰山美式', 'sparkling-espresso-tonic.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (6, '20080007', '璃光石榴冷萃', 'sparkling-pink-pom-cold-brew.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (7, '20080008', '橙柚派对', 'triple-citrus.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (8, '20010001', '阿馥奇朵?', 'affogato.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (9, '20010002', '麦芽雪冷萃?', 'cold-brew-malt.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (10, '20010003', '冷萃浮乐朵?', 'cold-brew-float.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (11, '20010004', '气致?冷萃浮乐朵?', 'instore-nitro-cold-brew-float.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (12, '20020001', '冷萃冰咖啡', 'cold-brew.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (13, '20020002', '轻甜奶油冷萃', 'vanilla-flavor-sweet-cream-cold-brew.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (14, '20020003', '绵云冷萃', 'cold-foam-cold-brew.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (15, '20030001', '美式咖啡（热/冷）', 'caffe-americano.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (16, '20030002', '拿铁（热/冷）', 'caffe-latte.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (17, '20030003', '摩卡（热/冷)', 'caffe-mocha.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (18, '20030004', '卡布奇诺（热/冷）', 'cappuccino.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (19, '20030005', '焦糖玛奇朵（热/冷）', 'caramel-macchiato.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (20, '20030006', '浓缩咖啡', 'espresso.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (21, '20030007', '馥芮白?', 'flat-white.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (22, '20030008', '榛果风味拿铁（热/冷）', 'hazelnut-flavored-latte.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (23, '20030009', '香草风味拿铁（热/冷）', 'vanilla-flavored-latte.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (24, '20040001', '焦糖浓缩咖啡星冰乐', 'caramel-espresso-frappuccino.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (25, '20040002', '抹茶星冰乐', 'green-tea-frappuccino.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (26, '20040003', '芒果西番莲果茶星冰乐', 'mango-passion-tea.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (27, '20040004', '摩卡星冰乐', 'mocha-frappuccino.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (28, '20040005', '摩卡可可碎片星冰乐', 'mocha-java-chip-frappuccino.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (29, '20040006', '香草风味星冰乐', 'vanilla-flavored-cream-frappuccino-blended-beverage.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (30, '20050001', '气致?冷萃咖啡', 'nitro-cold-brew.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (31, '20060001', '经典巧克力饮品（热/冷）', 'signature-chocolate-beverage.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (32, '20070001', '红茶拿铁（热/冷）', 'black-tea-latte.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (33, '20070002', '抹茶拿铁（热/冷）', 'green-tea-latte.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (34, '20070003', '茶瓦纳? 冰摇柚柚蜂蜜红茶', 'iced-shaken-honey-ruby-grapefruit-black-tea.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (35, '20070004', '冰摇红莓黑加仑茶', 'blackcurrant-raspberry.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (36, '20070005', '冰摇芒果花草茶', 'iced-shaken-mango-herbal-juiced-tea.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (37, '20070006', '茶瓦纳? 冰摇桃桃绿茶/冰摇桃桃乌龙茶', 'iced-shaken-peach-green-tea.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (38, '20080001', '蓝莓星空', 'blueberry-passion-pearl-fizz.jpg', 10.00, 1, 1, '2020-09-24 02:39:36', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (39, '40010001', '星巴克?凤舞祥云综合咖啡豆', 'south-of-the-clouds.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (40, '40010002', '星巴克?派克市场烘焙咖啡豆', 'pike-place-roast-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (41, '40010003', '星巴克?肯亚咖啡豆', 'kenya-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (42, '40010004', '星巴克?首选咖啡豆', 'house-blend-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (43, '40010005', '星巴克?危地马拉安提瓜咖啡豆', 'guatemala-antigua-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (44, '40010006', '星巴克?埃塞俄比亚咖啡豆', 'ethiopia-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (45, '40010007', '星巴克?哥伦比亚咖啡豆', 'colombia.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (46, '40010008', '星巴克?早餐综合咖啡豆', 'breakfast-blend-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (47, '40020001', '星巴克?苏门答腊咖啡豆', 'sumatra-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (48, '40020002', '星巴克?低因祥龙综合咖啡豆', 'komodo-dragon-blend-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (49, '40020003', '星巴克?意式烘焙咖啡豆', 'italian-roast-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (50, '40020004', '星巴克?浓缩烘焙咖啡豆', 'espresso-roast-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (51, '40020005', '星巴克?佛罗娜咖啡豆', 'caffe-verona-coffee-beans.png', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (52, '40030001', '星巴克VIA?香草拿铁风味免煮咖啡固体饮料', 'via-vanilla-latte.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (53, '40030002', '星巴克VIA?焦糖拿铁风味免煮咖啡固体饮料', 'via-caramel-latte.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (54, '40030003', '星巴克VIA?摩卡风味免煮咖啡固体饮料', 'via-caffe-mocha.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (55, '40040001', '星巴克VIA?意式烘焙免煮咖啡', 'via-italian-roast.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (56, '40040002', '星巴克VIA?哥伦比亚免煮咖啡', 'via-colombia.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (57, '40040001', '星巴克臻选? 日晒巴西格兰玛瀑布农场', 'reserve-sun-dried-brazil-cachoeirab-grama-farm.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (58, '40040002', '星巴克臻选? 夏威夷卡乌咖啡豆', 'reserve-hawaii-kau.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (59, '40040003', '星巴克臻选? 哥伦比亚佩德雷加尔', 'reserve-colombia-pedregal.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (60, '40040004', '星巴克臻选? 臻选2018圣诞专享咖啡豆', 'reserve-christmas-blend-2018.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (61, '40050001', '星巴克ORIGAMI?便携式滴滤咖啡（研磨咖啡粉）星巴克?派克市场烘焙咖啡系列', 'origami-pike-place.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
+INSERT INTO `beverage` VALUES (62, '40060001', '星巴克ORIGAMI?便携式滴滤咖啡（研磨咖啡粉）星巴克?佛罗娜烘焙咖啡系列', 'origami-verona.jpg', 10.00, 2, 1, '2020-09-25 14:16:20', '2020-10-28 17:23:48');
 
 -- ----------------------------
 -- Table structure for card
 -- ----------------------------
 DROP TABLE IF EXISTS `card`;
 CREATE TABLE `card`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '星礼卡表id',
-  `uid` int(0) NULL DEFAULT NULL COMMENT '用户id',
-  `card_id` int(0) NULL DEFAULT NULL COMMENT '星礼卡卡号',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '星礼卡表id',
+  `uid` int NULL DEFAULT NULL COMMENT '用户id',
+  `card_id` int NULL DEFAULT NULL COMMENT '星礼卡卡号',
   `card_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '星礼卡名称',
   `card_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '星礼卡图片',
   `balance` decimal(5, 2) NULL DEFAULT NULL COMMENT '余额',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of card
@@ -127,16 +126,16 @@ CREATE TABLE `card`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `city`;
 CREATE TABLE `city`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '城市表id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '城市表id',
   `city` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '城市名',
   `center_longitude` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '城市经度',
   `center_latitude` varchar(10) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '城市纬度',
-  `count` int(0) NULL DEFAULT NULL COMMENT '门店数量',
-  `status` int(0) NOT NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `count` int NULL DEFAULT NULL COMMENT '门店数量',
+  `status` int NOT NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 156 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of city
@@ -302,24 +301,24 @@ INSERT INTO `city` VALUES (155, '北京市', '116.407526', '39.904030', 234, 1, 
 -- ----------------------------
 DROP TABLE IF EXISTS `coupon`;
 CREATE TABLE `coupon`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '优惠券表id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '优惠券表id',
   `title` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '优惠券标题',
   `start_date` date NULL DEFAULT NULL COMMENT '优惠券开始日期',
   `expire_date` date NULL DEFAULT NULL COMMENT '优惠券结束日期',
   `use_date` date NULL DEFAULT NULL COMMENT '优惠券使用日期',
-  `use_status` int(0) NULL DEFAULT NULL COMMENT '优惠券使用状态',
+  `use_status` int NULL DEFAULT NULL COMMENT '优惠券使用状态',
   `goods_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品类型',
   `require_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '使用类型',
-  `require` int(0) NULL DEFAULT NULL COMMENT '使用数量',
+  `require` int NULL DEFAULT NULL COMMENT '使用数量',
   `coupon_type` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '优惠券类型',
-  `coupon_num` int(0) NULL DEFAULT NULL COMMENT '优惠券数量',
+  `coupon_num` int NULL DEFAULT NULL COMMENT '优惠券数量',
   `coupon_img` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '优惠券图片',
   `rules` json NULL COMMENT '优惠券规则',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of coupon
@@ -330,18 +329,18 @@ CREATE TABLE `coupon`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `expense_record`;
 CREATE TABLE `expense_record`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '费用记录表id',
-  `uid` int(0) NULL DEFAULT NULL COMMENT '用户id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '费用记录表id',
+  `uid` int NULL DEFAULT NULL COMMENT '用户id',
   `consume_date` datetime(0) NULL DEFAULT NULL COMMENT '消费时间',
   `store_name` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商店名称',
   `goods` json NULL COMMENT '消费商品',
   `total_price` decimal(10, 2) NULL DEFAULT NULL COMMENT '消费总价',
-  `star_gain` int(0) NULL DEFAULT NULL COMMENT '获得星数',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `star_gain` int NULL DEFAULT NULL COMMENT '获得星数',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of expense_record
@@ -352,17 +351,17 @@ CREATE TABLE `expense_record`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `food`;
 CREATE TABLE `food`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '食品表id',
-  `food_id` int(0) NULL DEFAULT NULL COMMENT '食品id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '食品表id',
+  `food_id` int NULL DEFAULT NULL COMMENT '食品id',
   `food_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '食品名字',
   `food_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '食品图片',
   `category` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '主分类',
   `sub_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '子分类',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 48 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of food
@@ -420,18 +419,18 @@ INSERT INTO `food` VALUES (47, 30010001, '美式松饼', 'american-style-pancake
 -- ----------------------------
 DROP TABLE IF EXISTS `login_log`;
 CREATE TABLE `login_log`  (
-  `id` bigint(0) NOT NULL AUTO_INCREMENT COMMENT '日志表id',
-  `uid` int(0) NULL DEFAULT NULL COMMENT '用户id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '日志表id',
+  `uid` int NULL DEFAULT NULL COMMENT '用户id',
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户名字',
   `location` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '登录地址',
   `ip` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT 'IP地址',
   `device` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '设备',
   `operation_time` datetime(0) NULL DEFAULT NULL COMMENT '操作时间',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of login_log
@@ -442,19 +441,19 @@ CREATE TABLE `login_log`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `membership`;
 CREATE TABLE `membership`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '会员表id',
-  `uid` int(0) NULL DEFAULT NULL COMMENT '用户表id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '会员表id',
+  `uid` int NULL DEFAULT NULL COMMENT '用户表id',
   `star_level` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '会员等级',
   `star_level_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '会员等级名称',
-  `star_number` int(0) NULL DEFAULT NULL COMMENT '会员星数',
-  `next_lev` int(0) NULL DEFAULT NULL COMMENT '下级会员需要星数',
+  `star_number` int NULL DEFAULT NULL COMMENT '会员星数',
+  `next_lev` int NULL DEFAULT NULL COMMENT '下级会员需要星数',
   `privileges` json NULL COMMENT '会员特权',
   `expire_date` date NULL DEFAULT NULL COMMENT '过期时间',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of membership
@@ -465,17 +464,17 @@ CREATE TABLE `membership`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `merchandise`;
 CREATE TABLE `merchandise`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '商品表id',
-  `product_id` int(0) NULL DEFAULT NULL COMMENT '商品编号',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '商品表id',
+  `product_id` int NULL DEFAULT NULL COMMENT '商品编号',
   `product_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品名称',
   `product_image` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '商品图片',
   `category` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '主分类',
   `sub_type` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '子分类',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 18 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of merchandise
@@ -503,9 +502,9 @@ INSERT INTO `merchandise` VALUES (17, 50010001, '12oz 烫金品牌黑色马克�
 -- ----------------------------
 DROP TABLE IF EXISTS `order`;
 CREATE TABLE `order`  (
-  `id` int(0) NOT NULL COMMENT '订单表id',
-  `uid` int(0) NULL DEFAULT NULL COMMENT '用户id',
-  `pay_price` int(0) NULL DEFAULT NULL COMMENT '实际支付价格',
+  `id` bigint NOT NULL COMMENT '订单表id',
+  `uid` int NULL DEFAULT NULL COMMENT '用户id',
+  `pay_price` int NULL DEFAULT NULL COMMENT '实际支付价格',
   `is_pay` tinyint(1) NULL DEFAULT 0 COMMENT '是否已经支付：1 已支付，0 未支付，-1 订单失效，2 已发货，3 交易成功，4 交易失败',
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户名',
   `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '昵称',
@@ -515,14 +514,14 @@ CREATE TABLE `order`  (
   `consign_time` datetime(0) NULL DEFAULT NULL COMMENT '发货时间',
   `end_time` datetime(0) NULL DEFAULT NULL COMMENT '交易结束时间',
   `close_time` datetime(0) NULL DEFAULT NULL COMMENT '交易完成时间',
-  `post_fee` int(0) NULL DEFAULT NULL COMMENT '邮费',
+  `post_fee` int NULL DEFAULT NULL COMMENT '邮费',
   `shipping_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '物流名称',
   `shipping_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '物流单号',
   `rate` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '评价',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order
@@ -533,18 +532,18 @@ CREATE TABLE `order`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `order_goods`;
 CREATE TABLE `order_goods`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '订单商品表',
-  `order_id` int(0) NULL DEFAULT NULL COMMENT '订单id',
-  `goods_id` int(0) NULL DEFAULT NULL COMMENT '商品id',
-  `count` int(0) NULL DEFAULT NULL COMMENT '商品数量',
-  `price` int(0) NULL DEFAULT NULL COMMENT '商品单价',
-  `total_price` int(0) NULL DEFAULT NULL COMMENT '商品总价',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '订单商品表',
+  `order_id` int NULL DEFAULT NULL COMMENT '订单id',
+  `goods_id` int NULL DEFAULT NULL COMMENT '商品id',
+  `count` int NULL DEFAULT NULL COMMENT '商品数量',
+  `price` int NULL DEFAULT NULL COMMENT '商品单价',
+  `total_price` int NULL DEFAULT NULL COMMENT '商品总价',
   `pic` varchar(255) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '图片地址',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_goods
@@ -555,7 +554,7 @@ CREATE TABLE `order_goods`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `order_shipping`;
 CREATE TABLE `order_shipping`  (
-  `order_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NOT NULL COMMENT '订单ID',
+  `order_id` bigint NOT NULL COMMENT '订单ID',
   `receiver_name` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '收货人名字',
   `receiver_phone` varchar(20) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '固定电话',
   `receiver_state` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '省份',
@@ -563,11 +562,11 @@ CREATE TABLE `order_shipping`  (
   `receiver_district` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '区/县',
   `receiver_address` varchar(200) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '地址',
   `receiver_zip` varchar(6) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮政编码',
-  `status` int(0) NOT NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NOT NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`order_id`) USING BTREE
-) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of order_shipping
@@ -578,17 +577,17 @@ CREATE TABLE `order_shipping`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `selection`;
 CREATE TABLE `selection`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '精选表id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '精选表id',
   `product_id` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '精选产品id',
   `product_name` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '精选产品名称',
   `product_image` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '精选产品图片',
   `category` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '主分类',
   `sub_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '子分类',
-  `status` int(0) NOT NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NOT NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 71 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of selection
@@ -669,16 +668,16 @@ INSERT INTO `selection` VALUES (70, '010010201', '蓝莓星空', 'blueberry-pass
 -- ----------------------------
 DROP TABLE IF EXISTS `shopping_record`;
 CREATE TABLE `shopping_record`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '购物车记录表id',
-  `uid` int(0) NULL DEFAULT NULL COMMENT '用户id',
-  `goods_id` int(0) NULL DEFAULT NULL COMMENT '商品id',
-  `type` int(0) NULL DEFAULT NULL COMMENT '商品类型：1 饮品，2 周边',
-  `count` int(0) NULL DEFAULT NULL COMMENT '商品数量',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '购物车记录表id',
+  `uid` int NULL DEFAULT NULL COMMENT '用户id',
+  `goods_id` int NULL DEFAULT NULL COMMENT '商品id',
+  `type` int NULL DEFAULT NULL COMMENT '商品类型：1 饮品，2 周边',
+  `count` int NULL DEFAULT NULL COMMENT '商品数量',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of shopping_record
@@ -689,7 +688,7 @@ CREATE TABLE `shopping_record`  (
 -- ----------------------------
 DROP TABLE IF EXISTS `store`;
 CREATE TABLE `store`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '商店表id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '商店表id',
   `brand` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '品牌',
   `country` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '国家',
   `city` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '城市',
@@ -704,11 +703,11 @@ CREATE TABLE `store`  (
   `phone_number` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '门店电话号码',
   `post_code` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '邮编',
   `owner_ship_type` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '所有权类型',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 1 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 1001 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of store
@@ -1719,19 +1718,19 @@ INSERT INTO `store` VALUES (1000, 'Starbucks', '中国', '北京市', '116.40752
 -- ----------------------------
 DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user`  (
-  `id` int(0) NOT NULL AUTO_INCREMENT COMMENT '用户id',
+  `id` bigint NOT NULL AUTO_INCREMENT COMMENT '用户id',
   `username` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '用户名',
   `password` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '密码',
   `nickname` varchar(50) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '昵称',
-  `gender` int(0) NULL DEFAULT NULL COMMENT '性别',
+  `gender` int NULL DEFAULT NULL COMMENT '性别',
   `phone` char(11) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '手机号码',
   `email` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '电子邮箱',
-  `status` int(0) NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
+  `status` int NULL DEFAULT 1 COMMENT '记录状态：1 正常，0 禁用，-1 删除',
   `role` varchar(30) CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci NULL DEFAULT NULL COMMENT '角色',
   `create_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) COMMENT '创建时间',
   `update_time` timestamp(0) NULL DEFAULT CURRENT_TIMESTAMP(0) ON UPDATE CURRENT_TIMESTAMP(0) COMMENT '更新时间',
   PRIMARY KEY (`id`) USING BTREE
-) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = Dynamic;
+) ENGINE = InnoDB AUTO_INCREMENT = 3 CHARACTER SET = utf8mb4 COLLATE = utf8mb4_0900_ai_ci ROW_FORMAT = DYNAMIC;
 
 -- ----------------------------
 -- Records of user

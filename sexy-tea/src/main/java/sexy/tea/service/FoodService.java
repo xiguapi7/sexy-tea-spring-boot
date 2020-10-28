@@ -24,11 +24,11 @@ public interface FoodService extends UploadService {
 
     Result find(int pageNum, int pageSize);
 
-    Result findByPrimaryKey(Integer primaryKey);
+    Result findByPrimaryKey(Long primaryKey);
 
     Result saveOrUpdate(Food food);
 
-    Result delete(Integer id);
+    Result delete(Long id);
 
     Result findByName(String name, int pageNum, int pageSize);
 }

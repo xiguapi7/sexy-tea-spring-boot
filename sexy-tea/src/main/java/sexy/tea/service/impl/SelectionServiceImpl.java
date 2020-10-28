@@ -113,7 +113,7 @@ public class SelectionServiceImpl implements SelectionService {
     }
 
     @Override
-    public Result uploadImage(MinioDto dto, String id) {
+    public Result uploadImage(MinioDto dto, Long id) {
         // 根据 product_id 查询实体记录
         Example example = Example.builder(Selection.class).build();
         example.createCriteria()

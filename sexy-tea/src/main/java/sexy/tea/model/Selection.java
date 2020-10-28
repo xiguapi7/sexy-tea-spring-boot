@@ -28,7 +28,7 @@ public class Selection implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer id;
+    private Long id;
     /**
      * 产品id
      */

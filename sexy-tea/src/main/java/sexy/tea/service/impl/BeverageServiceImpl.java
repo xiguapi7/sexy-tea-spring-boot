@@ -90,7 +90,7 @@ public class BeverageServiceImpl implements BeverageService {
 
     @Override
     // @Cacheable(value = RedisConstant)
-    public Result findByPrimaryKey(Integer primaryKey) {
+    public Result findByPrimaryKey(Long primaryKey) {
 
         Beverage beverage = beverageMapper.selectByPrimaryKey(primaryKey);
         if (beverage == null || primaryKey <= 0) {
@@ -120,7 +120,7 @@ public class BeverageServiceImpl implements BeverageService {
     }
 
     @Override
-    public Result uploadImage(MinioDto dto, String id) {
+    public Result uploadImage(MinioDto dto, Long id) {
         // 根据 beverage_id 查询实体记录
         Example example = Example.builder(Beverage.class).build();
         example.createCriteria()
@@ -148,7 +148,7 @@ public class BeverageServiceImpl implements BeverageService {
 
     @Transactional(rollbackFor = BusinessException.class)
     @Override
-    public Result delete(Integer id) {
+    public Result delete(Long id) {
         if (id == null || id <= 0) {
             // 校验
             return Result.business("参数错误", Optional.empty());

@@ -31,7 +31,7 @@ public class ShoppingRecord implements Serializable {
     @Id
     @Column(name = "id")
     @GeneratedValue(generator = "JDBC")
-    private Integer id;
+    private Long id;
     /**
      * 用户id
      */

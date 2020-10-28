@@ -66,7 +66,7 @@ public class CardServiceImpl implements CardService {
 
     @Transactional(rollbackFor = BusinessException.class)
     @Override
-    public Result deleteById(Integer id) {
+    public Result deleteById(Long id) {
         if (id == null || id <= 0) {
             return Result.business("参数错误", Optional.empty());
         }
@@ -75,7 +75,7 @@ public class CardServiceImpl implements CardService {
     }
 
     @Override
-    public Result findByUid(Integer uid) {
+    public Result findByUid(Long uid) {
         if (uid == null || uid <= 0) {
             return Result.business("参数错误", Optional.empty());
         }

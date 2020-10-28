@@ -33,7 +33,7 @@ public class BeverageController {
     }
 
     @GetMapping("/itemsById/{id}")
-    public Result itemsById(@PathVariable("id") Integer id) {
+    public Result itemsById(@PathVariable("id") Long id) {
         return service.findByPrimaryKey(id);
     }
 
@@ -55,12 +55,12 @@ public class BeverageController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public Result delete(@PathVariable Integer id) {
+    public Result delete(@PathVariable Long id) {
         return service.delete(id);
     }
 
     @PostMapping("/upload")
     public Result upload(HttpServletRequest request) {
-        return UploadUtils.upload(request, service);
+        return UploadUtils.upload(request);
     }
 }
