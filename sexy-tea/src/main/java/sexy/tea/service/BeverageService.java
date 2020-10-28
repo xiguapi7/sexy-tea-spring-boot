@@ -28,8 +28,6 @@ public interface BeverageService extends UploadService {
 
     Result saveOrUpdate(Beverage beverage);
 
-    // Result uploadImage(MinioDto dto, String id);
-
     Result delete(Integer id);
 
     Result findByName(String name, int pageNum, int pageSize);

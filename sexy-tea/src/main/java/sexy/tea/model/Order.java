@@ -1,5 +1,6 @@
 package sexy.tea.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -126,6 +127,7 @@ public class Order implements Serializable {
      * 更新时间
      */
     @Column(name = "update_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 
     private static final long serialVersionUID = 1L;

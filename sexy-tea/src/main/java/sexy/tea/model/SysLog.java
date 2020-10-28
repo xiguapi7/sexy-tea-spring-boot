@@ -1,5 +1,6 @@
 package sexy.tea.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -74,12 +75,14 @@ public class SysLog implements Serializable {
      * 操作时间
      */
     @Column(name = "operation_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Long operationTime;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Long createTime;
 
     private static final long serialVersionUID = 1L;

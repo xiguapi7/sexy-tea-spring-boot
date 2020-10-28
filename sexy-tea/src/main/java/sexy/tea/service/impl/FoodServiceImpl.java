@@ -1,5 +1,6 @@
 package sexy.tea.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,6 +12,7 @@ import sexy.tea.exception.BusinessException;
 import sexy.tea.mapper.FoodMapper;
 import sexy.tea.model.Beverage;
 import sexy.tea.model.Food;
+import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
 import sexy.tea.model.dto.MinioDto;
 import sexy.tea.service.FoodService;
@@ -72,12 +74,17 @@ public class FoodServiceImpl implements FoodService {
 
     @Override
     public Result find(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+        Page<Food> page = PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(Food.class).build();
         example.createCriteria().andEqualTo("status", 1);
 
         List<Food> foodList = foodMapper.selectByExample(example);
-        return Result.success("查询食品", foodList);
+        return Result.success("查询食品", Pager.<Food>builder()
+                .pageNum(page.getPageNum())
+                .pageSize(page.getPageSize())
+                .total(page.getTotal())
+                .result(foodList)
+                .build());
     }
 
     @Override
@@ -150,11 +157,16 @@ public class FoodServiceImpl implements FoodService {
             return Result.business("参数错误", Optional.empty());
         }
         name = "%" + name + "%";
-        PageHelper.startPage(pageNum, pageSize);
-        List<Food> food = foodMapper.findByName(name);
-        if (food == null) {
+        Page<Food> page = PageHelper.startPage(pageNum, pageSize);
+        List<Food> foodList = foodMapper.findByName(name);
+        if (foodList == null) {
             return Result.business("查询的食品不存在", Optional.empty());
         }
-        return Result.success("关键词: " + name, food);
+        return Result.success("关键词: " + name, Pager.<Food>builder()
+                .pageNum(page.getPageNum())
+                .pageSize(page.getPageSize())
+                .total(page.getTotal())
+                .result(foodList)
+                .build());
     }
 }

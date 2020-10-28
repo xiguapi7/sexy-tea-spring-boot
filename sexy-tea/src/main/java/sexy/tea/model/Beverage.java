@@ -1,9 +1,12 @@
 package sexy.tea.model;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sexy.tea.config.CustomJsonSerializer;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -50,17 +53,13 @@ public class Beverage implements Serializable {
      * 类型：1 奶茶，2 咖啡
      */
     @Column(name = "`type`")
-    private Byte type;
+    private Integer type;
     /**
-     * 主分类
+     * 价格
      */
-    @Column(name = "category")
-    private String category;
-    /**
-     * 子分类
-     */
-    @Column(name = "sub_type")
-    private String subType;
+    @Column(name = "price")
+    @JsonSerialize(using = CustomJsonSerializer.class)
+    private Double price;
     /**
      * 记录状态：1 正常，0 禁用，-1 删除
      */
@@ -70,10 +69,12 @@ public class Beverage implements Serializable {
      * 创建时间
      */
     @Column(name = "create_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date createTime;
     /**
      * 更新时间
      */
     @Column(name = "update_time")
+    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
     private Date updateTime;
 }

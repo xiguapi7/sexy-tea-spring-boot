@@ -1,11 +1,13 @@
 package sexy.tea.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import sexy.tea.mapper.StoreMapper;
 import sexy.tea.model.Store;
+import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
 import sexy.tea.service.StoreService;
 import tk.mybatis.mapper.entity.Example;
@@ -55,11 +57,16 @@ public class StoreServiceImpl implements StoreService {
 
     @Override
     public Result find(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+        Page<Store> page = PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(Store.class).build();
         example.createCriteria().andEqualTo("status", 1);
         List<Store> storeList = storeMapper.selectByExample(example);
-        return Result.success("列表查询", storeList);
+        return Result.success("列表查询", Pager.<Store>builder()
+                .pageNum(page.getPageNum())
+                .pageSize(page.getPageSize())
+                .total(page.getTotal())
+                .result(storeList)
+                .build());
     }
 
     @Override

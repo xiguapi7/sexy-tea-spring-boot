@@ -1,5 +1,6 @@
 package sexy.tea.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.util.StringUtils;
 import sexy.tea.exception.BusinessException;
 import sexy.tea.mapper.BeverageMapper;
 import sexy.tea.model.Beverage;
+import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
 import sexy.tea.model.dto.MinioDto;
 import sexy.tea.service.BeverageService;
@@ -72,12 +74,18 @@ public class BeverageServiceImpl implements BeverageService {
     @Override
     public Result find(int pageNum, int pageSize) {
 
-        PageHelper.startPage(pageNum, pageSize);
+        Page<Beverage> page = PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(Beverage.class).build();
         example.createCriteria().andEqualTo("status", 1);
 
-        List<Beverage> beverageList = beverageMapper.selectByExample(example);
-        return Result.success("饮品查询", beverageList);
+        beverageMapper.selectByExample(example);
+
+        return Result.success("饮品查询", Pager.<Beverage>builder()
+                .pageNum(page.getPageNum())
+                .pageSize(page.getPageSize())
+                .total(page.getTotal())
+                .result(page.getResult())
+                .build());
     }
 
     @Override
@@ -155,13 +163,16 @@ public class BeverageServiceImpl implements BeverageService {
             return Result.business("参数错误", Optional.empty());
         }
         name = "%" + name + "%";
-        PageHelper.startPage(pageNum, pageSize);
+        Page<Beverage> page = PageHelper.startPage(pageNum, pageSize);
         List<Beverage> beverage = beverageMapper.findByName(name);
         if (beverage == null) {
             return Result.business("查询的饮品不存在", Optional.empty());
         }
-        return Result.success("关键词: " + name, beverage);
+        return Result.success("关键词: " + name, Pager.<Beverage>builder()
+                .pageNum(page.getPageNum())
+                .pageSize(page.getPageSize())
+                .total(page.getTotal())
+                .result(beverage)
+                .build());
     }
-
-
 }

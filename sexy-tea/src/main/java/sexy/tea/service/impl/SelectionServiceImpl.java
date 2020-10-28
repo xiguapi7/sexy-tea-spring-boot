@@ -1,5 +1,6 @@
 package sexy.tea.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,6 +11,7 @@ import org.springframework.util.StringUtils;
 import sexy.tea.exception.BusinessException;
 import sexy.tea.mapper.SelectionMapper;
 import sexy.tea.model.Selection;
+import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
 import sexy.tea.model.dto.MinioDto;
 import sexy.tea.service.SelectionService;
@@ -71,13 +73,16 @@ public class SelectionServiceImpl implements SelectionService {
 
     @Override
     public Result find(int pageNum, int pageSize) {
-
-        PageHelper.startPage(pageNum, pageSize);
+        Page<Selection> page = PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(Selection.class).build();
         example.createCriteria().andEqualTo("status", 1);
-
         List<Selection> selectionList = selectionMapper.selectByExample(example);
-        return Result.success("列表查询", selectionList);
+        return Result.success("列表查询", Pager.<Selection>builder()
+                .pageNum(page.getPageNum())
+                .pageSize(page.getPageSize())
+                .total(page.getTotal())
+                .result(selectionList)
+                .build());
     }
 
     @Override
@@ -151,11 +156,16 @@ public class SelectionServiceImpl implements SelectionService {
             return Result.business("参数错误", Optional.empty());
         }
         name += "%";
-        PageHelper.startPage(pageNum, pageSize);
+        Page<Selection> page = PageHelper.startPage(pageNum, pageSize);
         List<Selection> selections = selectionMapper.findByName(name);
         if (selections == null) {
             return Result.business("查询的饮品不存在", Optional.empty());
         }
-        return Result.success("关键词: " + name, selections);
+        return Result.success("关键词: " + name, Pager.<Selection>builder()
+                .pageSize(page.getPageSize())
+                .pageNum(page.getPageNum())
+                .total(page.getTotal())
+                .result(selections)
+                .build());
     }
 }

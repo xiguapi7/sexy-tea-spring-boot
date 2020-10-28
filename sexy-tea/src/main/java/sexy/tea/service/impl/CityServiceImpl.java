@@ -1,10 +1,12 @@
 package sexy.tea.service.impl;
 
+import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import sexy.tea.mapper.CityMapper;
 import sexy.tea.model.City;
+import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
 import sexy.tea.service.CityService;
 import tk.mybatis.mapper.entity.Example;
@@ -53,11 +55,16 @@ public class CityServiceImpl implements CityService {
 
     @Override
     public Result find(int pageNum, int pageSize) {
-        PageHelper.startPage(pageNum, pageSize);
+        Page<City> page = PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(City.class).build();
         example.createCriteria().andEqualTo("status", 1);
         List<City> cityList = cityMapper.selectByExample(example);
-        return Result.success("查询城市", cityList);
+        return Result.success("查询城市", Pager.<City>builder()
+                .pageNum(page.getPageNum())
+                .pageSize(page.getPageSize())
+                .total(page.getTotal())
+                .result(cityList)
+                .build());
     }
 
     @Override
