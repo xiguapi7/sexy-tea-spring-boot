@@ -76,7 +76,7 @@ public class BeverageServiceImpl implements BeverageService {
 
         Page<Beverage> page = PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(Beverage.class).build();
-        example.createCriteria().andEqualTo("status", 1);
+        example.createCriteria().andNotEqualTo("status", -1);
 
         beverageMapper.selectByExample(example);
 
@@ -153,8 +153,13 @@ public class BeverageServiceImpl implements BeverageService {
             // 校验
             return Result.business("参数错误", Optional.empty());
         }
-        int row = beverageMapper.deleteByPrimaryKey(id);
-        return Result.success("删除成功, 受影响的行数: " + row, Optional.empty());
+        Beverage beverage = beverageMapper.selectByPrimaryKey(id);
+        if (beverage == null || beverage.getId() <= 0) {
+            return Result.business("参数错误", Optional.empty());
+        }
+        beverage.setStatus(-1);
+        beverageMapper.updateByPrimaryKey(beverage);
+        return Result.success("删除成功", Optional.empty());
     }
 
     @Override
