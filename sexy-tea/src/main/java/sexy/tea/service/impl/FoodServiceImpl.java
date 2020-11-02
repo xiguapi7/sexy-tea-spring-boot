@@ -76,7 +76,7 @@ public class FoodServiceImpl implements FoodService {
     public Result find(int pageNum, int pageSize) {
         Page<Food> page = PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(Food.class).build();
-        example.createCriteria().andEqualTo("status", 1);
+        example.createCriteria().andNotEqualTo("status", -1);
 
         List<Food> foodList = foodMapper.selectByExample(example);
         return Result.success("查询食品", Pager.<Food>builder()

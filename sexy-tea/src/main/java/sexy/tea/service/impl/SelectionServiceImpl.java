@@ -75,7 +75,7 @@ public class SelectionServiceImpl implements SelectionService {
     public Result find(int pageNum, int pageSize) {
         Page<Selection> page = PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(Selection.class).build();
-        example.createCriteria().andEqualTo("status", 1);
+        example.createCriteria().andNotEqualTo("status", -1);
         List<Selection> selectionList = selectionMapper.selectByExample(example);
         return Result.success("列表查询", Pager.<Selection>builder()
                 .pageNum(page.getPageNum())

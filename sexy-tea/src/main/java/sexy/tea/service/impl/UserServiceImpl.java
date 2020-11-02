@@ -3,6 +3,8 @@ package sexy.tea.service.impl;
 import cn.hutool.crypto.SecureUtil;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.github.pagehelper.Page;
+import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,12 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
+import sexy.tea.exception.BusinessException;
 import sexy.tea.mapper.UserMapper;
 import sexy.tea.model.User;
+import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
 import sexy.tea.model.vo.UserVO;
 import sexy.tea.service.UserService;
@@ -73,6 +78,7 @@ public class UserServiceImpl implements UserService {
         return userMapper.insertOrUpdateSelective(record);
     }
 
+    @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result register(User user) {
 
@@ -158,19 +164,29 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public Result userList(String name) {
+    public Result items(int pageNum, int pageSize, String username) {
+        Page<User> page = PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(User.class).build();
-        if (StringUtils.isEmpty(name)) {
+        if (StringUtils.isEmpty(username)) {
             example.createCriteria()
-                    .andEqualTo("status", 1);
+                    .andNotEqualTo("username", "root")
+                    .andNotEqualTo("status", -1);
         } else {
             example.createCriteria()
-                    .andEqualTo("status", 1)
-                    .andEqualTo("name", name);
+                    .andNotEqualTo("status", -1)
+                    .andNotEqualTo("username", "root")
+                    .andLike("username", "%" + username + "%");
         }
-        return Result.success("用户列表查询", userMapper.selectByExample(example));
+        userMapper.selectByExample(example);
+        return Result.success("用户列表查询, 参数" + username, Pager.<User>builder()
+                .pageNum(page.getPageNum())
+                .pageSize(page.getPageSize())
+                .total(page.getTotal())
+                .result(page.getResult())
+                .build());
     }
 
+    @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result removeUser(Integer id) {
         if (id == null || id <= 0) {
@@ -185,9 +201,30 @@ public class UserServiceImpl implements UserService {
         return Result.success("删除成功", Optional.empty());
     }
 
+
+    @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result batchRemoveUser(List<Integer> ids) {
         ids.forEach(this::removeUser);
         return Result.success("批量删除成功", Optional.empty());
+    }
+
+    @Transactional(rollbackFor = BusinessException.class)
+    @Override
+    public Result update(User user) {
+        if (user == null) {
+            // 异常
+            return Result.business("参数异常!", Optional.empty());
+        }
+        Long id = user.getId();
+        User dbUser = userMapper.selectByPrimaryKey(id);
+        if (dbUser == null) {
+            // 异常
+            return Result.business("参数异常! id: " + id, Optional.empty());
+        }
+        user.setPassword(dbUser.getPassword());
+        userMapper.updateByPrimaryKey(user);
+
+        return Result.success("更改成功", user);
     }
 }

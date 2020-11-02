@@ -1,10 +1,12 @@
 package sexy.tea.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sexy.tea.config.CustomJsonSerializer;
 
 import javax.persistence.*;
 import java.io.Serializable;
@@ -44,6 +46,12 @@ public class Selection implements Serializable {
      */
     @Column(name = "product_image")
     private String productImage;
+    /**
+     * 价格
+     */
+    @Column(name = "price")
+    @JsonSerialize(using = CustomJsonSerializer.class)
+    private Double price;
     /**
      * 主分类
      */

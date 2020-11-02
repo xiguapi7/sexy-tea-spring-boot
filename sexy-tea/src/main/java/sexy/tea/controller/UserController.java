@@ -46,13 +46,24 @@ public class UserController {
         return service.logout(loginSessionId);
     }
 
-    @GetMapping("/userList/{name}")
-    public Result userList(@PathVariable String name) {
-        return service.userList(name);
+    @GetMapping("/items/{pageNum}/{pageSize}")
+    public Result items(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
+        return service.items(pageNum, pageSize, "");
+    }
+
+    @GetMapping("/itemsByUserName/{pageNum}/{pageSize}/{username}")
+    public Result itemsByUserName(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize, @PathVariable("username") String username) {
+        return service.items(pageNum, pageSize, username);
     }
 
     @DeleteMapping("/delete/{id}")
     public Result delete(@PathVariable Integer id) {
         return service.removeUser(id);
     }
+
+    @PutMapping("/update")
+    public Result update(@RequestBody User user) {
+        return service.update(user);
+    }
+
 }

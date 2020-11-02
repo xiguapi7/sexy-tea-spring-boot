@@ -32,9 +32,11 @@ public interface UserService {
 
     Result logout(String loginSessionId);
 
-    Result userList(String name);
+    Result items(int pageNum, int pageSize, String name);
 
     Result removeUser(Integer id);
 
     Result batchRemoveUser(List<Integer> ids);
+
+    Result update(User user);
 }
