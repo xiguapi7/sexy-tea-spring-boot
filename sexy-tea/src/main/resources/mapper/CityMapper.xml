@@ -281,4 +281,11 @@
             </if>
         </trim>
     </insert>
+
+    <select id="search" resultMap="BaseResultMap">
+        SELECT DISTINCT *
+        FROM `city`
+        WHERE `status` <![CDATA[<>]]> -1
+          AND city LIKE #{cityName}
+    </select>
 </mapper>

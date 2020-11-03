@@ -29,8 +29,17 @@ public class CityController {
         return service.find(pageNum, pageSize);
     }
 
-    @GetMapping("/itemByCityName/{cityName}")
-    public Result itemByCityName(@PathVariable String cityName) {
-        return service.findByCityName(cityName);
+    @GetMapping("/search/{pageNum}/{pageSize}/{cityName}")
+    public Result search(@PathVariable("pageNum") int pageNum,
+                         @PathVariable("pageSize") int pageSize,
+                         @PathVariable String cityName) {
+        return service.search(pageNum, pageSize, cityName);
+    }
+
+    @GetMapping("/itemByCityName/{pageNum}/{pageSize}/{cityName}")
+    public Result itemByCityName(@PathVariable("pageNum") int pageNum,
+                                 @PathVariable("pageSize") int pageSize,
+                                 @PathVariable String cityName) {
+        return service.findByCityName(pageNum, pageSize, cityName);
     }
 }

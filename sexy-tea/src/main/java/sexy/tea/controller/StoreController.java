@@ -29,8 +29,8 @@ public class StoreController {
         return service.find(pageNum, pageSize);
     }
 
-    @GetMapping("/itemsByCityName/{cityName}")
+    /*@GetMapping("/itemsByCityName/{cityName}")
     public Result itemsByCityName(@PathVariable String cityName) {
-        return service.findByCityName(cityName);
-    }
+        return service.findByCityName(, cityName);
+    }*/
 }

@@ -2,6 +2,7 @@ package sexy.tea.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -21,6 +22,7 @@ import java.util.Optional;
  * description:
  */
 @Service
+@Slf4j
 public class StoreServiceImpl implements StoreService {
 
     private final StoreMapper storeMapper;
@@ -70,17 +72,18 @@ public class StoreServiceImpl implements StoreService {
     }
 
     @Override
-    public Result findByCityName(String cityName) {
-        if (StringUtils.isEmpty(cityName)) {
-            return Result.business("参数错误, cityName: " + cityName, Optional.empty());
+    public Result findByCityName(int pageNum, int pageSize, String city) {
+        if (StringUtils.isEmpty(city)) {
+            return Result.business("参数错误, city: " + city, Optional.empty());
         }
-
-        Example example = Example.builder(Store.class)
-                .build();
-        example.createCriteria()
-                .andEqualTo("city", cityName)
-                .andEqualTo("status", 1);
-        List<Store> storeList = storeMapper.selectByExample(example);
-        return Result.success("关键词:" + cityName, storeList);
+        city = "%" + city + "%";
+        Page<Store> page = PageHelper.startPage(pageNum, pageSize);
+        storeMapper.findByCity(city);
+        return Result.success("关键词:" + city, Pager.<Store>builder()
+                .pageNum(page.getPageNum())
+                .pageSize(page.getPageSize())
+                .total(page.getTotal())
+                .result(page.getResult())
+                .build());
     }
 }

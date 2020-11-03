@@ -23,4 +23,6 @@ public interface CityMapper extends tk.mybatis.mapper.common.Mapper<City> {
     int insertOrUpdate(City record);
 
     int insertOrUpdateSelective(City record);
+
+    List<City> search(@Param("cityName") String cityName);
 }

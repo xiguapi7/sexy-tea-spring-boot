@@ -33,11 +33,6 @@ public class Store implements Serializable {
     @GeneratedValue(generator = "JDBC")
     private Long id;
     /**
-     * 品牌
-     */
-    @Column(name = "brand")
-    private String brand;
-    /**
      * 国家
      */
     @Column(name = "country")
@@ -97,11 +92,6 @@ public class Store implements Serializable {
      */
     @Column(name = "post_code")
     private String postCode;
-    /**
-     * 所有权类型
-     */
-    @Column(name = "owner_ship_type")
-    private String ownerShipType;
     /**
      * 记录状态：1 正常，0 禁用，-1 删除
      */

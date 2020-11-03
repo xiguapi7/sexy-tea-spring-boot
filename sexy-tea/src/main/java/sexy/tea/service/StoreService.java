@@ -25,5 +25,5 @@ public interface StoreService {
 
     Result find(int pageNum, int pageSize);
 
-    Result findByCityName(String cityName);
+    Result findByCityName(int pageNum, int pageSize, String cityName);
 }
