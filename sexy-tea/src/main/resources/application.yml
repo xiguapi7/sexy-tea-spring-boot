@@ -59,7 +59,7 @@ spring:
         max-wait: 60000
 # mybatis配置
 mybatis:
-  type-aliases-package: sexy.tea.model
+  type-aliases-package: sexy.tea.handler
   mapper-locations: classpath:mapper/**/*.xml
 # 通用mapper配置
 mapper:

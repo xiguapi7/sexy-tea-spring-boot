@@ -1,8 +1,7 @@
 package sexy.tea.service;
 
-import sexy.tea.model.ShoppingRecord;
-
-import java.util.List;
+import sexy.tea.model.common.Result;
+import sexy.tea.model.dto.ShoppingRecordDto;
 
 /**
  * author 大大大西西瓜皮🍉
@@ -11,15 +10,11 @@ import java.util.List;
  */
 public interface ShoppingRecordService {
 
+    Result find(int pageNum, int pageSize);
 
-    int updateBatch(List<ShoppingRecord> list);
+    Result findByUid(Long uid);
 
-    int updateBatchSelective(List<ShoppingRecord> list);
+    Result saveOrUpdate(ShoppingRecordDto dto);
 
-    int batchInsert(List<ShoppingRecord> list);
-
-    int insertOrUpdate(ShoppingRecord record);
-
-    int insertOrUpdateSelective(ShoppingRecord record);
-
+    Result delete(Long uid);
 }
