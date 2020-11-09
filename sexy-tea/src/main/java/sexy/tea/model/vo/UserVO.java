@@ -20,7 +20,7 @@ public class UserVO implements Serializable {
 
     private String loginSessionId;
 
-    private Integer id;
+    private Long id;
 
     private String username;
 

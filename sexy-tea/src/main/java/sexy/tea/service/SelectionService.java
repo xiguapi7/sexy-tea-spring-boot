@@ -32,4 +32,6 @@ public interface SelectionService extends UploadService {
     Result delete(Integer id);
 
     Result findByName(String name, int pageNum, int pageSize);
+
+    Result itemsMenu(int pageNum, int pageSize);
 }

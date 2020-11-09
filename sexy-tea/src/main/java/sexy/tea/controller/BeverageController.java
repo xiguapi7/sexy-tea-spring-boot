@@ -44,6 +44,11 @@ public class BeverageController {
         return service.findByName(name, pageNum, pageSize);
     }
 
+    @GetMapping("/items/menu/{type}/{pageNum}/{pageSize}")
+    public Result itemsMenu(@PathVariable("type") int type, @PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
+        return service.itemsMenu(type, pageNum, pageSize);
+    }
+
     @PostMapping("/save")
     public Result save(@RequestBody Beverage beverage) {
         return service.saveOrUpdate(beverage);

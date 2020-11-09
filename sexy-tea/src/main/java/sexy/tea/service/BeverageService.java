@@ -31,4 +31,6 @@ public interface BeverageService extends UploadService {
     Result delete(Long id);
 
     Result findByName(String name, int pageNum, int pageSize);
+
+    Result itemsMenu(int type, int pageNum, int pageSize);
 }

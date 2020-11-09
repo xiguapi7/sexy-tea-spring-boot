@@ -89,6 +89,24 @@ public class BeverageServiceImpl implements BeverageService {
     }
 
     @Override
+    public Result itemsMenu(int type, int pageNum, int pageSize) {
+        Page<Beverage> page = PageHelper.startPage(pageNum, pageSize);
+        Example example = Example.builder(Beverage.class).build();
+        example.createCriteria()
+                .andEqualTo("type", type)
+                .andEqualTo("status", 1);
+
+        beverageMapper.selectByExample(example);
+
+        return Result.success("饮品查询", Pager.<Beverage>builder()
+                .pageNum(page.getPageNum())
+                .pageSize(page.getPageSize())
+                .total(page.getTotal())
+                .result(page.getResult())
+                .build());
+    }
+
+    @Override
     // @Cacheable(value = RedisConstant)
     public Result findByPrimaryKey(Long primaryKey) {
 

@@ -32,6 +32,11 @@ public class FoodController {
         return service.find(pageNum, pageSize);
     }
 
+    @GetMapping("/items/menu/{pageNum}/{pageSize}")
+    public Result itemsMenu(@PathVariable("pageNum") int pageNum, @PathVariable("pageSize") int pageSize) {
+        return service.itemsMenu(pageNum, pageSize);
+    }
+
     @GetMapping("/itemsById/{id}")
     public Result itemsById(@PathVariable("id") Long id) {
         return service.findByPrimaryKey(id);
