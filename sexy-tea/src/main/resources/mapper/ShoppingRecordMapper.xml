@@ -6,8 +6,7 @@
         <!--@Table shopping_record-->
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="uid" jdbcType="BIGINT" property="uid"/>
-        <result column="items" jdbcType="VARCHAR" property="items" typeHandler="JSONTypeHandler"/>
-        <result column="status" jdbcType="INTEGER" property="status"/>
+        <result column="items" jdbcType="VARCHAR" property="items" typeHandler="sexy.tea.handler.ItemsJSONTypeHandler" />
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>

@@ -1,7 +1,7 @@
 package sexy.tea.service;
 
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.ShoppingRecordDto;
+import sexy.tea.model.dto.shopping.ShoppingRecordDto;
 
 /**
  * author 大大大西西瓜皮🍉

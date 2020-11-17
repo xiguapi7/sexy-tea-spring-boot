@@ -3,6 +3,7 @@ package sexy.tea.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -11,10 +12,12 @@ import sexy.tea.mapper.ShoppingRecordMapper;
 import sexy.tea.model.ShoppingRecord;
 import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.ShoppingRecordDto;
+import sexy.tea.model.dto.shopping.*;
 import sexy.tea.service.ShoppingRecordService;
 import tk.mybatis.mapper.entity.Example;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 /**
@@ -66,28 +69,78 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result saveOrUpdate(ShoppingRecordDto dto) {
-        if (dto == null || (dto.getUid() == null || dto.getUid() <= 0)) {
+
+        if (dto == null) {
             return Result.business("参数错误", Optional.empty());
         }
+
         Long uid = dto.getUid();
+
+        if (uid == null || uid <= 0) {
+            return Result.business("参数错误", Optional.empty());
+        }
+
         Example example = Example.builder(ShoppingRecord.class).build();
         example.createCriteria().andNotEqualTo("status", -1).andEqualTo("uid", uid);
+        ShoppingRecord record = shoppingRecordMapper.selectOneByExample(example);
 
-        ShoppingRecord originShoppingRecord = shoppingRecordMapper.selectOneByExample(example);
-        if (originShoppingRecord == null || originShoppingRecord.getId() == null) {
-            // 如果不存在, 则新增
-            ShoppingRecord record = ShoppingRecord.builder()
-                    .uid(dto.getUid())
-                    // .items(dto.getItemsJson())
-                    .build();
+        if (record == null) {
+            record = ShoppingRecord.builder().uid(uid).build();
+        }
+
+        log.info("uid = {}", uid);
+
+        if (record.getId() == null) {
+            // 新增
+            List<RawItemDto> rawItemDtos = dto.getItems();
+            List<ItemDto> itemDtos = new ArrayList<>();
+
+            rawItemDtos.parallelStream().forEach(rawItemDto -> {
+                String table = rawItemDto.getTable();
+
+                if ("beverage".equals(table)) {
+                    BeverageItemDto itemDto = new BeverageItemDto();
+                    BeanUtils.copyProperties(rawItemDto, itemDto);
+                    itemDtos.add(itemDto);
+                } else if ("food".equals(table)) {
+                    FoodItemDto itemDto = new FoodItemDto();
+                    BeanUtils.copyProperties(rawItemDto, itemDto);
+                    itemDtos.add(itemDto);
+                } else {
+                    SelectionItemDto itemDto = new SelectionItemDto();
+                    BeanUtils.copyProperties(rawItemDto, itemDto);
+                    itemDtos.add(itemDto);
+                }
+            });
+
+            log.info("add items: {}", itemDtos);
+
+            record.setItems(itemDtos);
             shoppingRecordMapper.insertSelective(record);
-            return Result.success("添加购物车成功", record);
         } else {
             // 更新
-            // originShoppingRecord.setItems(dto.getItemsJson());
-            shoppingRecordMapper.updateByPrimaryKeySelective(originShoppingRecord);
-            return Result.success("更新购物车成功", originShoppingRecord);
+            List<RawItemDto> rawItemDtos = dto.getItems();
+            List<ItemDto> newItemDtos = new ArrayList<>();
+
+            record.getItems().parallelStream().forEach(item -> {
+                rawItemDtos.parallelStream().forEach(rawItemDto -> {
+                    if (rawItemDto.getTable().equals(item.getTable()) && rawItemDto.getId().equals(item.getId())) {
+                        // 原已存在记录
+                        newItemDtos.add(rawItemDto);
+                    } else {
+                        newItemDtos.add(item);
+                    }
+                });
+            });
+            log.info("update items: {}", newItemDtos);
+
+            record.setItems(newItemDtos);
+            shoppingRecordMapper.updateByPrimaryKeySelective(record);
         }
+
+        log.info("record: {}", record);
+
+        return Result.success("更改成功", record);
     }
 
     @Transactional(rollbackFor = BusinessException.class)

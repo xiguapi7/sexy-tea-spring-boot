@@ -4,7 +4,7 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.ShoppingRecordDto;
+import sexy.tea.model.dto.shopping.ShoppingRecordDto;
 import sexy.tea.service.ShoppingRecordService;
 
 /**
@@ -36,7 +36,7 @@ public class ShoppingRecordController {
         return service.findByUid(uid);
     }
 
-    @PostMapping("/add")
+    @PostMapping("/save")
     public Result add(@RequestBody ShoppingRecordDto dto) {
         return service.saveOrUpdate(dto);
     }

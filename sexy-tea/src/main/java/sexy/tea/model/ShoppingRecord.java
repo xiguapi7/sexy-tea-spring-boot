@@ -2,6 +2,7 @@ package sexy.tea.model;
 
 import lombok.Builder;
 import lombok.Data;
+import sexy.tea.model.dto.shopping.ItemDto;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -9,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
+import java.util.List;
 
 /**
  * 购物车实体类
@@ -39,7 +41,7 @@ public class ShoppingRecord implements Serializable {
      * 购物项（JSON存储）
      */
     @Column(name = "items")
-    private String items;
+    private List<ItemDto> items;
 
     /**
      * 记录状态：1 正常，0 禁用，-1 删除
