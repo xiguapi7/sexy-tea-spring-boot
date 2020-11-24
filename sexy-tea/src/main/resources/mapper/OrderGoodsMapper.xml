@@ -311,4 +311,10 @@
       </if>
     </trim>
   </insert>
+
+  <update id="deleteByOrderId" parameterType="java.lang.String">
+    UPDATE `order_goods`
+    SET `status` = -1
+    WHERE order_id = #{orderId,jdbcType=VARCHAR}
+  </update>
 </mapper>

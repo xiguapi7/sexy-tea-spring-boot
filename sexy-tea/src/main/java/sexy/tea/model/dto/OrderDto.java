@@ -2,12 +2,8 @@ package sexy.tea.model.dto;
 
 import lombok.Builder;
 import lombok.Data;
-import sexy.tea.model.Order;
-import sexy.tea.model.OrderGoods;
-import sexy.tea.model.OrderShipping;
-import sexy.tea.model.vo.UserVO;
-
-import java.util.List;
+import sexy.tea.model.ShoppingRecord;
+import sexy.tea.model.User;
 
 /**
  * @author 大大大西西瓜皮🍉
@@ -18,11 +14,7 @@ import java.util.List;
 @Builder
 public class OrderDto {
 
-    private UserVO userVO;
+    private User user;
 
-    private Order order;
-
-    private List<OrderGoods> orderGoodsList;
-
-    private OrderShipping orderShipping;
+    private ShoppingRecord record;
 }

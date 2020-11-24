@@ -1,10 +1,12 @@
 package sexy.tea.model;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import sexy.tea.config.CustomJsonSerializer;
 
 import javax.persistence.Column;
 import javax.persistence.Id;
@@ -13,6 +15,8 @@ import java.io.Serializable;
 import java.util.Date;
 
 /**
+ * 订单实体
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 12:44 2020-09-29
  * description:
@@ -28,19 +32,20 @@ public class Order implements Serializable {
      */
     @Id
     @Column(name = "id")
-    private Long id;
+    private String id;
 
     /**
      * 用户id
      */
     @Column(name = "`uid`")
-    private Integer uid;
+    private Long uid;
 
     /**
      * 实际支付价格
      */
-    @Column(name = "pay_price")
-    private Integer payPrice;
+    @Column(name = "total")
+    @JsonSerialize(using = CustomJsonSerializer.class)
+    private Double total;
 
     /**
      * 是否已经支付：1 已支付，0 未支付，-1 订单失效，2 已发货，3 交易成功，4 交易失败
@@ -97,23 +102,8 @@ public class Order implements Serializable {
     private Date closeTime;
 
     /**
-     * 邮费
+     * 评价
      */
-    @Column(name = "post_fee")
-    private Integer postFee;
-
-    /**
-     * 物流名称
-     */
-    @Column(name = "shipping_name")
-    private String shippingName;
-
-    /**
-     * 物流单号
-     */
-    @Column(name = "shipping_code")
-    private String shippingCode;
-
     @Column(name = "rate")
     private String rate;
 

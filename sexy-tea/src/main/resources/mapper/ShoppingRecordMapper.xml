@@ -6,17 +6,27 @@
         <!--@Table shopping_record-->
         <id column="id" jdbcType="BIGINT" property="id"/>
         <result column="uid" jdbcType="BIGINT" property="uid"/>
-        <result column="items" jdbcType="VARCHAR" property="items" typeHandler="sexy.tea.handler.ItemsJSONTypeHandler" />
+        <result column="items" jdbcType="VARCHAR" property="items"/>
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
     <sql id="Base_Column_List">
-        <!--@mbg.generated generated on Wed Nov 04 15:07:14 CST 2020.-->
-        id, `uid`, items, `status`, create_time, update_time
+        id,
+        `uid`,
+        items,
+        `status`,
+        create_time,
+        update_time
     </sql>
 
 
     <update id="deleteByUid" parameterType="java.lang.Long">
+        UPDATE shopping_record
+        SET `status` = -1
+        WHERE uid = #{uid}
+    </update>
+
+    <update id="updateShoppingRecordByUid" parameterType="java.lang.Long">
         UPDATE shopping_record
         SET `status` = -1
         WHERE uid = #{uid}

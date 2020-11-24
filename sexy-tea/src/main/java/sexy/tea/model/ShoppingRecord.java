@@ -1,8 +1,9 @@
 package sexy.tea.model;
 
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
 import lombok.Builder;
 import lombok.Data;
-import sexy.tea.model.dto.shopping.ItemDto;
+import sexy.tea.config.CustomJsonSerializer;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
@@ -10,7 +11,6 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-import java.util.List;
 
 /**
  * 购物车实体类
@@ -41,7 +41,15 @@ public class ShoppingRecord implements Serializable {
      * 购物项（JSON存储）
      */
     @Column(name = "items")
-    private List<ItemDto> items;
+    private String items;
+
+
+    /**
+     * 总金额
+     */
+    @Column(name = "total")
+    @JsonSerialize(using = CustomJsonSerializer.class)
+    private Double total;
 
     /**
      * 记录状态：1 正常，0 禁用，-1 删除

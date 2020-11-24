@@ -453,4 +453,17 @@
       </if>
     </trim>
   </insert>
+
+  <update id="fallbackUpdateOrder" parameterType="java.lang.String">
+    UPDATE `order`
+    SET is_pay = 1
+    WHERE `status` = 1
+    AND `id` = #{orderId,jdbcType=VARCHAR}
+  </update>
+
+  <update id="deleteByOrderId" parameterType="java.lang.String">
+    UPDATE `order`
+    SET `status` = -1
+    WHERE `id` = #{orderId,jdbcType=VARCHAR}
+  </update>
 </mapper>

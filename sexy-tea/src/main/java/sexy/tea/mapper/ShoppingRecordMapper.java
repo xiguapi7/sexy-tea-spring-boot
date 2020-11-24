@@ -11,4 +11,6 @@ import sexy.tea.model.ShoppingRecord;
 @Mapper
 public interface ShoppingRecordMapper extends tk.mybatis.mapper.common.Mapper<ShoppingRecord> {
     void deleteByUid(Long uid);
+
+    void updateShoppingRecordByUid(Long uid);
 }

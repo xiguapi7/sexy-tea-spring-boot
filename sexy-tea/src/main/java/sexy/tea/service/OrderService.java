@@ -23,6 +23,16 @@ public interface OrderService {
 
     int insertOrUpdateSelective(Order record);
 
+    Result find(int pageNum, int pageSize);
+
     Result createOrder(OrderDto orderDto);
+
+    Order findByOrderId(String orderId);
+
+    Result findOrderGoodsByOrderId(String orderId);
+
+    Result deleteByOrderId(String orderId);
+
+    void fallbackUpdateOrder(String orderId);
 }
 

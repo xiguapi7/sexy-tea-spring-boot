@@ -1,10 +1,7 @@
 package sexy.tea.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import sexy.tea.model.common.Result;
 import sexy.tea.model.dto.OrderDto;
 import sexy.tea.service.OrderService;
@@ -29,4 +26,25 @@ public class OrderController {
     public Result create(@RequestBody OrderDto orderDto) {
         return service.createOrder(orderDto);
     }
+
+    @GetMapping("/find/{pageNum}/{pageSize}")
+    public Result find(@PathVariable int pageNum, @PathVariable int pageSize) {
+        return service.find(pageNum, pageSize);
+    }
+
+    @GetMapping("/findByOrderId/{orderId}")
+    public Result findByOrderId(@PathVariable String orderId) {
+        return Result.success("根据订单ID查询", service.findByOrderId(orderId));
+    }
+
+    @GetMapping("/findOrderGoodsByOrderId/{orderId}")
+    public Result findOrderGoodsByOrderId(@PathVariable String orderId) {
+        return service.findOrderGoodsByOrderId(orderId);
+    }
+
+    @DeleteMapping("/delete/{orderId}")
+    public Result deleteByOrderId(@PathVariable String orderId) {
+        return service.deleteByOrderId(orderId);
+    }
+
 }

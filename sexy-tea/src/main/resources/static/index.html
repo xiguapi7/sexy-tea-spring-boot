@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>确认订单</title>
+</head>
+<body>
+<div>
+
+    <form name="punchout_form" method="post"
+          action="https://openapi.alipaydev.com/gateway.do?alipay_sdk=alipay-easysdk-java-2.1.0&app_id=2016101000653119&charset=UTF-8&format=json&method=alipay.trade.page.pay&notify_url=http%3A%2F%2Ff4722s.natappfree.cc%2Fpay%2Ffallback&return_url=http%3A%2F%2Ff4722s.natappfree.cc%2Freturn.html&sign=ngbTBTeLDCIypUa6dOo0%2FgKlasdrhrDgHRIYRETPcJ9JOJJoTTjLNkAtJT%2FlzoRi3q8tYV1nTFM%2FEQ4WGI%2B9o2YVuovoFl2zBkpkQPdtKFaiv7cOC2KcQeDyLwZLNpq%2B8Qj7q7liv1yD7aB9hVsZtHG3pF2s%2BLBB7B85%2BtG85bUaQwRYZJmisehMnTxbvIYQIeYmVrM4QDV%2BAFvUoOyZvAtw75bkD3MVuBYzKeg4ZZZsokWecgOXyJyI2Wmtt1Km93fYoO2PfaygvH4P2As5xtH6tcQ24HPS919Y9YXfhpYTLJN%2BhgbYrl0zEWxTvDwgTTAd4DSQF%2Ff4sZCyISsL7g%3D%3D&sign_type=RSA2&timestamp=2020-11-24+23%3A37%3A41&version=1.0">
+        <input type="hidden" name="biz_content"
+               value="{&quot;out_trade_no&quot;:&quot;f5dcc0bf2673484788626d333b6bf263&quot;,&quot;total_amount&quot;:&quot;100.0&quot;,&quot;subject&quot;:&quot;订单:f5dcc0bf2673484788626d333b6bf263&quot;,&quot;product_code&quot;:&quot;FAST_INSTANT_TRADE_PAY&quot;}"><input
+            type="submit" value="立即支付" style="display:none"></form>
+    <script>document.forms[0].submit();</script>
+</div>
+</body>
+</html>

@@ -3,8 +3,8 @@ package sexy.tea.controller;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
+import sexy.tea.model.ShoppingRecord;
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.shopping.ShoppingRecordDto;
 import sexy.tea.service.ShoppingRecordService;
 
 /**
@@ -37,13 +37,13 @@ public class ShoppingRecordController {
     }
 
     @PostMapping("/save")
-    public Result add(@RequestBody ShoppingRecordDto dto) {
-        return service.saveOrUpdate(dto);
+    public Result add(@RequestBody ShoppingRecord record) {
+        return service.saveOrUpdate(record);
     }
 
     @PutMapping("/update")
-    public Result update(@RequestBody ShoppingRecordDto dto) {
-        return service.saveOrUpdate(dto);
+    public Result update(@RequestBody ShoppingRecord record) {
+        return service.saveOrUpdate(record);
     }
 
     @DeleteMapping("/delete/{uid}")

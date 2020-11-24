@@ -3,7 +3,6 @@ package sexy.tea.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -12,12 +11,9 @@ import sexy.tea.mapper.ShoppingRecordMapper;
 import sexy.tea.model.ShoppingRecord;
 import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.shopping.*;
 import sexy.tea.service.ShoppingRecordService;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 /**
@@ -63,84 +59,40 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
                 .andNotEqualTo("status", -1)
                 .andEqualTo("uid", uid);
         ShoppingRecord shoppingRecord = shoppingRecordMapper.selectOneByExample(example);
+
+        if (shoppingRecord == null) {
+            return Result.success("查询的用户id无购物车项", uid);
+        }
+
         return Result.success("查询成功", shoppingRecord);
     }
 
     @Transactional(rollbackFor = BusinessException.class)
     @Override
-    public Result saveOrUpdate(ShoppingRecordDto dto) {
-
-        if (dto == null) {
+    public Result saveOrUpdate(ShoppingRecord record) {
+        if (record == null || record.getUid() == null) {
             return Result.business("参数错误", Optional.empty());
         }
 
-        Long uid = dto.getUid();
+        final Example example = Example.builder(ShoppingRecord.class).build();
+        example.createCriteria().andEqualTo("status", 1).andEqualTo("uid", record.getUid());
+        ShoppingRecord newShoppingRecord = shoppingRecordMapper.selectOneByExample(example);
 
-        if (uid == null || uid <= 0) {
-            return Result.business("参数错误", Optional.empty());
+        if (newShoppingRecord == null) {
+            newShoppingRecord = ShoppingRecord.builder().build();
         }
 
-        Example example = Example.builder(ShoppingRecord.class).build();
-        example.createCriteria().andNotEqualTo("status", -1).andEqualTo("uid", uid);
-        ShoppingRecord record = shoppingRecordMapper.selectOneByExample(example);
+        newShoppingRecord.setUid(record.getUid());
+        newShoppingRecord.setItems(record.getItems());
+        newShoppingRecord.setTotal(record.getTotal());
 
-        if (record == null) {
-            record = ShoppingRecord.builder().uid(uid).build();
-        }
-
-        log.info("uid = {}", uid);
-
-        if (record.getId() == null) {
-            // 新增
-            List<RawItemDto> rawItemDtos = dto.getItems();
-            List<ItemDto> itemDtos = new ArrayList<>();
-
-            rawItemDtos.parallelStream().forEach(rawItemDto -> {
-                String table = rawItemDto.getTable();
-
-                if ("beverage".equals(table)) {
-                    BeverageItemDto itemDto = new BeverageItemDto();
-                    BeanUtils.copyProperties(rawItemDto, itemDto);
-                    itemDtos.add(itemDto);
-                } else if ("food".equals(table)) {
-                    FoodItemDto itemDto = new FoodItemDto();
-                    BeanUtils.copyProperties(rawItemDto, itemDto);
-                    itemDtos.add(itemDto);
-                } else {
-                    SelectionItemDto itemDto = new SelectionItemDto();
-                    BeanUtils.copyProperties(rawItemDto, itemDto);
-                    itemDtos.add(itemDto);
-                }
-            });
-
-            log.info("add items: {}", itemDtos);
-
-            record.setItems(itemDtos);
-            shoppingRecordMapper.insertSelective(record);
+        if (newShoppingRecord.getId() == null) {
+            shoppingRecordMapper.insertSelective(newShoppingRecord);
         } else {
-            // 更新
-            List<RawItemDto> rawItemDtos = dto.getItems();
-            List<ItemDto> newItemDtos = new ArrayList<>();
-
-            record.getItems().parallelStream().forEach(item -> {
-                rawItemDtos.parallelStream().forEach(rawItemDto -> {
-                    if (rawItemDto.getTable().equals(item.getTable()) && rawItemDto.getId().equals(item.getId())) {
-                        // 原已存在记录
-                        newItemDtos.add(rawItemDto);
-                    } else {
-                        newItemDtos.add(item);
-                    }
-                });
-            });
-            log.info("update items: {}", newItemDtos);
-
-            record.setItems(newItemDtos);
-            shoppingRecordMapper.updateByPrimaryKeySelective(record);
+            shoppingRecordMapper.updateByPrimaryKeySelective(newShoppingRecord);
         }
 
-        log.info("record: {}", record);
-
-        return Result.success("更改成功", record);
+        return Result.success("更改成功", newShoppingRecord);
     }
 
     @Transactional(rollbackFor = BusinessException.class)
@@ -153,5 +105,10 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
         // 根据uid清空购物车
         shoppingRecordMapper.deleteByUid(uid);
         return Result.success("清空购物车成功: uid = " + uid, Optional.empty());
+    }
+
+    @Override
+    public void updateShoppingRecordByUid(Long id) {
+        shoppingRecordMapper.updateShoppingRecordByUid(id);
     }
 }

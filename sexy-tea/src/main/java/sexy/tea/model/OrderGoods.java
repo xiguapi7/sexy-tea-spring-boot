@@ -36,37 +36,13 @@ public class OrderGoods implements Serializable {
      * 订单id
      */
     @Column(name = "order_id")
-    private Long orderId;
+    private String orderId;
 
     /**
-     * 商品id
+     * 订单商品项
      */
-    @Column(name = "goods_id")
-    private Integer goodsId;
-
-    /**
-     * 商品数量
-     */
-    @Column(name = "`count`")
-    private Integer count;
-
-    /**
-     * 商品单价
-     */
-    @Column(name = "price")
-    private Integer price;
-
-    /**
-     * 商品总价
-     */
-    @Column(name = "total_price")
-    private Integer totalPrice;
-
-    /**
-     * 图片地址
-     */
-    @Column(name = "pic")
-    private String pic;
+    @Column(name = "items")
+    private String items;
 
     /**
      * 记录状态：1 正常，0 禁用，-1 删除

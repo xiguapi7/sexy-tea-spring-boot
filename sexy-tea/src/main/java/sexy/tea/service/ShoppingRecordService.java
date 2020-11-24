@@ -1,7 +1,7 @@
 package sexy.tea.service;
 
+import sexy.tea.model.ShoppingRecord;
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.shopping.ShoppingRecordDto;
 
 /**
  * author 大大大西西瓜皮🍉
@@ -14,7 +14,9 @@ public interface ShoppingRecordService {
 
     Result findByUid(Long uid);
 
-    Result saveOrUpdate(ShoppingRecordDto dto);
+    Result saveOrUpdate(ShoppingRecord record);
 
     Result delete(Long uid);
+
+    void updateShoppingRecordByUid(Long id);
 }

@@ -22,4 +22,8 @@ public interface OrderMapper extends tk.mybatis.mapper.common.Mapper<Order> {
     int insertOrUpdate(Order record);
 
     int insertOrUpdateSelective(Order record);
+
+    void fallbackUpdateOrder(String orderId);
+
+    void deleteByOrderId(String orderId);
 }
