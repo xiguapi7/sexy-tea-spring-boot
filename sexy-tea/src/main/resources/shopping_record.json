@@ -1,0 +1,44 @@
+{
+  "uid": 1,
+  "items": "[{\"id\":1,\"foodId\":\"30010002\",\"foodName\":\"蓝莓麦芬\",\"foodImage\":\"blueberry-muffin.jpg\",\"price\":\"10.00\",\"table\":\"food\",\"count\":3},{\"id\":1,\"beverageId\":\"20080002\",\"beverageName\":\"橘香茉吉托\",\"beverageImage\":\"citrus-mint-mojito.jpg\",\"type\":1,\"price\":\"10.00\",\"table\":\"beverage\",\"count\":2},{\"id\":39,\"beverageId\":\"40010001\",\"beverageName\":\"星巴克?凤舞祥云综合咖啡豆\",\"beverageImage\":\"south-of-the-clouds.jpg\",\"type\":2,\"price\":\"10.00\",\"table\":\"beverage\",\"count\":1},{\"id\":1,\"productId\":\"010010202\",\"productName\":\"橘香茉吉托\",\"productImage\":\"citrus-mint-mojito.jpg\",\"price\":\"10.00\",\"table\":\"selection\",\"count\":2}]",
+  "originItems": [
+    {
+      "id": 1,
+      "foodId": "30010002",
+      "foodName": "蓝莓麦芬",
+      "foodImage": "blueberry-muffin.jpg",
+      "price": "10.00",
+      "table": "food",
+      "count": 3
+    },
+    {
+      "id": 1,
+      "beverageId": "20080002",
+      "beverageName": "橘香茉吉托",
+      "beverageImage": "citrus-mint-mojito.jpg",
+      "type": 1,
+      "price": "10.00",
+      "table": "beverage",
+      "count": 2
+    },
+    {
+      "id": 39,
+      "beverageId": "40010001",
+      "beverageName": "星巴克?凤舞祥云综合咖啡豆",
+      "beverageImage": "south-of-the-clouds.jpg",
+      "type": 2,
+      "price": "10.00",
+      "table": "beverage",
+      "count": 1
+    },
+    {
+      "id": 1,
+      "productId": "010010202",
+      "productName": "橘香茉吉托",
+      "productImage": "citrus-mint-mojito.jpg",
+      "price": "10.00",
+      "table": "selection",
+      "count": 2
+    }
+  ]
+}
