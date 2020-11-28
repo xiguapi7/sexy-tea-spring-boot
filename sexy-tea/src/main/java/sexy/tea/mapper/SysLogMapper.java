@@ -7,10 +7,11 @@ import sexy.tea.model.SysLog;
 import java.util.List;
 
 /**
+ * <p>
  *
- * author 大大大西西瓜皮🍉
- * date 18:00 2020-10-13
- * description: 
+ * @author 大大大西西瓜皮🍉
+ * @since 2020-11-28 上午 11:48
+ * desc:
  */
 @Mapper
 public interface SysLogMapper extends tk.mybatis.mapper.common.Mapper<SysLog> {

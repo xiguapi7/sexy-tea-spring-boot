@@ -1,31 +1,28 @@
 package sexy.tea.model;
 
-import com.fasterxml.jackson.annotation.JsonFormat;
-import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Table;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 /**
+ * <p>
  *
- * author 大大大西西瓜皮🍉
- * date 18:00 2020-10-13
- * description: 
+ * @author 大大大西西瓜皮🍉
+ * @since 2020-11-28 上午 11:48
+ * desc:
  */
 @Data
 @Builder
-@AllArgsConstructor
-@NoArgsConstructor
 @Table(name = "sys_log")
 public class SysLog implements Serializable {
     /**
-     * 日志表id
+     * 系统日志表主键
      */
     @Id
     @Column(name = "id")
@@ -33,57 +30,46 @@ public class SysLog implements Serializable {
     private Long id;
 
     /**
-     * 用户id
+     * 调用的uri
      */
-    // @Column(name = "`uid`")
-    // private Integer uid;
+    @Column(name = "uri")
+    private String uri;
 
     /**
-     * 用户名字
+     * 调用的方法
      */
-    // @Column(name = "username")
-    // private String username;
+    @Column(name = "`method`")
+    private String method;
 
     /**
-     * 登录地址
+     * 入参
      */
-    // @Column(name = "`location`")
-    // private String location;
+    @Column(name = "args")
+    private String args;
 
     /**
-     * IP地址
+     * 出参
      */
-    // @Column(name = "ip")
-    // private String ip;
+    @Column(name = "`result`")
+    private String result;
 
     /**
-     * 设备
+     * 耗时
      */
-    // @Column(name = "device")
-    // private String device;
-
-    @Column(name = "`remark`")
-    private String remark;
+    @Column(name = "`use`")
+    private Long use;
 
     /**
-     * 操作
+     * 调用方IP地址
      */
-    @Column(name = "`operation`")
-    private String operation;
-
-    /**
-     * 操作时间
-     */
-    @Column(name = "operation_time")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Long operationTime;
+    @Column(name = "ip")
+    private String ip;
 
     /**
      * 创建时间
      */
     @Column(name = "create_time")
-    @JsonFormat(pattern = "yyyy-MM-dd HH:mm:ss")
-    private Long createTime;
+    private LocalDateTime createTime;
 
     private static final long serialVersionUID = 1L;
 }
