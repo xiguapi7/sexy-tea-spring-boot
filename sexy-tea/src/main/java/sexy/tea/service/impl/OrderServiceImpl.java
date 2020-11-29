@@ -209,5 +209,16 @@ public class OrderServiceImpl implements OrderService {
             log.error("支付回调出错, error = {}", e.getMessage());
         }
     }
+
+    @Override
+    public Result findByUid(Long uid) {
+        if (uid == null || uid <= 0) {
+            return Result.business("参数错误", Optional.empty());
+        }
+        final Example example = Example.builder(Order.class).build();
+        example.createCriteria().andEqualTo("uid", uid).andNotEqualTo("status", -1);
+        final List<Order> orderList = orderMapper.selectByExample(example);
+        return Result.success("查询订单成功", orderList);
+    }
 }
 

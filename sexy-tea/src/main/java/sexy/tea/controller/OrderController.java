@@ -47,4 +47,8 @@ public class OrderController {
         return service.deleteByOrderId(orderId);
     }
 
+    @GetMapping("/findByUid/{uid}")
+    public Result findByUid(@PathVariable Long uid) {
+        return service.findByUid(uid);
+    }
 }

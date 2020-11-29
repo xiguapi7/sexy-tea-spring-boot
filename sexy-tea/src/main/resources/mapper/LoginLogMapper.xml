@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sexy.tea.mapper.LoginLogMapper">
+  <resultMap id="BaseResultMap" type="sexy.tea.model.LoginLog">
+    <!--@mbg.generated generated on Sat Nov 28 14:57:14 CST 2020.-->
+    <!--@Table login_log-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="uid" jdbcType="INTEGER" property="uid" />
+    <result column="username" jdbcType="VARCHAR" property="username" />
+    <result column="ip" jdbcType="VARCHAR" property="ip" />
+    <result column="operation_time" jdbcType="TIMESTAMP" property="operationTime" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Sat Nov 28 14:57:14 CST 2020.-->
+    id, `uid`, username, ip, operation_time, create_time
+  </sql>
+</mapper>

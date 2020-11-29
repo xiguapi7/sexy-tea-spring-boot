@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sexy.tea.mapper.ErrorLogMapper">
+  <resultMap id="BaseResultMap" type="sexy.tea.model.ErrorLog">
+    <!--@mbg.generated generated on Sat Nov 28 14:42:58 CST 2020.-->
+    <!--@Table error_log-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="signature" jdbcType="VARCHAR" property="signature" />
+    <result column="args" jdbcType="VARCHAR" property="args" />
+    <result column="error" jdbcType="VARCHAR" property="error" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Sat Nov 28 14:42:58 CST 2020.-->
+    id, signature, args, error, create_time
+  </sql>
+</mapper>

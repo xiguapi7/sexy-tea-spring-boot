@@ -34,5 +34,7 @@ public interface OrderService {
     Result deleteByOrderId(String orderId);
 
     void fallbackUpdateOrder(String orderId);
+
+    Result findByUid(Long uid);
 }
 

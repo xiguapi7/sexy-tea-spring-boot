@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="sexy.tea.mapper.NewsInfoMapper">
+  <resultMap id="BaseResultMap" type="sexy.tea.model.NewsInfo">
+    <!--@mbg.generated generated on Sun Nov 29 11:20:59 CST 2020.-->
+    <!--@Table news_info-->
+    <id column="id" jdbcType="BIGINT" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="link" jdbcType="VARCHAR" property="link" />
+    <result column="head_image" jdbcType="VARCHAR" property="headImage" />
+    <result column="news_times" jdbcType="TIMESTAMP" property="newsTimes" />
+    <result column="get_time" jdbcType="TIMESTAMP" property="getTime" />
+  </resultMap>
+  <sql id="Base_Column_List">
+    <!--@mbg.generated generated on Sun Nov 29 11:20:59 CST 2020.-->
+    id, title, link, head_image, news_times, get_time
+  </sql>
+</mapper>
