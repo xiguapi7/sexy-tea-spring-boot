@@ -66,6 +66,12 @@ public class Order implements Serializable {
     private String nickname;
 
     /**
+     * 电话号码
+     */
+    @Column(name = "phone")
+    private String phone;
+
+    /**
      * 备注
      */
     @Column(name = "remark")

@@ -102,6 +102,7 @@ public class OrderServiceImpl implements OrderService {
         final Page<Order> page = PageHelper.startPage(pageNum, pageSize);
         final Example example = Example.builder(Order.class).build();
         example.createCriteria().andNotEqualTo("status", -1);
+        example.setOrderByClause("update_time DESC");
         orderMapper.selectByExample(example);
 
         return Result.success("订单查询成功", Pager.<Order>builder()
@@ -134,6 +135,7 @@ public class OrderServiceImpl implements OrderService {
                 .id(orderId)
                 .uid(user.getId())
                 .username(user.getUsername())
+                .phone(user.getPhone())
                 .total(record.getTotal())
                 .isPay(0)
                 .nickname(user.getNickname())
@@ -166,6 +168,7 @@ public class OrderServiceImpl implements OrderService {
         example.createCriteria()
                 .andEqualTo("id", orderId)
                 .andEqualTo("status", 1);
+        example.setOrderByClause("update_time DESC");
 
         return orderMapper.selectOneByExample(example);
     }
@@ -178,6 +181,7 @@ public class OrderServiceImpl implements OrderService {
 
         final Example example = Example.builder(OrderGoods.class).build();
         example.createCriteria().andEqualTo("orderId", orderId).andEqualTo("status", 1);
+        example.setOrderByClause("update_time DESC");
 
         final OrderGoods orderGoods = orderGoodsMapper.selectOneByExample(example);
         return Result.success("查询订单项成功", orderGoods);
@@ -217,6 +221,7 @@ public class OrderServiceImpl implements OrderService {
         }
         final Example example = Example.builder(Order.class).build();
         example.createCriteria().andEqualTo("uid", uid).andNotEqualTo("status", -1);
+        example.setOrderByClause("update_time DESC");
         final List<Order> orderList = orderMapper.selectByExample(example);
         return Result.success("查询订单成功", orderList);
     }
