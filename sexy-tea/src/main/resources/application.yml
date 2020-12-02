@@ -90,4 +90,16 @@ alipay:
   publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx7psSKGuqlYUFSiK9nn+A56C2h5BchrKCE6U5rAPX3zoiEbgMHdqziZ8+QkDa0GCJ5tIJRpet26bdKKxycixn9AeEM52YqYmYSU3SBkdpKk5gG9aIzSCvSsFvRbPrXiy9nAORGL+cW2E4S03plwlx+Q1MkhngR/BA7HmnKszS2ZofJ9Bvu6KVW35ylO5Cbc1v/hWQZyupQ8IAJQWfpxhshcQJBR+270x+aI0pYOMm25RfGCHhgGfaWDXnIVr/JqdrNvZim77MFvY/kpJt6yeHUYFFx/EuVnNfMSFhvoMeF58JnEYHc+o1JzAGLcTfF7v4TsEA71EQAfwYMyM1nYwIQIDAQAB
   gateway: openapi.alipaydev.com
   returnUrl: http://localhost:8081/account/order
-  notifyUrl: http://sxiawn.natappfree.cc/pay/fallback
+  notifyUrl: http://jpd3s5.natappfree.cc/pay/fallback
+# 度量参数
+management:
+  endpoints:
+    web:
+      cors:
+        allowed-headers: "*"
+      base-path: /monitor
+      exposure:
+        include: "*"
+  endpoint:
+    health:
+      show-details: always

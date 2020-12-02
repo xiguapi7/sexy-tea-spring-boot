@@ -11,6 +11,7 @@ import sexy.tea.model.SysLog;
 import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
 import sexy.tea.service.SysLogService;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 
@@ -29,7 +30,9 @@ public class SysLogServiceImpl implements SysLogService {
     @Override
     public Result find(int pageNum, int pageSize) {
         final Page<SysLog> page = PageHelper.startPage(pageNum, pageSize);
-        sysLogMapper.selectAll();
+        final Example example = Example.builder(SysLog.class).build();
+        example.setOrderByClause("create_time DESC");
+        sysLogMapper.selectByExample(example);
         return Result.success("查询成功", Pager.<SysLog>builder()
                 .result(page.getResult())
                 .total(page.getTotal())

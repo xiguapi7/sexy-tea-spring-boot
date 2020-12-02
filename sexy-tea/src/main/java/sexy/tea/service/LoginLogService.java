@@ -1,5 +1,6 @@
 package sexy.tea.service;
 
+import sexy.tea.model.LoginLog;
 import sexy.tea.model.common.Result;
 
 /**
@@ -12,4 +13,6 @@ import sexy.tea.model.common.Result;
 public interface LoginLogService {
 
     Result find(int pageNum, int pageSize);
+
+    void insertLog(LoginLog loginLog);
 }

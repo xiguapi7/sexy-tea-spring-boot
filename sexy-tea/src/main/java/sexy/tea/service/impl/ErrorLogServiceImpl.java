@@ -10,6 +10,7 @@ import sexy.tea.model.ErrorLog;
 import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
 import sexy.tea.service.ErrorLogService;
+import tk.mybatis.mapper.entity.Example;
 
 import javax.annotation.Resource;
 
@@ -29,7 +30,9 @@ public class ErrorLogServiceImpl implements ErrorLogService {
     @Override
     public Result find(int pageNum, int pageSize) {
         final Page<ErrorLog> page = PageHelper.startPage(pageNum, pageSize);
-        errorLogMapper.selectAll();
+        final Example example = Example.builder(ErrorLog.class).build();
+        example.setOrderByClause("create_time DESC");
+        errorLogMapper.selectByExample(example);
         return Result.success("查询成功", Pager.<ErrorLog>builder()
                 .result(page.getResult())
                 .total(page.getTotal())

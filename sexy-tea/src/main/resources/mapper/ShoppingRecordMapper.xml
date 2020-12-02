@@ -28,7 +28,7 @@
 
     <update id="updateShoppingRecordByUid" parameterType="java.lang.Long">
         UPDATE shopping_record
-        SET `status` = -1
+        SET `status` = 2
         WHERE uid = #{uid}
     </update>
 </mapper>
