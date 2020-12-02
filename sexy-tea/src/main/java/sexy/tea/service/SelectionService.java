@@ -25,11 +25,11 @@ public interface SelectionService extends UploadService {
 
     Result find(int pageNum, int pageSize);
 
-    Result findByPrimaryKey(Integer primaryKey);
+    Result findByPrimaryKey(Long primaryKey);
 
     Result saveOrUpdate(Selection selection);
 
-    Result delete(Integer id);
+    Result delete(Long id);
 
     Result findByName(String name, int pageNum, int pageSize);
 

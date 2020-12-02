@@ -58,7 +58,9 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
         example.createCriteria()
                 .andNotEqualTo("status", -1)
                 .andEqualTo("uid", uid);
-        ShoppingRecord shoppingRecord = shoppingRecordMapper.selectOneByExample(example);
+        example.setOrderByClause("update_time DESC");
+
+        final ShoppingRecord shoppingRecord = shoppingRecordMapper.selectByExample(example).get(0);
 
         if (shoppingRecord == null) {
             return Result.success("查询的用户id无购物车项", uid);

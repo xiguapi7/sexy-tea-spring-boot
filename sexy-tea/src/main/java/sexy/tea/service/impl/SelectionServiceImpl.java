@@ -86,7 +86,7 @@ public class SelectionServiceImpl implements SelectionService {
     }
 
     @Override
-    public Result findByPrimaryKey(Integer primaryKey) {
+    public Result findByPrimaryKey(Long primaryKey) {
         Selection selection = selectionMapper.selectByPrimaryKey(primaryKey);
         if (selection == null || primaryKey <= 0) {
             return Result.notFound();
@@ -141,7 +141,7 @@ public class SelectionServiceImpl implements SelectionService {
 
     @Transactional(rollbackFor = BusinessException.class)
     @Override
-    public Result delete(Integer id) {
+    public Result delete(Long id) {
         if (id == null || id <= 0) {
             // 校验
             return Result.business("参数错误", Optional.empty());

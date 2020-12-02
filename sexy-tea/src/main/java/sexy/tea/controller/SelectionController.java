@@ -38,7 +38,7 @@ public class SelectionController {
     }
 
     @GetMapping("/itemsById/{id}")
-    public Result itemsById(@PathVariable("id") Integer id) {
+    public Result itemsById(@PathVariable("id") Long id) {
         return service.findByPrimaryKey(id);
     }
 
@@ -58,7 +58,7 @@ public class SelectionController {
     }
 
     @DeleteMapping("/delete/{id}")
-    public Result delete(@PathVariable Integer id) {
+    public Result delete(@PathVariable Long id) {
         return service.delete(id);
     }
 
