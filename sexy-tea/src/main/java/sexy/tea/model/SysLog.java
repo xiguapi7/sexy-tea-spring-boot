@@ -50,8 +50,8 @@ public class SysLog implements Serializable {
     /**
      * 出参
      */
-    @Column(name = "`result`")
-    private String result;
+    // @Column(name = "`result`")
+    // private String result;
 
     /**
      * 耗时

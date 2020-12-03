@@ -98,7 +98,7 @@ public class LogAspect {
         sysLogService.insertLog(SysLog.builder()
                 .uri(uri)
                 .use(use)
-                .result(result.toString())
+                // .result(result.toString())
                 .ip(ip)
                 .args(argsBuilder.toString())
                 .method(method)
