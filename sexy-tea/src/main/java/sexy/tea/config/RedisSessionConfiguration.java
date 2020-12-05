@@ -2,6 +2,8 @@ package sexy.tea.config;
 
 /**
  * session托管到redis
+ * <p>
+ * TODO Spring Session引入
  *
  * @author 大大大西西瓜皮🍉
  * @date 23:05 2020-09-26

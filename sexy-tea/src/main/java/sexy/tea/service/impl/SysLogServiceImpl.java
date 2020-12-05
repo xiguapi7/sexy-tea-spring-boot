@@ -4,7 +4,7 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -64,7 +64,7 @@ public class SysLogServiceImpl implements SysLogService {
      *
      * @param sysLog 系统日志信息
      */
-    @CachePut(value = "sys_log_items")
+    @CacheEvict(value = "sys_log_items")
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public void insertLog(SysLog sysLog) {

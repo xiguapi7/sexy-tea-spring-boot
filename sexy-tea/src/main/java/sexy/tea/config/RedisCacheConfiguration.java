@@ -12,6 +12,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 import java.io.Serializable;
 
 /**
+ * Redis缓存配置
+ *
  * <p>
  *
  * @author 大大大西西瓜皮🍉
@@ -20,7 +22,7 @@ import java.io.Serializable;
  */
 @Configuration
 @AutoConfigureAfter(RedisAutoConfiguration.class)
-public class CacheConfiguration {
+public class RedisCacheConfiguration {
 
     @Bean
     public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory factory) {
