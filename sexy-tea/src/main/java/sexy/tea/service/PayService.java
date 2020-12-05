@@ -6,7 +6,7 @@ import sexy.tea.model.common.Result;
 import javax.servlet.http.HttpServletRequest;
 
 /**
- * 支付接口
+ * 支付服务接口
  *
  * <p>
  *
@@ -18,5 +18,5 @@ public interface PayService {
 
     Result confirm(PaymentBO paymentBO);
 
-    Result fallback(HttpServletRequest request);
+    Result callback(HttpServletRequest request);
 }

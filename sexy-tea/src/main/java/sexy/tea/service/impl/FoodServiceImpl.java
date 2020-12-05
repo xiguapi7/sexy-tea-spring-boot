@@ -4,28 +4,29 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import sexy.tea.exception.BusinessException;
 import sexy.tea.mapper.FoodMapper;
-import sexy.tea.model.Beverage;
 import sexy.tea.model.Food;
 import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.MinioDto;
 import sexy.tea.service.FoodService;
-import sexy.tea.utils.MinioUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
+ * 食品服务接口实现类
+ * <p>
+ * TODO 与饮品等服务合并改造
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
@@ -41,37 +42,7 @@ public class FoodServiceImpl implements FoodService {
         this.foodMapper = foodMapper;
     }
 
-    @Value("${minio.prefix}")
-    private String prefix;
-
-    @Value("${minio.defaultBucketName}")
-    private String defaultBucketName;
-
-    @Override
-    public int updateBatch(List<Food> list) {
-        return foodMapper.updateBatch(list);
-    }
-
-    @Override
-    public int updateBatchSelective(List<Food> list) {
-        return foodMapper.updateBatchSelective(list);
-    }
-
-    @Override
-    public int batchInsert(List<Food> list) {
-        return foodMapper.batchInsert(list);
-    }
-
-    @Override
-    public int insertOrUpdate(Food record) {
-        return foodMapper.insertOrUpdate(record);
-    }
-
-    @Override
-    public int insertOrUpdateSelective(Food record) {
-        return foodMapper.insertOrUpdateSelective(record);
-    }
-
+    @Cacheable(value = "food_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         Page<Food> page = PageHelper.startPage(pageNum, pageSize);
@@ -87,6 +58,7 @@ public class FoodServiceImpl implements FoodService {
                 .build());
     }
 
+    @Cacheable(value = "food_id_item")
     @Override
     public Result findByPrimaryKey(Long primaryKey) {
         Food food = foodMapper.selectByPrimaryKey(primaryKey);
@@ -96,6 +68,7 @@ public class FoodServiceImpl implements FoodService {
         return Result.success("主键: " + primaryKey, food);
     }
 
+    @CachePut(value = {"food_menu_items", "food_name_items", "food_id_item", "food_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result saveOrUpdate(Food food) {
@@ -114,32 +87,7 @@ public class FoodServiceImpl implements FoodService {
         return Result.success("更改成功", food.getFoodId());
     }
 
-    @Override
-    public Result uploadImage(MinioDto dto, Long id) {
-        Example example = Example.builder(Beverage.class).build();
-        example.createCriteria()
-                .andEqualTo("id", id)
-                .andEqualTo("status", 1);
-        Food food = foodMapper.selectOneByExample(example);
-        // 校验
-        if (food == null) {
-            return Result.business("参数错误, id: " + id, Optional.empty());
-        }
-        String name = food.getId() + dto.getSuffix();
-        // 图片
-        try {
-            InputStream is = dto.getFile().getInputStream();
-            MinioUtils.upload(defaultBucketName, name, is, dto.getContentType());
-        } catch (IOException e) {
-            log.error("上传失败, 错误信息：{}", e.getMessage());
-        }
-        String url = prefix + name;
-        // 更新图片地址
-        food.setFoodImage(url);
-        foodMapper.updateByPrimaryKey(food);
-        return Result.success("图片上传成功, 地址为： " + url, Optional.empty());
-    }
-
+    @CacheEvict(value = {"food_menu_items", "food_name_items", "food_id_item", "food_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result delete(Long id) {
@@ -151,6 +99,7 @@ public class FoodServiceImpl implements FoodService {
         return Result.success("删除成功, 受影响的行数: " + row, Optional.empty());
     }
 
+    @Cacheable(value = "food_name_items")
     @Override
     public Result findByName(String name, int pageNum, int pageSize) {
         if (StringUtils.isEmpty(name)) {
@@ -170,6 +119,7 @@ public class FoodServiceImpl implements FoodService {
                 .build());
     }
 
+    @Cacheable(value = "food_menu_items")
     @Override
     public Result itemsMenu(int pageNum, int pageSize) {
         Page<Food> page = PageHelper.startPage(pageNum, pageSize);

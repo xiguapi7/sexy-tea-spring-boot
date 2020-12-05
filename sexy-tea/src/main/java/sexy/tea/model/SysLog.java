@@ -62,8 +62,8 @@ public class SysLog implements Serializable {
     /**
      * 调用方IP地址
      */
-    @Column(name = "ip")
-    private String ip;
+    // @Column(name = "ip")
+    // private String ip;
 
     /**
      * 创建时间

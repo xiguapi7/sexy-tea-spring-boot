@@ -26,4 +26,8 @@ public interface BeverageMapper extends tk.mybatis.mapper.common.Mapper<Beverage
     int insertOrUpdateSelective(Beverage record);
 
     List<Beverage> findByName(String name);
+
+    List<Beverage> newestMikeTea();
+
+    List<Beverage> newestCoffee();
 }

@@ -25,7 +25,9 @@ import java.util.Map;
 import java.util.Optional;
 
 /**
- * 支付接口实现类
+ * 支付服务接口实现类
+ * <p>
+ * TODO 支付接口完善和BUG修正, 引入微信支付
  *
  * <p>
  *
@@ -41,6 +43,9 @@ public class PayServiceImpl implements PayService {
 
     private final OrderMapper orderMapper;
 
+    /**
+     * 支付宝支付流程完成（不一定成功）前台返回URL
+     */
     @Value("${alipay.returnUrl}")
     private String returnUrl;
 
@@ -50,6 +55,11 @@ public class PayServiceImpl implements PayService {
         this.orderMapper = orderMapper;
     }
 
+    /**
+     * 确认支付
+     * @param paymentBO 支付参数
+     * @return 返回包含支付宝支付FORM表单的结果对象
+     */
     @Transactional(rollbackFor = Exception.class)
     @Override
     public Result confirm(PaymentBO paymentBO) {
@@ -85,9 +95,16 @@ public class PayServiceImpl implements PayService {
         }
     }
 
+    /**
+     * 支付回调
+     *
+     * @param request HTTP请求
+     *
+     * @return 封装回调结果的响应对象
+     */
     @Transactional(rollbackFor = BusinessException.class)
     @Override
-    public Result fallback(HttpServletRequest request) {
+    public Result callback(HttpServletRequest request) {
         try {
             log.info("--------------支付宝支付回调-------------");
 

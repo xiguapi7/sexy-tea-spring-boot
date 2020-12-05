@@ -8,8 +8,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.redis.core.StringRedisTemplate;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -33,6 +34,10 @@ import java.util.List;
 import java.util.Optional;
 
 /**
+ * 订单服务接口实现类
+ * <p>
+ * TODO 订单支付分布式锁等功能的实现
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
@@ -41,6 +46,9 @@ import java.util.Optional;
 @Slf4j
 public class OrderServiceImpl implements OrderService {
 
+    /**
+     * Jackson序列化和反序列化的MAPPER对象
+     */
     private static final ObjectMapper MAPPER = new ObjectMapper();
 
     private final OrderMapper orderMapper;
@@ -51,51 +59,26 @@ public class OrderServiceImpl implements OrderService {
 
     private final ShoppingRecordService shoppingRecordService;
 
-    @Value("${order.gen}")
-    private String genKey;
-
-    @Value("${order.default")
-    private String defaultKey;
-
-    @Value("${order.item}")
-    private String itemKey;
-
-    private final StringRedisTemplate template;
-
     @Autowired
-    public OrderServiceImpl(OrderMapper orderMapper, OrderShippingMapper orderShippingMapper, OrderGoodsMapper orderGoodsMapper, ShoppingRecordService shoppingRecordService, StringRedisTemplate template) {
+    public OrderServiceImpl(OrderMapper orderMapper,
+                            OrderShippingMapper orderShippingMapper,
+                            OrderGoodsMapper orderGoodsMapper,
+                            ShoppingRecordService shoppingRecordService) {
         this.orderMapper = orderMapper;
         this.orderShippingMapper = orderShippingMapper;
         this.orderGoodsMapper = orderGoodsMapper;
         this.shoppingRecordService = shoppingRecordService;
-        this.template = template;
     }
 
-    @Override
-    public int updateBatch(List<Order> list) {
-        return orderMapper.updateBatch(list);
-    }
-
-    @Override
-    public int updateBatchSelective(List<Order> list) {
-        return orderMapper.updateBatchSelective(list);
-    }
-
-    @Override
-    public int batchInsert(List<Order> list) {
-        return orderMapper.batchInsert(list);
-    }
-
-    @Override
-    public int insertOrUpdate(Order record) {
-        return orderMapper.insertOrUpdate(record);
-    }
-
-    @Override
-    public int insertOrUpdateSelective(Order record) {
-        return orderMapper.insertOrUpdateSelective(record);
-    }
-
+    /**
+     * 分页查询订单
+     *
+     * @param pageNum  当前页
+     * @param pageSize 条数
+     *
+     * @return 结果集
+     */
+    @Cacheable(value = "order_items")
     @Override
     public Result find(int pageNum, int pageSize) {
 
@@ -113,6 +96,14 @@ public class OrderServiceImpl implements OrderService {
                 .build());
     }
 
+    /**
+     * 生成订单
+     *
+     * @param orderDto 订单参数
+     *
+     * @return 封装订单号的响应
+     */
+    @CachePut(value = {"order_items", "order_uid_items", "order_id_goods"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result createOrder(OrderDto orderDto) {
@@ -160,6 +151,14 @@ public class OrderServiceImpl implements OrderService {
         return Result.success("生成订单成功", orderId);
     }
 
+    /**
+     * 根据订单号查询
+     *
+     * @param orderId 订单号
+     *
+     * @return 结果集
+     */
+    @Cacheable(value = "order_id_item")
     @Override
     public Order findByOrderId(String orderId) {
         log.info("根据订单ID查询订单, orderId = {}", orderId);
@@ -173,6 +172,14 @@ public class OrderServiceImpl implements OrderService {
         return orderMapper.selectOneByExample(example);
     }
 
+    /**
+     * 根据订单号查询订单详情
+     *
+     * @param orderId 订单号
+     *
+     * @return 结果集
+     */
+    @Cacheable(value = "order_id_goods")
     @Override
     public Result findOrderGoodsByOrderId(String orderId) {
         if (StringUtils.isEmpty(orderId)) {
@@ -187,7 +194,15 @@ public class OrderServiceImpl implements OrderService {
         return Result.success("查询订单项成功", orderGoods);
     }
 
-    @Transactional
+    /**
+     * 根据订单号删除订单
+     *
+     * @param orderId 订单号
+     *
+     * @return 删除结果
+     */
+    @CacheEvict(value = {"order_id_goods", "order_items", "order_uid_items"})
+    @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result deleteByOrderId(String orderId) {
         if (StringUtils.isEmpty(orderId)) {
@@ -200,9 +215,15 @@ public class OrderServiceImpl implements OrderService {
         return Result.success("删除订单成功", orderId);
     }
 
+    /**
+     * 回调修改订单状态
+     *
+     * @param orderId 订单号
+     */
+    @CachePut(value = {"order_id_goods", "order_items", "order_uid_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
-    public void fallbackUpdateOrder(String orderId) {
+    public void callbackUpdateOrder(String orderId) {
 
         final AlipayTradeQueryResponse response;
         try {
@@ -214,6 +235,14 @@ public class OrderServiceImpl implements OrderService {
         }
     }
 
+    /**
+     * 用户下的订单
+     *
+     * @param uid 用户ID
+     *
+     * @return 结果集
+     */
+    @Cacheable(value = "order_uid_items")
     @Override
     public Result findByUid(Long uid) {
         if (uid == null || uid <= 0) {

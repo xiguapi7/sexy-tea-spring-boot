@@ -3,29 +3,18 @@ package sexy.tea.service;
 import sexy.tea.model.Selection;
 import sexy.tea.model.common.Result;
 
-import java.util.List;
-
 /**
+ * 精选服务接口
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
  */
-public interface SelectionService extends UploadService {
-
-
-    int updateBatch(List<Selection> list);
-
-    int updateBatchSelective(List<Selection> list);
-
-    int batchInsert(List<Selection> list);
-
-    int insertOrUpdate(Selection record);
-
-    int insertOrUpdateSelective(Selection record);
+public interface SelectionService {
 
     Result find(int pageNum, int pageSize);
 
-    Result findByPrimaryKey(Long primaryKey);
+    Result findById(Long primaryKey);
 
     Result saveOrUpdate(Selection selection);
 

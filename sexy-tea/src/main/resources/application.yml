@@ -3,6 +3,8 @@ server:
 spring:
   application:
     name: sexy-tea
+  cache:
+    type: REDIS
   datasource:
     # 数据源类型设置为Druid数据源
     type: com.alibaba.druid.pool.DruidDataSource

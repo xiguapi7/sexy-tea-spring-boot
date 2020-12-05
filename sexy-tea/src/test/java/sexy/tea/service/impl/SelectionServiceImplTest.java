@@ -49,7 +49,7 @@ class SelectionServiceImplTest {
 
     @Test
     void findByPrimaryKey() {
-        final Result result = service.findByPrimaryKey(1L);
+        final Result result = service.findById(1L);
         assertNotNull(result);
     }
 

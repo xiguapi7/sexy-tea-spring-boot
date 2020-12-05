@@ -98,11 +98,17 @@
             <version>7.1.4</version>
         </dependency>
 
-        <!--Hu tool工具类-->
+        <!--Hutool工具类-->
         <dependency>
             <groupId>cn.hutool</groupId>
             <artifactId>hutool-crypto</artifactId>
             <version>5.4.3</version>
+        </dependency>
+
+        <!--缓存支持-->
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-cache</artifactId>
         </dependency>
 
         <!-- swagger2 -->

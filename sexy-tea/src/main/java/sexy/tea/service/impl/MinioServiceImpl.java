@@ -18,7 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Minio服务实现类
+ * Minio服务接口实现类
  *
  * @author 大大大西西瓜皮🍉
  * @date 20:25 2020-10-08

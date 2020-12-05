@@ -39,7 +39,7 @@ public class SelectionController {
 
     @GetMapping("/itemsById/{id}")
     public Result itemsById(@PathVariable("id") Long id) {
-        return service.findByPrimaryKey(id);
+        return service.findById(id);
     }
 
     @GetMapping("/itemsByName/{name}/{pageNum}/{pageSize}")

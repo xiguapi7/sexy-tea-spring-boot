@@ -11,10 +11,11 @@ import sexy.tea.model.common.Result;
 import sexy.tea.service.CardService;
 import tk.mybatis.mapper.entity.Example;
 
-import java.util.List;
 import java.util.Optional;
 
 /**
+ * 星礼卡服务接口实现类
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
@@ -27,31 +28,6 @@ public class CardServiceImpl implements CardService {
     @Autowired
     public CardServiceImpl(CardMapper cardMapper) {
         this.cardMapper = cardMapper;
-    }
-
-    @Override
-    public int updateBatch(List<Card> list) {
-        return cardMapper.updateBatch(list);
-    }
-
-    @Override
-    public int updateBatchSelective(List<Card> list) {
-        return cardMapper.updateBatchSelective(list);
-    }
-
-    @Override
-    public int batchInsert(List<Card> list) {
-        return cardMapper.batchInsert(list);
-    }
-
-    @Override
-    public int insertOrUpdate(Card record) {
-        return cardMapper.insertOrUpdate(record);
-    }
-
-    @Override
-    public int insertOrUpdateSelective(Card record) {
-        return cardMapper.insertOrUpdateSelective(record);
     }
 
     @Transactional(rollbackFor = BusinessException.class)

@@ -6,6 +6,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import sexy.tea.model.common.Result;
 import sexy.tea.service.UserService;
 
+import static java.lang.System.currentTimeMillis;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 /**
@@ -20,26 +21,6 @@ class UserServiceImplTest {
 
     @Autowired
     private UserService service;
-
-    @Test
-    void updateBatch() {
-    }
-
-    @Test
-    void updateBatchSelective() {
-    }
-
-    @Test
-    void batchInsert() {
-    }
-
-    @Test
-    void insertOrUpdate() {
-    }
-
-    @Test
-    void insertOrUpdateSelective() {
-    }
 
     @Test
     void register() {
@@ -59,7 +40,10 @@ class UserServiceImplTest {
 
     @Test
     void items() {
-        final Result result = service.items(1, 3, "");
+        final long start = currentTimeMillis();
+        final Result result = service.items(1, 10, "");
+        final long used = currentTimeMillis() - start;
+        System.out.println("used: " + used);
         assertNotNull(result);
     }
 

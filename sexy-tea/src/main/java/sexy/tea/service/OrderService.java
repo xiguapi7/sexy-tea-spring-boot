@@ -4,24 +4,14 @@ import sexy.tea.model.Order;
 import sexy.tea.model.common.Result;
 import sexy.tea.model.dto.OrderDto;
 
-import java.util.List;
-
 /**
+ * 订单服务接口
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
  */
 public interface OrderService {
-
-    int updateBatch(List<Order> list);
-
-    int updateBatchSelective(List<Order> list);
-
-    int batchInsert(List<Order> list);
-
-    int insertOrUpdate(Order record);
-
-    int insertOrUpdateSelective(Order record);
 
     Result find(int pageNum, int pageSize);
 
@@ -33,7 +23,7 @@ public interface OrderService {
 
     Result deleteByOrderId(String orderId);
 
-    void fallbackUpdateOrder(String orderId);
+    void callbackUpdateOrder(String orderId);
 
     Result findByUid(Long uid);
 }

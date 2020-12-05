@@ -51,6 +51,6 @@ public class PayController {
 
     @PostMapping("/fallback")
     public Result fallback(HttpServletRequest request, HttpServletResponse response) {
-        return payService.fallback(request);
+        return payService.callback(request);
     }
 }

@@ -5,6 +5,9 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -13,18 +16,16 @@ import sexy.tea.mapper.BeverageMapper;
 import sexy.tea.model.Beverage;
 import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.MinioDto;
 import sexy.tea.service.BeverageService;
-import sexy.tea.utils.MinioUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
+ * 饮品服务接口实现类
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
@@ -46,31 +47,7 @@ public class BeverageServiceImpl implements BeverageService {
     @Value("${minio.defaultBucketName}")
     private String defaultBucketName;
 
-    @Override
-    public int updateBatch(List<Beverage> list) {
-        return beverageMapper.updateBatch(list);
-    }
-
-    @Override
-    public int updateBatchSelective(List<Beverage> list) {
-        return beverageMapper.updateBatchSelective(list);
-    }
-
-    @Override
-    public int batchInsert(List<Beverage> list) {
-        return beverageMapper.batchInsert(list);
-    }
-
-    @Override
-    public int insertOrUpdate(Beverage record) {
-        return beverageMapper.insertOrUpdate(record);
-    }
-
-    @Override
-    public int insertOrUpdateSelective(Beverage record) {
-        return beverageMapper.insertOrUpdateSelective(record);
-    }
-
+    @Cacheable(value = "beverage_items")
     @Override
     public Result find(int pageNum, int pageSize) {
 
@@ -88,6 +65,7 @@ public class BeverageServiceImpl implements BeverageService {
                 .build());
     }
 
+    @Cacheable(value = "beverage_menu_items")
     @Override
     public Result itemsMenu(int type, int pageNum, int pageSize) {
         Page<Beverage> page = PageHelper.startPage(pageNum, pageSize);
@@ -106,17 +84,18 @@ public class BeverageServiceImpl implements BeverageService {
                 .build());
     }
 
+    @Cacheable(value = "beverage_id_item")
     @Override
-    // @Cacheable(value = RedisConstant)
-    public Result findByPrimaryKey(Long primaryKey) {
+    public Result findById(Long id) {
 
-        Beverage beverage = beverageMapper.selectByPrimaryKey(primaryKey);
-        if (beverage == null || primaryKey <= 0) {
+        Beverage beverage = beverageMapper.selectByPrimaryKey(id);
+        if (beverage == null || id <= 0) {
             return Result.notFound();
         }
         return Result.success("主键查询饮品", beverage);
     }
 
+    @CachePut
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result saveOrUpdate(Beverage beverage) {
@@ -137,7 +116,7 @@ public class BeverageServiceImpl implements BeverageService {
         return Result.success("更改成功", beverage);
     }
 
-    @Override
+    /*@Override
     public Result uploadImage(MinioDto dto, Long id) {
         // 根据 beverage_id 查询实体记录
         Example example = Example.builder(Beverage.class).build();
@@ -162,8 +141,9 @@ public class BeverageServiceImpl implements BeverageService {
         beverage.setBeverageImage(url);
         beverageMapper.updateByPrimaryKey(beverage);
         return Result.success("图片上传成功, 地址为： " + url, Optional.empty());
-    }
+    }*/
 
+    @CacheEvict
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result delete(Long id) {
@@ -180,6 +160,7 @@ public class BeverageServiceImpl implements BeverageService {
         return Result.success("删除成功", Optional.empty());
     }
 
+    @Cacheable(value = "beverage_name_items")
     @Override
     public Result findByName(String name, int pageNum, int pageSize) {
         if (StringUtils.isEmpty(name)) {

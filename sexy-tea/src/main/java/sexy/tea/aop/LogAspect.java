@@ -99,7 +99,7 @@ public class LogAspect {
                 .uri(uri)
                 .use(use)
                 // .result(result.toString())
-                .ip(ip)
+                // .ip(ip)
                 .args(argsBuilder.toString())
                 .method(method)
                 .createTime(LocalDateTime.now())

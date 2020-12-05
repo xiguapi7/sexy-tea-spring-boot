@@ -4,7 +4,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -13,18 +15,19 @@ import sexy.tea.mapper.SelectionMapper;
 import sexy.tea.model.Selection;
 import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
-import sexy.tea.model.dto.MinioDto;
 import sexy.tea.service.SelectionService;
-import sexy.tea.utils.MinioUtils;
 import tk.mybatis.mapper.entity.Example;
 
-import java.io.IOException;
-import java.io.InputStream;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
 /**
+ * 精选服务接口实现类
+ * <p>
+ * TODO 精选、食品、饮品数据表重新设计, 改造为`product + category`的形式
+ *
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
@@ -40,37 +43,15 @@ public class SelectionServiceImpl implements SelectionService {
         this.selectionMapper = selectionMapper;
     }
 
-    @Value("${minio.prefix}")
-    private String prefix;
-
-    @Value("${minio.defaultBucketName}")
-    private String defaultBucketName;
-
-    @Override
-    public int updateBatch(List<Selection> list) {
-        return selectionMapper.updateBatch(list);
-    }
-
-    @Override
-    public int updateBatchSelective(List<Selection> list) {
-        return selectionMapper.updateBatchSelective(list);
-    }
-
-    @Override
-    public int batchInsert(List<Selection> list) {
-        return selectionMapper.batchInsert(list);
-    }
-
-    @Override
-    public int insertOrUpdate(Selection record) {
-        return selectionMapper.insertOrUpdate(record);
-    }
-
-    @Override
-    public int insertOrUpdateSelective(Selection record) {
-        return selectionMapper.insertOrUpdateSelective(record);
-    }
-
+    /**
+     * 分页查询
+     *
+     * @param pageNum  当前页
+     * @param pageSize 条数
+     *
+     * @return 结果集
+     */
+    @Cacheable(value = "selection_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         Page<Selection> page = PageHelper.startPage(pageNum, pageSize);
@@ -85,15 +66,31 @@ public class SelectionServiceImpl implements SelectionService {
                 .build());
     }
 
+    /**
+     * 主键查询
+     *
+     * @param id 主键
+     *
+     * @return 结果集
+     */
+    @Cacheable(value = "selection_id_item")
     @Override
-    public Result findByPrimaryKey(Long primaryKey) {
-        Selection selection = selectionMapper.selectByPrimaryKey(primaryKey);
-        if (selection == null || primaryKey <= 0) {
+    public Result findById(Long id) {
+        Selection selection = selectionMapper.selectByPrimaryKey(id);
+        if (selection == null || id <= 0) {
             return Result.notFound();
         }
-        return Result.success("主键: " + primaryKey, selection);
+        return Result.success("主键: " + id, selection);
     }
 
+    /**
+     * 保存或更改
+     *
+     * @param selection 数据
+     *
+     * @return 响应
+     */
+    @CachePut(value = {"selection_items", "selection_id_item", "selection_menu_items", "selection_name_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result saveOrUpdate(Selection selection) {
@@ -112,33 +109,14 @@ public class SelectionServiceImpl implements SelectionService {
         return Result.success("更改成功", selection);
     }
 
-    @Override
-    public Result uploadImage(MinioDto dto, Long id) {
-        // 根据 product_id 查询实体记录
-        Example example = Example.builder(Selection.class).build();
-        example.createCriteria()
-                .andEqualTo("id", id)
-                .andEqualTo("status", 1);
-        Selection selection = selectionMapper.selectOneByExample(example);
-        // 校验
-        if (selection == null) {
-            return Result.business("参数错误, id: " + id, Optional.empty());
-        }
-        String name = selection.getProductId() + dto.getSuffix();
-        // 图片
-        try {
-            InputStream is = dto.getFile().getInputStream();
-            MinioUtils.upload(defaultBucketName, name, is, dto.getContentType());
-        } catch (IOException e) {
-            log.error("上传失败, 错误信息：{}", e.getMessage());
-        }
-        String url = prefix + name;
-        // 更新图片地址
-        selection.setProductImage(url);
-        selectionMapper.updateByPrimaryKey(selection);
-        return Result.success("图片上传成功, 地址为： " + url, Optional.empty());
-    }
-
+    /**
+     * 删除
+     *
+     * @param id 主键
+     *
+     * @return 响应
+     */
+    @CacheEvict(value = {"selection_items", "selection_id_item", "selection_menu_items", "selection_name_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result delete(Long id) {
@@ -146,16 +124,26 @@ public class SelectionServiceImpl implements SelectionService {
             // 校验
             return Result.business("参数错误", Optional.empty());
         }
-        int row = selectionMapper.deleteByPrimaryKey(id);
-        return Result.success("删除成功, 受影响的行数: " + row, Optional.empty());
+        selectionMapper.deleteByPrimaryKey(id);
+        return Result.success("删除成功", Optional.empty());
     }
 
+    /**
+     * 名称模糊分页查询
+     *
+     * @param name     名称
+     * @param pageNum  当前页
+     * @param pageSize 条数
+     *
+     * @return 结果集
+     */
+    @Cacheable(value = "selection_name_items")
     @Override
     public Result findByName(String name, int pageNum, int pageSize) {
         if (StringUtils.isEmpty(name)) {
             return Result.business("参数错误", Optional.empty());
         }
-        name += "%";
+        name = "%" + name + "%";
         Page<Selection> page = PageHelper.startPage(pageNum, pageSize);
         List<Selection> selections = selectionMapper.findByName(name);
         if (selections == null) {
@@ -169,6 +157,15 @@ public class SelectionServiceImpl implements SelectionService {
                 .build());
     }
 
+    /**
+     * 菜单项分页查询
+     *
+     * @param pageNum  当前页
+     * @param pageSize 条数
+     *
+     * @return 结果集
+     */
+    @Cacheable(value = "selection_menu_items")
     @Override
     public Result itemsMenu(int pageNum, int pageSize) {
         Page<Selection> page = PageHelper.startPage(pageNum, pageSize);

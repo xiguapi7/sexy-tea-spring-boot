@@ -3,28 +3,18 @@ package sexy.tea.service;
 import sexy.tea.model.Beverage;
 import sexy.tea.model.common.Result;
 
-import java.util.List;
-
 /**
+ * 饮品服务接口
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
  * description:
  */
-public interface BeverageService extends UploadService {
-
-    int updateBatch(List<Beverage> list);
-
-    int updateBatchSelective(List<Beverage> list);
-
-    int batchInsert(List<Beverage> list);
-
-    int insertOrUpdate(Beverage record);
-
-    int insertOrUpdateSelective(Beverage record);
+public interface BeverageService {
 
     Result find(int pageNum, int pageSize);
 
-    Result findByPrimaryKey(Long primaryKey);
+    Result findById(Long primaryKey);
 
     Result saveOrUpdate(Beverage beverage);
 

@@ -3,6 +3,9 @@ package sexy.tea.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sexy.tea.exception.BusinessException;
@@ -13,9 +16,11 @@ import sexy.tea.model.common.Result;
 import sexy.tea.service.SysLogService;
 import tk.mybatis.mapper.entity.Example;
 
-import javax.annotation.Resource;
-
 /**
+ * 系统日志服务接口实现
+ * <p>
+ * TODO 日志模块重新设计
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 18:00 2020-10-13
  * description:
@@ -24,9 +29,22 @@ import javax.annotation.Resource;
 @Slf4j
 public class SysLogServiceImpl implements SysLogService {
 
-    @Resource
-    private SysLogMapper sysLogMapper;
+    private final SysLogMapper sysLogMapper;
 
+    @Autowired
+    public SysLogServiceImpl(SysLogMapper sysLogMapper) {
+        this.sysLogMapper = sysLogMapper;
+    }
+
+    /**
+     * 分页查询系统日志
+     *
+     * @param pageNum  当前页
+     * @param pageSize 条数
+     *
+     * @return 统一响应对象 {@link Result}
+     */
+    @Cacheable(value = "sys_log_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         final Page<SysLog> page = PageHelper.startPage(pageNum, pageSize);
@@ -41,6 +59,12 @@ public class SysLogServiceImpl implements SysLogService {
                 .build());
     }
 
+    /**
+     * 插入系统日志
+     *
+     * @param sysLog 系统日志信息
+     */
+    @CachePut(value = "sys_log_items")
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public void insertLog(SysLog sysLog) {

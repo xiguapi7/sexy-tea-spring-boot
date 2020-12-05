@@ -4,6 +4,9 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CacheEvict;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sexy.tea.exception.BusinessException;
@@ -18,6 +21,7 @@ import java.util.Optional;
 
 /**
  * 购物车服务接口实现类
+ *
  * <p>
  * author 大大大西西瓜皮🍉
  * date 15:10 2020-09-26
@@ -34,6 +38,15 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
         this.shoppingRecordMapper = shoppingRecordMapper;
     }
 
+    /**
+     * 分页查询购物车
+     *
+     * @param pageNum  当前页
+     * @param pageSize 条数
+     *
+     * @return 结果集
+     */
+    @Cacheable(value = "shopping_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         Page<ShoppingRecord> page = PageHelper.startPage(pageNum, pageSize);
@@ -48,6 +61,13 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
                 .build());
     }
 
+    /**
+     * 按用户ID查询购物车
+     *
+     * @param uid 用户ID
+     *
+     * @return 结果集
+     */
     @Override
     public Result findByUid(Long uid) {
         if (uid == null || uid <= 0) {
@@ -69,6 +89,14 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
         return Result.success("查询成功", shoppingRecord);
     }
 
+    /**
+     * 存储或更改购物车信息
+     *
+     * @param record 购物车信息
+     *
+     * @return 响应
+     */
+    @CachePut(value = "shopping_items")
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result saveOrUpdate(ShoppingRecord record) {
@@ -97,6 +125,14 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
         return Result.success("更改成功", newShoppingRecord);
     }
 
+    /**
+     * 删除购物车项
+     *
+     * @param uid 用户ID
+     *
+     * @return 响应
+     */
+    @CacheEvict(value = "shopping_items")
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result delete(Long uid) {
@@ -109,6 +145,12 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
         return Result.success("清空购物车成功: uid = " + uid, Optional.empty());
     }
 
+    /**
+     * 更新购物车状态
+     *
+     * @param id 用户ID
+     */
+    @CachePut(value = "shopping_items")
     @Override
     public void updateShoppingRecordByUid(Long id) {
         shoppingRecordMapper.updateShoppingRecordByUid(id);

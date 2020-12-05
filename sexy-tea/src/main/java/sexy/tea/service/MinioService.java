@@ -5,6 +5,8 @@ import sexy.tea.model.common.Result;
 import java.io.InputStream;
 
 /**
+ * MinIO服务接口
+ * <p>
  * author 大大大西西瓜皮🍉
  * date 20:12 2020-10-08
  * description:
