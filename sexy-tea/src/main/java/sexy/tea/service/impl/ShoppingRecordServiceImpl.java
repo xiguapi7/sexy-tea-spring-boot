@@ -73,20 +73,11 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
         if (uid == null || uid <= 0) {
             return Result.business("参数错误", Optional.empty());
         }
-        // 根据uid和status <> -1查询购物车记录
-        Example example = Example.builder(ShoppingRecord.class).build();
-        example.createCriteria()
-                .andNotEqualTo("status", -1)
-                .andEqualTo("uid", uid);
-        example.setOrderByClause("update_time DESC");
-
-        final ShoppingRecord shoppingRecord = shoppingRecordMapper.selectByExample(example).get(0);
-
-        if (shoppingRecord == null) {
-            return Result.success("查询的用户id无购物车项", uid);
+        final ShoppingRecord record = shoppingRecordMapper.findByUid(uid);
+        if (record == null) {
+            return Result.success("查询成功, 记录为空", Optional.empty());
         }
-
-        return Result.success("查询成功", shoppingRecord);
+        return Result.success("查询成功", record);
     }
 
     /**

@@ -13,4 +13,6 @@ public interface ShoppingRecordMapper extends tk.mybatis.mapper.common.Mapper<Sh
     void deleteByUid(Long uid);
 
     void updateShoppingRecordByUid(Long uid);
+
+    ShoppingRecord findByUid(Long uid);
 }
