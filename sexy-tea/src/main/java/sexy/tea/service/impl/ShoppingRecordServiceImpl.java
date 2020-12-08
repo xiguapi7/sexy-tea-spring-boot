@@ -136,11 +136,12 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
     /**
      * 更新购物车状态
      *
-     * @param id 用户ID
+     * @param id ID
      */
     // @CachePut(value = "shopping_items")
+    @Transactional(rollbackFor = BusinessException.class)
     @Override
-    public void updateShoppingRecordByUid(Long id) {
+    public void updateShoppingRecordById(Long id) {
         shoppingRecordMapper.updateShoppingRecordByUid(id);
     }
 }

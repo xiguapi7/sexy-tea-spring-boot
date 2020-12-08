@@ -143,7 +143,7 @@ public class OrderServiceImpl implements OrderService {
         orderGoodsMapper.insertSelective(orderGoods);
 
         // 删除购物车项
-        shoppingRecordService.updateShoppingRecordByUid(user.getId());
+        shoppingRecordService.updateShoppingRecordById(record.getId());
 
         return Result.success("生成订单成功", orderId);
     }

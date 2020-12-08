@@ -18,5 +18,5 @@ public interface ShoppingRecordService {
 
     Result delete(Long uid);
 
-    void updateShoppingRecordByUid(Long id);
+    void updateShoppingRecordById(Long id);
 }
