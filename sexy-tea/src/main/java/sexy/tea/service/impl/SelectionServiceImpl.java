@@ -4,9 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -51,7 +48,7 @@ public class SelectionServiceImpl implements SelectionService {
      *
      * @return 结果集
      */
-    @Cacheable(value = "selection_items")
+    // @Cacheable(value = "selection_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         Page<Selection> page = PageHelper.startPage(pageNum, pageSize);
@@ -73,7 +70,7 @@ public class SelectionServiceImpl implements SelectionService {
      *
      * @return 结果集
      */
-    @Cacheable(value = "selection_id_item")
+    // @Cacheable(value = "selection_id_item")
     @Override
     public Result findById(Long id) {
         Selection selection = selectionMapper.selectByPrimaryKey(id);
@@ -90,7 +87,7 @@ public class SelectionServiceImpl implements SelectionService {
      *
      * @return 响应
      */
-    @CachePut(value = {"selection_items", "selection_id_item", "selection_menu_items", "selection_name_items"})
+    // @CachePut(value = {"selection_items", "selection_id_item", "selection_menu_items", "selection_name_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result saveOrUpdate(Selection selection) {
@@ -116,7 +113,7 @@ public class SelectionServiceImpl implements SelectionService {
      *
      * @return 响应
      */
-    @CacheEvict(value = {"selection_items", "selection_id_item", "selection_menu_items", "selection_name_items"})
+    // @CacheEvict(value = {"selection_items", "selection_id_item", "selection_menu_items", "selection_name_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result delete(Long id) {
@@ -137,7 +134,7 @@ public class SelectionServiceImpl implements SelectionService {
      *
      * @return 结果集
      */
-    @Cacheable(value = "selection_name_items")
+    // @Cacheable(value = "selection_name_items")
     @Override
     public Result findByName(String name, int pageNum, int pageSize) {
         if (StringUtils.isEmpty(name)) {
@@ -165,7 +162,7 @@ public class SelectionServiceImpl implements SelectionService {
      *
      * @return 结果集
      */
-    @Cacheable(value = "selection_menu_items")
+    // @Cacheable(value = "selection_menu_items")
     @Override
     public Result itemsMenu(int pageNum, int pageSize) {
         Page<Selection> page = PageHelper.startPage(pageNum, pageSize);

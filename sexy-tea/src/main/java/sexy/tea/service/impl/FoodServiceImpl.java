@@ -4,9 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -42,7 +39,7 @@ public class FoodServiceImpl implements FoodService {
         this.foodMapper = foodMapper;
     }
 
-    @Cacheable(value = "food_items")
+    // @Cacheable(value = "food_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         Page<Food> page = PageHelper.startPage(pageNum, pageSize);
@@ -58,7 +55,7 @@ public class FoodServiceImpl implements FoodService {
                 .build());
     }
 
-    @Cacheable(value = "food_id_item")
+    // @Cacheable(value = "food_id_item")
     @Override
     public Result findByPrimaryKey(Long primaryKey) {
         Food food = foodMapper.selectByPrimaryKey(primaryKey);
@@ -68,7 +65,7 @@ public class FoodServiceImpl implements FoodService {
         return Result.success("主键: " + primaryKey, food);
     }
 
-    @CachePut(value = {"food_menu_items", "food_name_items", "food_id_item", "food_items"})
+    // @CachePut(value = {"food_menu_items", "food_name_items", "food_id_item", "food_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result saveOrUpdate(Food food) {
@@ -87,7 +84,7 @@ public class FoodServiceImpl implements FoodService {
         return Result.success("更改成功", food.getFoodId());
     }
 
-    @CacheEvict(value = {"food_menu_items", "food_name_items", "food_id_item", "food_items"})
+    // @CacheEvict(value = {"food_menu_items", "food_name_items", "food_id_item", "food_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result delete(Long id) {
@@ -99,7 +96,7 @@ public class FoodServiceImpl implements FoodService {
         return Result.success("删除成功, 受影响的行数: " + row, Optional.empty());
     }
 
-    @Cacheable(value = "food_name_items")
+    // @Cacheable(value = "food_name_items")
     @Override
     public Result findByName(String name, int pageNum, int pageSize) {
         if (StringUtils.isEmpty(name)) {
@@ -119,7 +116,7 @@ public class FoodServiceImpl implements FoodService {
                 .build());
     }
 
-    @Cacheable(value = "food_menu_items")
+    // @Cacheable(value = "food_menu_items")
     @Override
     public Result itemsMenu(int pageNum, int pageSize) {
         Page<Food> page = PageHelper.startPage(pageNum, pageSize);

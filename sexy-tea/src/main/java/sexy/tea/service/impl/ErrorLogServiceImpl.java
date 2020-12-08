@@ -2,8 +2,6 @@ package sexy.tea.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sexy.tea.exception.BusinessException;
@@ -31,7 +29,7 @@ public class ErrorLogServiceImpl implements ErrorLogService {
     @Resource
     private ErrorLogMapper errorLogMapper;
 
-    @Cacheable(value = "error_log_items")
+    // @Cacheable(value = "error_log_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         final Page<ErrorLog> page = PageHelper.startPage(pageNum, pageSize);
@@ -46,7 +44,7 @@ public class ErrorLogServiceImpl implements ErrorLogService {
                 .build());
     }
 
-    @CacheEvict(value = {"error_log_items"})
+    // @CacheEvict(value = {"error_log_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public void insertLog(ErrorLog errorLog) {

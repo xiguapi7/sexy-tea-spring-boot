@@ -4,8 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sexy.tea.exception.BusinessException;
@@ -44,7 +42,7 @@ public class SysLogServiceImpl implements SysLogService {
      *
      * @return 统一响应对象 {@link Result}
      */
-    @Cacheable(value = "sys_log_items")
+    // @Cacheable(value = "sys_log_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         final Page<SysLog> page = PageHelper.startPage(pageNum, pageSize);
@@ -64,7 +62,7 @@ public class SysLogServiceImpl implements SysLogService {
      *
      * @param sysLog 系统日志信息
      */
-    @CacheEvict(value = "sys_log_items")
+    // @CacheEvict(value = "sys_log_items")
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public void insertLog(SysLog sysLog) {

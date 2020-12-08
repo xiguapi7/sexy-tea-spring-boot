@@ -5,9 +5,6 @@ import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -47,7 +44,7 @@ public class BeverageServiceImpl implements BeverageService {
     @Value("${minio.defaultBucketName}")
     private String defaultBucketName;
 
-    @Cacheable(value = "beverage_items")
+    // @Cacheable(value = "beverage_items")
     @Override
     public Result find(int pageNum, int pageSize) {
 
@@ -65,7 +62,7 @@ public class BeverageServiceImpl implements BeverageService {
                 .build());
     }
 
-    @Cacheable(value = "beverage_menu_items")
+    // @Cacheable(value = "beverage_menu_items")
     @Override
     public Result itemsMenu(int type, int pageNum, int pageSize) {
         Page<Beverage> page = PageHelper.startPage(pageNum, pageSize);
@@ -84,7 +81,7 @@ public class BeverageServiceImpl implements BeverageService {
                 .build());
     }
 
-    @Cacheable(value = "beverage_id_item")
+    // @Cacheable(value = "beverage_id_item")
     @Override
     public Result findById(Long id) {
 
@@ -95,7 +92,7 @@ public class BeverageServiceImpl implements BeverageService {
         return Result.success("主键查询饮品", beverage);
     }
 
-    @CachePut
+    // @CachePut
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result saveOrUpdate(Beverage beverage) {
@@ -143,7 +140,7 @@ public class BeverageServiceImpl implements BeverageService {
         return Result.success("图片上传成功, 地址为： " + url, Optional.empty());
     }*/
 
-    @CacheEvict
+    // @CacheEvict
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result delete(Long id) {
@@ -160,7 +157,7 @@ public class BeverageServiceImpl implements BeverageService {
         return Result.success("删除成功", Optional.empty());
     }
 
-    @Cacheable(value = "beverage_name_items")
+    // @Cacheable(value = "beverage_name_items")
     @Override
     public Result findByName(String name, int pageNum, int pageSize) {
         if (StringUtils.isEmpty(name)) {

@@ -3,7 +3,6 @@ package sexy.tea.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import sexy.tea.mapper.CityMapper;
@@ -37,7 +36,7 @@ public class CityServiceImpl implements CityService {
         this.storeService = storeService;
     }
 
-    @Cacheable(value = "city_items")
+    // @Cacheable(value = "city_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         Page<City> page = PageHelper.startPage(pageNum, pageSize);
@@ -52,13 +51,13 @@ public class CityServiceImpl implements CityService {
                 .build());
     }
 
-    @Cacheable(value = "city_name_items")
+    // @Cacheable(value = "city_name_items")
     @Override
     public Result findByCityName(int pageNum, int pageSize, String cityName) {
         return storeService.findByCityName(pageNum, pageSize, cityName);
     }
 
-    @Cacheable(value = "city_name_search")
+    // @Cacheable(value = "city_name_search")
     @Override
     public Result search(int pageNum, int pageSize, String cityName) {
         if (StringUtils.isEmpty(cityName)) {

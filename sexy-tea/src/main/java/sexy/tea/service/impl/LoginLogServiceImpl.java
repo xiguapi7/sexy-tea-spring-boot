@@ -3,8 +3,6 @@ package sexy.tea.service.impl;
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sexy.tea.exception.BusinessException;
@@ -43,7 +41,7 @@ public class LoginLogServiceImpl implements LoginLogService {
      *
      * @return 结果集
      */
-    @Cacheable(value = "login_log_items")
+    // @Cacheable(value = "login_log_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         final Page<LoginLog> page = PageHelper.startPage(pageNum, pageSize);
@@ -63,7 +61,7 @@ public class LoginLogServiceImpl implements LoginLogService {
      *
      * @param loginLog 日志数据
      */
-    @CacheEvict(value = {"login_log_items"})
+    // @CacheEvict(value = {"login_log_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public void insertLog(LoginLog loginLog) {

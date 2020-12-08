@@ -35,8 +35,9 @@
     <select id="findByUid" resultMap="BaseResultMap">
         SELECT *
         FROM `shopping_record` AS sr
-        WHERE sr.`status` != - 1
-          AND sr.uid = 4
+        <!--WHERE sr.`status` <![CDATA[<>]]> 1-->
+        WHERE sr.`status` = 1
+          AND sr.uid = #{uid}
         ORDER BY update_time DESC
         LIMIT 1
     </select>

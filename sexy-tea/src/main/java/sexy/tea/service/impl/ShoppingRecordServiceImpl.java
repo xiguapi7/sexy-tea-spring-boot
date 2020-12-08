@@ -4,9 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import sexy.tea.exception.BusinessException;
@@ -46,12 +43,12 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
      *
      * @return 结果集
      */
-    @Cacheable(value = "shopping_items")
+    // @Cacheable(value = "shopping_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         Page<ShoppingRecord> page = PageHelper.startPage(pageNum, pageSize);
         Example example = Example.builder(ShoppingRecord.class).build();
-        example.createCriteria().andNotEqualTo("status", -1);
+        example.createCriteria().andEqualTo("status", 1);
         shoppingRecordMapper.selectByExample(example);
         return Result.success("查询成功", Pager.<ShoppingRecord>builder()
                 .pageNum(page.getPageNum())
@@ -87,7 +84,7 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
      *
      * @return 响应
      */
-    @CachePut(value = "shopping_items")
+    // @CachePut(value = "shopping_items")
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result saveOrUpdate(ShoppingRecord record) {
@@ -123,7 +120,7 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
      *
      * @return 响应
      */
-    @CacheEvict(value = "shopping_items")
+    // @CacheEvict(value = "shopping_items")
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result delete(Long uid) {
@@ -141,7 +138,7 @@ public class ShoppingRecordServiceImpl implements ShoppingRecordService {
      *
      * @param id 用户ID
      */
-    @CachePut(value = "shopping_items")
+    // @CachePut(value = "shopping_items")
     @Override
     public void updateShoppingRecordByUid(Long id) {
         shoppingRecordMapper.updateShoppingRecordByUid(id);

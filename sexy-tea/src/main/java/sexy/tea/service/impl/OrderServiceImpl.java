@@ -8,9 +8,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -78,7 +75,7 @@ public class OrderServiceImpl implements OrderService {
      *
      * @return 结果集
      */
-    @Cacheable(value = "order_items")
+    // @Cacheable(value = "order_items")
     @Override
     public Result find(int pageNum, int pageSize) {
 
@@ -103,7 +100,7 @@ public class OrderServiceImpl implements OrderService {
      *
      * @return 封装订单号的响应
      */
-    @CachePut(value = {"order_items", "order_uid_items", "order_id_goods"})
+    // @CachePut(value = {"order_items", "order_uid_items", "order_id_goods"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result createOrder(OrderDto orderDto) {
@@ -158,7 +155,7 @@ public class OrderServiceImpl implements OrderService {
      *
      * @return 结果集
      */
-    @Cacheable(value = "order_id_item")
+    // @Cacheable(value = "order_id_item")
     @Override
     public Order findByOrderId(String orderId) {
         log.info("根据订单ID查询订单, orderId = {}", orderId);
@@ -179,7 +176,7 @@ public class OrderServiceImpl implements OrderService {
      *
      * @return 结果集
      */
-    @Cacheable(value = "order_id_goods")
+    // @Cacheable(value = "order_id_goods")
     @Override
     public Result findOrderGoodsByOrderId(String orderId) {
         if (StringUtils.isEmpty(orderId)) {
@@ -201,7 +198,7 @@ public class OrderServiceImpl implements OrderService {
      *
      * @return 删除结果
      */
-    @CacheEvict(value = {"order_id_goods", "order_items", "order_uid_items"})
+    // @CacheEvict(value = {"order_id_goods", "order_items", "order_uid_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result deleteByOrderId(String orderId) {
@@ -220,7 +217,7 @@ public class OrderServiceImpl implements OrderService {
      *
      * @param orderId 订单号
      */
-    @CachePut(value = {"order_id_goods", "order_items", "order_uid_items"})
+    // @CachePut(value = {"order_id_goods", "order_items", "order_uid_items"})
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public void callbackUpdateOrder(String orderId) {
@@ -242,7 +239,7 @@ public class OrderServiceImpl implements OrderService {
      *
      * @return 结果集
      */
-    @Cacheable(value = "order_uid_items")
+    // @Cacheable(value = "order_uid_items")
     @Override
     public Result findByUid(Long uid) {
         if (uid == null || uid <= 0) {

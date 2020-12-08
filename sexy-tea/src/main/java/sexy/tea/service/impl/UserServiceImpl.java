@@ -9,9 +9,6 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.cache.annotation.CacheEvict;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.data.redis.core.ValueOperations;
 import org.springframework.stereotype.Service;
@@ -208,7 +205,7 @@ public class UserServiceImpl implements UserService {
      *
      * @return 统一响应对象 {@link Result}
      */
-    @Cacheable(value = "user_items")
+    // @Cacheable(value = "user_items")
     @Override
     public Result items(int pageNum, int pageSize, String username) {
         log.info("用户名模糊分页查询列表, pageNum = {}, pageSize = {}, username = {}", pageNum, pageSize, username);
@@ -245,7 +242,7 @@ public class UserServiceImpl implements UserService {
      *
      * @return 统一响应对象 {@link Result}
      */
-    @CacheEvict(value = "user_items")
+    // @CacheEvict(value = "user_items")
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result removeUser(Integer id) {
@@ -272,7 +269,7 @@ public class UserServiceImpl implements UserService {
      *
      * @return 统一响应对象 {@link Result}
      */
-    @CacheEvict(value = "user_items")
+    // @CacheEvict(value = "user_items")
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result batchRemoveUser(List<Integer> ids) {
@@ -288,7 +285,7 @@ public class UserServiceImpl implements UserService {
      *
      * @return 统一响应对象 {@link Result}
      */
-    @CachePut(value = "user_items")
+    // @CachePut(value = "user_items")
     @Transactional(rollbackFor = BusinessException.class)
     @Override
     public Result update(User user) {

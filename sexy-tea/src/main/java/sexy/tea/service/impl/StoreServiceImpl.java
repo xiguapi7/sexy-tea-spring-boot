@@ -4,7 +4,6 @@ import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import sexy.tea.mapper.StoreMapper;
@@ -43,7 +42,7 @@ public class StoreServiceImpl implements StoreService {
      *
      * @return 统一响应对象 {@link Result}
      */
-    @Cacheable(value = "store_items")
+    // @Cacheable(value = "store_items")
     @Override
     public Result find(int pageNum, int pageSize) {
         log.info("分页查询商店, pageNum = {}, pageSize = {}", pageNum, pageSize);
@@ -70,7 +69,7 @@ public class StoreServiceImpl implements StoreService {
      *
      * @return 统一响应对象 {@link Result}
      */
-    @Cacheable(value = "store_items_cityName")
+    // @Cacheable(value = "store_items_cityName")
     @Override
     public Result findByCityName(int pageNum, int pageSize, String cityName) {
         if (StringUtils.isEmpty(cityName)) {

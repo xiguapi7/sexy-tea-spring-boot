@@ -1,9 +1,5 @@
 package sexy.tea.config;
 
-import org.springframework.boot.autoconfigure.AutoConfigureAfter;
-import org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 import org.springframework.data.redis.connection.lettuce.LettuceConnectionFactory;
 import org.springframework.data.redis.core.RedisTemplate;
 import org.springframework.data.redis.serializer.GenericJackson2JsonRedisSerializer;
@@ -20,11 +16,11 @@ import java.io.Serializable;
  * @since 2020-12-5 下午 04:59
  * desc:
  */
-@Configuration
-@AutoConfigureAfter(RedisAutoConfiguration.class)
+// @Configuration
+// @AutoConfigureAfter(RedisAutoConfiguration.class)
 public class RedisCacheConfiguration {
 
-    @Bean
+    // @Bean
     public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory factory) {
         RedisTemplate<String, Serializable> template = new RedisTemplate<>();
         template.setKeySerializer(new StringRedisSerializer());
