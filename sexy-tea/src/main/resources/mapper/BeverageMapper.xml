@@ -350,4 +350,10 @@
         ORDER BY b.update_time DESC
         LIMIT 10
     </select>
+
+    <select id="beverageCount" resultType="java.lang.Long">
+        SELECT DISTINCT COUNT(b.id) AS 'beverageCount'
+        FROM beverage b
+        WHERE b.`status` = 1
+    </select>
 </mapper>

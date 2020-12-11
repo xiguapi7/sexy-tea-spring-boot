@@ -24,4 +24,6 @@ public interface FoodMapper extends tk.mybatis.mapper.common.Mapper<Food> {
     int insertOrUpdateSelective(Food record);
 
     List<Food> findByName(String name);
+
+    Long foodCount();
 }

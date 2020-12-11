@@ -9,6 +9,7 @@ import sexy.tea.mapper.CityMapper;
 import sexy.tea.model.City;
 import sexy.tea.model.common.Pager;
 import sexy.tea.model.common.Result;
+import sexy.tea.model.vo.CityVO;
 import sexy.tea.service.CityService;
 import sexy.tea.service.StoreService;
 import tk.mybatis.mapper.entity.Example;
@@ -80,5 +81,11 @@ public class CityServiceImpl implements CityService {
                 .total(page.getTotal())
                 .result(page.getResult())
                 .build());
+    }
+
+    @Override
+    public Result info() {
+        final List<CityVO> cityVOList = cityMapper.cityVOList();
+        return Result.success("统计城市门店TOP5", cityVOList);
     }
 }

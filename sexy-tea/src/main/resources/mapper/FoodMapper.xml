@@ -1,294 +1,302 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="sexy.tea.mapper.FoodMapper">
-  <resultMap id="BaseResultMap" type="sexy.tea.model.Food">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
-    <!--@Table food-->
-    <id column="id" jdbcType="INTEGER" property="id" />
-    <result column="food_id" jdbcType="INTEGER" property="foodId" />
-    <result column="food_name" jdbcType="VARCHAR" property="foodName" />
-    <result column="food_image" jdbcType="VARCHAR" property="foodImage" />
-    <result column="category" jdbcType="VARCHAR" property="category" />
-    <result column="sub_type" jdbcType="VARCHAR" property="subType" />
-    <result column="status" jdbcType="TINYINT" property="status" />
-    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
-    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
-  </resultMap>
-  <sql id="Base_Column_List">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
-    id, food_id, food_name, food_image, category, sub_type, `status`, create_time, update_time
-  </sql>
-  <update id="updateBatch" parameterType="java.util.List">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
-    update food
-    <trim prefix="set" suffixOverrides=",">
-      <trim prefix="food_id = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.foodId,jdbcType=INTEGER}
+    <resultMap id="BaseResultMap" type="sexy.tea.model.Food">
+        <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+        <!--@Table food-->
+        <id column="id" jdbcType="INTEGER" property="id"/>
+        <result column="food_id" jdbcType="INTEGER" property="foodId"/>
+        <result column="food_name" jdbcType="VARCHAR" property="foodName"/>
+        <result column="food_image" jdbcType="VARCHAR" property="foodImage"/>
+        <result column="category" jdbcType="VARCHAR" property="category"/>
+        <result column="sub_type" jdbcType="VARCHAR" property="subType"/>
+        <result column="status" jdbcType="TINYINT" property="status"/>
+        <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
+        <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+        id, food_id, food_name, food_image, category, sub_type, `status`, create_time, update_time
+    </sql>
+    <update id="updateBatch" parameterType="java.util.List">
+        <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+        update food
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="food_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.foodId,jdbcType=INTEGER}
+                </foreach>
+            </trim>
+            <trim prefix="food_name = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.foodName,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="food_image = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.foodImage,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="category = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.category,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="sub_type = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.subType,jdbcType=VARCHAR}
+                </foreach>
+            </trim>
+            <trim prefix="`status` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+                </foreach>
+            </trim>
+            <trim prefix="create_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+                </foreach>
+            </trim>
+            <trim prefix="update_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=INTEGER}
         </foreach>
-      </trim>
-      <trim prefix="food_name = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.foodName,jdbcType=VARCHAR}
+    </update>
+    <update id="updateBatchSelective" parameterType="java.util.List">
+        <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+        update food
+        <trim prefix="set" suffixOverrides=",">
+            <trim prefix="food_id = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.foodId != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.foodId,jdbcType=INTEGER}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="food_name = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.foodName != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.foodName,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="food_image = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.foodImage != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.foodImage,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="category = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.category != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.category,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="sub_type = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.subType != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.subType,jdbcType=VARCHAR}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="`status` = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.status != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="create_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.createTime != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
+                    </if>
+                </foreach>
+            </trim>
+            <trim prefix="update_time = case" suffix="end,">
+                <foreach collection="list" index="index" item="item">
+                    <if test="item.updateTime != null">
+                        when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
+                    </if>
+                </foreach>
+            </trim>
+        </trim>
+        where id in
+        <foreach close=")" collection="list" item="item" open="(" separator=", ">
+            #{item.id,jdbcType=INTEGER}
         </foreach>
-      </trim>
-      <trim prefix="food_image = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.foodImage,jdbcType=VARCHAR}
+    </update>
+    <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
+        <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+        insert into food
+        (food_id, food_name, food_image, category, sub_type, `status`, create_time, update_time
+        )
+        values
+        <foreach collection="list" item="item" separator=",">
+            (#{item.foodId,jdbcType=INTEGER}, #{item.foodName,jdbcType=VARCHAR}, #{item.foodImage,jdbcType=VARCHAR},
+            #{item.category,jdbcType=VARCHAR}, #{item.subType,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT},
+            #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
         </foreach>
-      </trim>
-      <trim prefix="category = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.category,jdbcType=VARCHAR}
-        </foreach>
-      </trim>
-      <trim prefix="sub_type = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.subType,jdbcType=VARCHAR}
-        </foreach>
-      </trim>
-      <trim prefix="`status` = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
-        </foreach>
-      </trim>
-      <trim prefix="create_time = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
-        </foreach>
-      </trim>
-      <trim prefix="update_time = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
-        </foreach>
-      </trim>
-    </trim>
-    where id in
-    <foreach close=")" collection="list" item="item" open="(" separator=", ">
-      #{item.id,jdbcType=INTEGER}
-    </foreach>
-  </update>
-  <update id="updateBatchSelective" parameterType="java.util.List">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
-    update food
-    <trim prefix="set" suffixOverrides=",">
-      <trim prefix="food_id = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.foodId != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.foodId,jdbcType=INTEGER}
-          </if>
-        </foreach>
-      </trim>
-      <trim prefix="food_name = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.foodName != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.foodName,jdbcType=VARCHAR}
-          </if>
-        </foreach>
-      </trim>
-      <trim prefix="food_image = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.foodImage != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.foodImage,jdbcType=VARCHAR}
-          </if>
-        </foreach>
-      </trim>
-      <trim prefix="category = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.category != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.category,jdbcType=VARCHAR}
-          </if>
-        </foreach>
-      </trim>
-      <trim prefix="sub_type = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.subType != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.subType,jdbcType=VARCHAR}
-          </if>
-        </foreach>
-      </trim>
-      <trim prefix="`status` = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.status != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.status,jdbcType=TINYINT}
-          </if>
-        </foreach>
-      </trim>
-      <trim prefix="create_time = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.createTime != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.createTime,jdbcType=TIMESTAMP}
-          </if>
-        </foreach>
-      </trim>
-      <trim prefix="update_time = case" suffix="end,">
-        <foreach collection="list" index="index" item="item">
-          <if test="item.updateTime != null">
-            when id = #{item.id,jdbcType=INTEGER} then #{item.updateTime,jdbcType=TIMESTAMP}
-          </if>
-        </foreach>
-      </trim>
-    </trim>
-    where id in
-    <foreach close=")" collection="list" item="item" open="(" separator=", ">
-      #{item.id,jdbcType=INTEGER}
-    </foreach>
-  </update>
-  <insert id="batchInsert" keyColumn="id" keyProperty="id" parameterType="map" useGeneratedKeys="true">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
-    insert into food
-    (food_id, food_name, food_image, category, sub_type, `status`, create_time, update_time
-      )
-    values
-    <foreach collection="list" item="item" separator=",">
-      (#{item.foodId,jdbcType=INTEGER}, #{item.foodName,jdbcType=VARCHAR}, #{item.foodImage,jdbcType=VARCHAR}, 
-        #{item.category,jdbcType=VARCHAR}, #{item.subType,jdbcType=VARCHAR}, #{item.status,jdbcType=TINYINT}, 
-        #{item.createTime,jdbcType=TIMESTAMP}, #{item.updateTime,jdbcType=TIMESTAMP})
-    </foreach>
-  </insert>
-  <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Food" useGeneratedKeys="true">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
-    insert into food
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      food_id,
-      food_name,
-      food_image,
-      category,
-      sub_type,
-      `status`,
-      create_time,
-      update_time,
-    </trim>
-    values
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      #{foodId,jdbcType=INTEGER},
-      #{foodName,jdbcType=VARCHAR},
-      #{foodImage,jdbcType=VARCHAR},
-      #{category,jdbcType=VARCHAR},
-      #{subType,jdbcType=VARCHAR},
-      #{status,jdbcType=TINYINT},
-      #{createTime,jdbcType=TIMESTAMP},
-      #{updateTime,jdbcType=TIMESTAMP},
-    </trim>
-    on duplicate key update 
-    <trim suffixOverrides=",">
-      <if test="id != null">
-        id = #{id,jdbcType=INTEGER},
-      </if>
-      food_id = #{foodId,jdbcType=INTEGER},
-      food_name = #{foodName,jdbcType=VARCHAR},
-      food_image = #{foodImage,jdbcType=VARCHAR},
-      category = #{category,jdbcType=VARCHAR},
-      sub_type = #{subType,jdbcType=VARCHAR},
-      `status` = #{status,jdbcType=TINYINT},
-      create_time = #{createTime,jdbcType=TIMESTAMP},
-      update_time = #{updateTime,jdbcType=TIMESTAMP},
-    </trim>
-  </insert>
-  <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Food" useGeneratedKeys="true">
-    <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
-    insert into food
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        id,
-      </if>
-      <if test="foodId != null">
-        food_id,
-      </if>
-      <if test="foodName != null">
-        food_name,
-      </if>
-      <if test="foodImage != null">
-        food_image,
-      </if>
-      <if test="category != null">
-        category,
-      </if>
-      <if test="subType != null">
-        sub_type,
-      </if>
-      <if test="status != null">
-        `status`,
-      </if>
-      <if test="createTime != null">
-        create_time,
-      </if>
-      <if test="updateTime != null">
-        update_time,
-      </if>
-    </trim>
-    values
-    <trim prefix="(" suffix=")" suffixOverrides=",">
-      <if test="id != null">
-        #{id,jdbcType=INTEGER},
-      </if>
-      <if test="foodId != null">
-        #{foodId,jdbcType=INTEGER},
-      </if>
-      <if test="foodName != null">
-        #{foodName,jdbcType=VARCHAR},
-      </if>
-      <if test="foodImage != null">
-        #{foodImage,jdbcType=VARCHAR},
-      </if>
-      <if test="category != null">
-        #{category,jdbcType=VARCHAR},
-      </if>
-      <if test="subType != null">
-        #{subType,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        #{status,jdbcType=TINYINT},
-      </if>
-      <if test="createTime != null">
-        #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-    on duplicate key update 
-    <trim suffixOverrides=",">
-      <if test="id != null">
-        id = #{id,jdbcType=INTEGER},
-      </if>
-      <if test="foodId != null">
-        food_id = #{foodId,jdbcType=INTEGER},
-      </if>
-      <if test="foodName != null">
-        food_name = #{foodName,jdbcType=VARCHAR},
-      </if>
-      <if test="foodImage != null">
-        food_image = #{foodImage,jdbcType=VARCHAR},
-      </if>
-      <if test="category != null">
-        category = #{category,jdbcType=VARCHAR},
-      </if>
-      <if test="subType != null">
-        sub_type = #{subType,jdbcType=VARCHAR},
-      </if>
-      <if test="status != null">
-        `status` = #{status,jdbcType=TINYINT},
-      </if>
-      <if test="createTime != null">
-        create_time = #{createTime,jdbcType=TIMESTAMP},
-      </if>
-      <if test="updateTime != null">
-        update_time = #{updateTime,jdbcType=TIMESTAMP},
-      </if>
-    </trim>
-  </insert>
+    </insert>
+    <insert id="insertOrUpdate" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Food"
+            useGeneratedKeys="true">
+        <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+        insert into food
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            food_id,
+            food_name,
+            food_image,
+            category,
+            sub_type,
+            `status`,
+            create_time,
+            update_time,
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            #{foodId,jdbcType=INTEGER},
+            #{foodName,jdbcType=VARCHAR},
+            #{foodImage,jdbcType=VARCHAR},
+            #{category,jdbcType=VARCHAR},
+            #{subType,jdbcType=VARCHAR},
+            #{status,jdbcType=TINYINT},
+            #{createTime,jdbcType=TIMESTAMP},
+            #{updateTime,jdbcType=TIMESTAMP},
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            food_id = #{foodId,jdbcType=INTEGER},
+            food_name = #{foodName,jdbcType=VARCHAR},
+            food_image = #{foodImage,jdbcType=VARCHAR},
+            category = #{category,jdbcType=VARCHAR},
+            sub_type = #{subType,jdbcType=VARCHAR},
+            `status` = #{status,jdbcType=TINYINT},
+            create_time = #{createTime,jdbcType=TIMESTAMP},
+            update_time = #{updateTime,jdbcType=TIMESTAMP},
+        </trim>
+    </insert>
+    <insert id="insertOrUpdateSelective" keyColumn="id" keyProperty="id" parameterType="sexy.tea.model.Food"
+            useGeneratedKeys="true">
+        <!--@mbg.generated generated on Sat Sep 26 15:10:17 CST 2020.-->
+        insert into food
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                id,
+            </if>
+            <if test="foodId != null">
+                food_id,
+            </if>
+            <if test="foodName != null">
+                food_name,
+            </if>
+            <if test="foodImage != null">
+                food_image,
+            </if>
+            <if test="category != null">
+                category,
+            </if>
+            <if test="subType != null">
+                sub_type,
+            </if>
+            <if test="status != null">
+                `status`,
+            </if>
+            <if test="createTime != null">
+                create_time,
+            </if>
+            <if test="updateTime != null">
+                update_time,
+            </if>
+        </trim>
+        values
+        <trim prefix="(" suffix=")" suffixOverrides=",">
+            <if test="id != null">
+                #{id,jdbcType=INTEGER},
+            </if>
+            <if test="foodId != null">
+                #{foodId,jdbcType=INTEGER},
+            </if>
+            <if test="foodName != null">
+                #{foodName,jdbcType=VARCHAR},
+            </if>
+            <if test="foodImage != null">
+                #{foodImage,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="subType != null">
+                #{subType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+        on duplicate key update
+        <trim suffixOverrides=",">
+            <if test="id != null">
+                id = #{id,jdbcType=INTEGER},
+            </if>
+            <if test="foodId != null">
+                food_id = #{foodId,jdbcType=INTEGER},
+            </if>
+            <if test="foodName != null">
+                food_name = #{foodName,jdbcType=VARCHAR},
+            </if>
+            <if test="foodImage != null">
+                food_image = #{foodImage,jdbcType=VARCHAR},
+            </if>
+            <if test="category != null">
+                category = #{category,jdbcType=VARCHAR},
+            </if>
+            <if test="subType != null">
+                sub_type = #{subType,jdbcType=VARCHAR},
+            </if>
+            <if test="status != null">
+                `status` = #{status,jdbcType=TINYINT},
+            </if>
+            <if test="createTime != null">
+                create_time = #{createTime,jdbcType=TIMESTAMP},
+            </if>
+            <if test="updateTime != null">
+                update_time = #{updateTime,jdbcType=TIMESTAMP},
+            </if>
+        </trim>
+    </insert>
 
     <select id="findByName" resultMap="BaseResultMap" parameterType="String">
         SELECT *
         FROM food
         WHERE `status` = 1
         AND food_name LIKE #{name}
+    </select>
+
+    <select id="foodCount" resultType="java.lang.Long">
+        SELECT DISTINCT COUNT(f.id) AS 'foodCount'
+        FROM food f
+        WHERE f.`status` = 1
     </select>
 </mapper>

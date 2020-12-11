@@ -466,4 +466,18 @@
     SET `status` = -1
     WHERE `id` = #{orderId,jdbcType=VARCHAR}
   </update>
+
+  <select id="purchases" resultType="java.lang.Double">
+    SELECT SUM(o.total) AS purcharse
+    FROM `order` o
+    WHERE o.`is_pay` = 1
+    </select>
+
+  <select id="orderVOList" resultType="sexy.tea.model.vo.OrderVO">
+    SELECT id, total, is_pay
+    FROM `order`
+    WHERE `status` > 0
+    ORDER BY update_time DESC
+    LIMIT 10
+  </select>
 </mapper>

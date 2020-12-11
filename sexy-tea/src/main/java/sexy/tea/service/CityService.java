@@ -16,4 +16,6 @@ public interface CityService {
     Result findByCityName(int pageNum, int pageSize, String cityName);
 
     Result search(int pageNum, int pageSize, String cityName);
+
+    Result info();
 }

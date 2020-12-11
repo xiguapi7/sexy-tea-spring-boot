@@ -13,6 +13,10 @@
         <result column="create_time" jdbcType="TIMESTAMP" property="createTime"/>
         <result column="update_time" jdbcType="TIMESTAMP" property="updateTime"/>
     </resultMap>
+    <resultMap id="StatisticsResultMap" type="sexy.tea.model.vo.CityVO">
+        <result column="city" jdbcType="VARCHAR" property="name"/>
+        <result column="count" jdbcType="INTEGER" property="value"/>
+    </resultMap>
     <sql id="Base_Column_List">
         <!--@mbg.generated generated on Sat Sep 26 15:10:16 CST 2020.-->
         id, city, center_longitude, center_latitude, `count`, `status`, create_time, update_time
@@ -287,5 +291,12 @@
         FROM `city`
         WHERE `status` <![CDATA[<>]]> -1
           AND city LIKE #{cityName}
+    </select>
+
+    <select id="cityVOList" resultType="sexy.tea.model.vo.CityVO">
+        SELECT DISTINCT city AS 'name', count AS 'value'
+        FROM `city`
+        ORDER BY count DESC
+        LIMIT 5
     </select>
 </mapper>

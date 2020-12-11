@@ -42,4 +42,12 @@ public class CityController {
                                  @PathVariable String cityName) {
         return service.findByCityName(pageNum, pageSize, cityName);
     }
+
+    /**
+     * 城市门店TOP5信息
+     */
+    @GetMapping("/info")
+    public Result info() {
+        return service.info();
+    }
 }

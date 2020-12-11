@@ -295,4 +295,10 @@
         WHERE `status` <![CDATA[ <> ]]> -1
           AND product_name LIKE #{name}
     </select>
+
+    <select id="selectionCount" resultType="java.lang.Long">
+        SELECT DISTINCT COUNT(s.id) AS 'selectionCount'
+        FROM selection s
+        WHERE s.`status` = 1
+    </select>
 </mapper>

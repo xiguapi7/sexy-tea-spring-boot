@@ -3,6 +3,7 @@ package sexy.tea.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import sexy.tea.model.City;
+import sexy.tea.model.vo.CityVO;
 
 import java.util.List;
 
@@ -25,4 +26,6 @@ public interface CityMapper extends tk.mybatis.mapper.common.Mapper<City> {
     int insertOrUpdateSelective(City record);
 
     List<City> search(@Param("cityName") String cityName);
+
+    List<CityVO> cityVOList();
 }

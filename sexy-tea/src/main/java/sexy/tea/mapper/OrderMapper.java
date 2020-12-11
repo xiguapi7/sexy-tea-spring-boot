@@ -3,6 +3,7 @@ package sexy.tea.mapper;
 import org.apache.ibatis.annotations.Mapper;
 import org.apache.ibatis.annotations.Param;
 import sexy.tea.model.Order;
+import sexy.tea.model.vo.OrderVO;
 
 import java.util.List;
 
@@ -26,4 +27,8 @@ public interface OrderMapper extends tk.mybatis.mapper.common.Mapper<Order> {
     void fallbackUpdateOrder(String orderId);
 
     void deleteByOrderId(String orderId);
+
+    Double purchases();
+
+    List<OrderVO> orderVOList();
 }

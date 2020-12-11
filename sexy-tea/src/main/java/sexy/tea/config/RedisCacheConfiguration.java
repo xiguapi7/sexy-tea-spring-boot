@@ -24,7 +24,6 @@ public class RedisCacheConfiguration {
     public RedisTemplate<String, Serializable> redisCacheTemplate(LettuceConnectionFactory factory) {
         RedisTemplate<String, Serializable> template = new RedisTemplate<>();
         template.setKeySerializer(new StringRedisSerializer());
-        ;
         template.setValueSerializer(new GenericJackson2JsonRedisSerializer());
         template.setConnectionFactory(factory);
         return template;

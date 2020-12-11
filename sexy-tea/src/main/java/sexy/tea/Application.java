@@ -13,7 +13,12 @@ import tk.mybatis.spring.annotation.MapperScan;
  */
 @SpringBootApplication
 @MapperScan("sexy.tea.mapper")
-// @EnableCaching
+/*@EnableCaching
+@EnableRedisHttpSession(
+        maxInactiveIntervalInSeconds = 3600,// 过期时间，3600 = 60min
+        redisNamespace = "sexyTeaSession",// 自定义命名空间
+        flushMode = FlushMode.IMMEDIATE// FlushMode.IMMEDIATE表示只要有更新，就刷新缓存
+)*/
 public class Application {
 
     public static void main(String[] args) {

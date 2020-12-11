@@ -24,4 +24,6 @@ public interface StoreMapper extends tk.mybatis.mapper.common.Mapper<Store> {
     int insertOrUpdateSelective(Store record);
 
     List<Store> findByCity(@Param("city") String city);
+
+    Long storeCount();
 }

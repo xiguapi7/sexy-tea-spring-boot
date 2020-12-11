@@ -13,19 +13,5 @@ import sexy.tea.model.common.Result;
  */
 public interface StatisticsService {
 
-    Result newestFood();
-
-    Result newestMilkTea();
-
-    Result newestCoffee();
-
-    Result newestSelection();
-
-    Result newestStore();
-
-    Result newestOrder();
-
-    Result cityCount();
-
-    Result userCount();
+    Result getDashboardInfo();
 }

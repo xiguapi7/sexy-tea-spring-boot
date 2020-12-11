@@ -528,4 +528,10 @@
         WHERE `status` <![CDATA[ <> ]]> -1
           AND city LIKE #{city}
     </select>
+
+    <select id="storeCount" resultType="java.lang.Long">
+        SELECT DISTINCT COUNT(s.id) AS 'storeCount'
+        FROM store s
+        WHERE s.`status` = 1
+    </select>
 </mapper>

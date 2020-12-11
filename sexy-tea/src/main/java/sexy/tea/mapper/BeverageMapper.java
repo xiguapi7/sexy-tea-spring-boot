@@ -30,4 +30,6 @@ public interface BeverageMapper extends tk.mybatis.mapper.common.Mapper<Beverage
     List<Beverage> newestMikeTea();
 
     List<Beverage> newestCoffee();
+
+    Long beverageCount();
 }
