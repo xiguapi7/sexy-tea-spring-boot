@@ -1,18 +1,12 @@
 package sexy.tea.config;
 
-import com.alibaba.druid.pool.DruidDataSource;
 import com.alibaba.druid.support.http.StatViewServlet;
 import com.alibaba.druid.support.http.WebStatFilter;
-import lombok.extern.slf4j.Slf4j;
-import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.boot.web.servlet.FilterRegistrationBean;
 import org.springframework.boot.web.servlet.ServletRegistrationBean;
-import org.springframework.context.annotation.Bean;
-import org.springframework.context.annotation.Configuration;
 
 import javax.servlet.Filter;
 import javax.servlet.Servlet;
-import javax.sql.DataSource;
 
 /**
  * Druid配置类
@@ -21,13 +15,14 @@ import javax.sql.DataSource;
  * @date 16:22 2020-09-23
  * description:
  */
-@Configuration
-@Slf4j
+// @Configuration
+// @Slf4j
 public class DruidConfiguration {
 
-    @Bean
+    // @Bean
     public ServletRegistrationBean<Servlet> druidServlet() {
-        ServletRegistrationBean<Servlet> servletRegistrationBean = new ServletRegistrationBean<>(new StatViewServlet(), "/druid/*");
+        ServletRegistrationBean<Servlet> servletRegistrationBean
+                = new ServletRegistrationBean<>(new StatViewServlet(), "/druid/*");
         // IP白名单
         // servletRegistrationBean.addInitParameter("allow", "*");
         // IP黑名单(共同存在时，deny优先于allow)
@@ -41,17 +36,12 @@ public class DruidConfiguration {
     }
 
 
-    @Bean
+    // @Bean
     public FilterRegistrationBean<Filter> filterRegistrationBean() {
-        FilterRegistrationBean<Filter> filterRegistrationBean = new FilterRegistrationBean<>(new WebStatFilter());
+        FilterRegistrationBean<Filter> filterRegistrationBean
+                = new FilterRegistrationBean<>(new WebStatFilter());
         filterRegistrationBean.addUrlPatterns("/*");
         filterRegistrationBean.addInitParameter("exclusions", "*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*");
         return filterRegistrationBean;
-    }
-
-    @Bean
-    @ConfigurationProperties(prefix = "spring.datasource")
-    public DataSource druid() {
-        return new DruidDataSource();
     }
 }

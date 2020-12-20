@@ -5,44 +5,101 @@ spring:
     name: sexy-tea
     cache:
       type: REDIS
+  #  datasource:
+  #    # 数据源类型设置为Druid数据源
+  #    type: com.alibaba.druid.pool.DruidDataSource
+  #    # 数据源信息
+  #    driver-class-name: com.mysql.cj.jdbc.Driver
+  #    url: jdbc:mysql://localhost:3306/sexy-tea?charsetEncoding=utf8mb4&serverTimezone=UTC
+  #    username: root
+  #    password: 1015
+  #    # 数据连接池配置
+  #    druid:
+  #      url: jdbc:mysql://localhost:3306/sexy-tea?charsetEncoding=utf8mb4&serverTimezone=GMT+8
+  #      initial-size: 8
+  #      max-active: 20
+  #      min-idle: 8
+  #      max-wait: 6000
+  #      # 是否缓存preparedStatement，也就是PSCache,PSCache对支持游标的数据库性能提升巨大，比如说oracle,在mysql下建议关闭。
+  #      pool-prepared-statements: false
+  #      # 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
+  #      max-open-prepared-statements: -1
+  #      # 配置检测可以关闭的空闲连接间隔时间
+  #      time-between-eviction-runs-millis: 60000
+  #      # 配置连接在连接池中的最小生存时间
+  #      min-evictable-idle-time-millis: 300000
+  #      max-evictable-idle-time-millis: 400000
+  #      # 引入过滤器, 监控统计的stat和防御SQL注入的wall
+  #      filters: stat, wall, log4j2
+  #      # spring监控AOP切入点D
+  #      aop-patterns: sexy.tea.service.*
+  #      # 是否启用StatFilter
+  #      web-stat-filter:
+  #        enabled: true
+  #        url-pattern: /**
+  #        exclusions:
+  #      validation-query: SELECT 1 FROM DUAL
+  #      test-while-idle: true
+  #      test-on-borrow: true
+  #      test-on-return: false
+  #      use-global-data-source-stat: true
+  #      connect-properties: druid.stat.mergeSql-true;druid.stat.slowSqlMills=5000
+  #      # 异步初始化策略
+  #      async-init: true
   datasource:
-    # 数据源类型设置为Druid数据源
+    # driver-class-name: com.mysql.cj.jdbc.Driver   #
     type: com.alibaba.druid.pool.DruidDataSource
-    # 数据源信息
-    driver-class-name: com.mysql.cj.jdbc.Driver
-    url: jdbc:mysql://localhost:3306/sexy-tea?charsetEncoding=utf8mb4&serverTimezone=UTC
-    username: root
-    password: 1015
-    # 数据连接池配置
     druid:
-      initial-size: 8
-      max-active: 20
-      min-idle: 8
-      max-wait: 6000
-      # 是否缓存preparedStatement，也就是PSCache,PSCache对支持游标的数据库性能提升巨大，比如说oracle,在mysql下建议关闭。
-      pool-prepared-statements: false
-      # 要启用PSCache，必须配置大于0，当大于0时，poolPreparedStatements自动触发修改为true。在Druid中，不会存在Oracle下PSCache占用内存过多的问题，可以把这个数值配置大一些，比如说100
-      max-open-prepared-statements: -1
-      # 配置检测可以关闭的空闲连接间隔时间
-      time-between-eviction-runs-millis: 60000
-      # 配置连接在连接池中的最小生存时间
-      min-evictable-idle-time-millis: 300000
-      max-evictable-idle-time-millis: 400000
-      # 引入过滤器, 监控统计的stat和防御SQL注入的wall
-      filters: stat,wall
-      # spring监控AOP切入点
-      aop-patterns: sexy.tea.service.*
-      # 是否启用StatFilter
+      url: jdbc:mysql://127.0.0.1:3306/sexy-tea?serverTimezone=Asia/Shanghai&charseterEncoding=utf8
+      username: root
+      password: 1015
+      # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，
+      # wall用于防火墙
+      filter:
+        stat:
+          enabled: true
+        wall:
+          enabled: true
+      # 配置StatFilter
       web-stat-filter:
+        #默认为false，设置为true启动
         enabled: true
-        url-pattern: /*
-        exclusions:
-      validation-query: SELECT 1 FROM DUAL
-      test-while-idle: true
+        exclusions: "*.js,*.gif,*.jpg,*.bmp,*.png,*.css,*.ico,/druid/*"
+      #配置StatViewServlet
+      stat-view-servlet:
+        url-pattern: "/druid/*"
+        #允许那些ip
+        login-username: lsp
+        login-password: lsp
+        #禁止那些ip
+        deny: 192.168.1.102
+        #是否可以重置
+        reset-enable: false
+        #启用
+        enabled: true
+      #最大等待时间，配置获取连接等待超时，时间单位都是毫秒ms
+      max-wait: 60000
+      #最大值
+      max-active: 20
+      #最小值
+      min-idle: 5
+      #初始化大小
+      initial-size: 5
+      #配置一个连接在池中最小生存的时间
+      min-evictable-idle-time-millis: 60000
+      #配置间隔多久才进行一次检测，检测需要关闭的空闲连接
+      time-between-eviction-runs-millis: 300000
       test-on-borrow: false
       test-on-return: false
+      test-while-idle: true
+      pool-prepared-statements: false
+      #最大PSCache连接
+      max-pool-prepared-statement-per-connection-size: -1
       use-global-data-source-stat: true
-      connect-properties: druid.stat.mergeSql-true;druid.stat.slowSqlMills=5000
+      # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+      connection-properties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=500
+      async-init: true
+      aop-patterns: sexy.tea.service.*
   devtools:
     livereload:
       enabled: true
@@ -59,6 +116,9 @@ spring:
         max-idle: 8
         min-idle: 0
         max-wait: 60000
+  jackson:
+    date-format: yyyy-MM-dd HH:mm:ss
+    time-zone: GMT+8
 # mybatis配置
 mybatis:
   type-aliases-package: sexy.tea.model
@@ -91,8 +151,8 @@ alipay:
   privateKey: MIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCAjq2her9rtWvqnUFEsg/ZiYej5aNcq4fVgw1yvJNMnCWpTLjNVFKpgf7s+HcAG9UrUZnyNIwUBbbbtsdQoTs0SVofdqRAUwhu1E6bwgwhGb7/ZExnFrBLeaE4O2fDAlxcMRzXI0DAGHbxHFGPyx4TSvNviJ65aJMkQyfikcybi+bVSsnCbaVHRuXkF18dBo3V5d9QcymbcYMPDDLXRqVRlJnKrgr2Y/hC3qWtX1/kRzwkzCg1KEpx0x2jdrTk4K2lIiEiwZLMZxgoRVVckhChYuvRMa88b5tu1AfvRLJYOC5JtHhyD/F5v4L9hLI09kMHw88DEF4L/VUT3SgkSBnfAgMBAAECggEAIoUtfpT1XbjDl6ZOZmHh+6oAcDQzn6i3us+MBuk4LHQpcMKXRRuFbtrnVz6IxdCzdwRccDtH+gBmz6zO7Im+2hVwS86R4Gvrccc0rIJ4u1KshOur0Gq5QCsS7YSWIjk6D89oTSS8OFjZZ3kRNal3E/smTybCaEr6Z9xYk3BPHt0a1uqBkt0BXeNdq+qBjV8Z3UPYhgWc4vS/3KkJicdRH7kFKYnE5OGknKYTD5COWyu+/uzaCwNDIjIrSGv8DKzVkILErWlsFo0kcEPmyLTaIKthiCgOXTrmZ+05tlhl5LV7L7pENu3spWDtnPhEZS0oj4679dnFT1RR+S4KeieoMQKBgQC45KEgckfvOnoVOInt8ZnmA/i8ovZOA1olwioJzQDOB/H5hziQOhitpLfVSkXkrCDWfQ6PyuqnE7uJCXg02mkgWSwJ6245TWxJxA9Vs4KG4wSEaFe01+Ahf3+R/5bVHb7cdp+pep7iDSjsCtHvqlcvahWMjdHw2AdrNOrjogUwdQKBgQCx/5j7t5GeRFv+gQOhaNymefMaVF7C2xJKSAL5x305JTx+Edb3xeMrr7bsALVeiVJEzFBy6h61eNb/t8SnbMN0jA0OziYHMFln/QmztzSt4rbvSUpNpEmY6H+Gf0Hr0U6yuEOuGg/N8Xe8P5Ei4Wp6ZTgV/lb3F/LAn2AS/NVWgwKBgGhsiCwhH0uXxVey5QPETl1ApP01NNL+xa1JqiB67hdvGVUK8AFVLpbzzvfhyPPL24gIfW7s9faDCInvFTsUmAczFdJMa6ZleeF3oAmRJwkzsltt6wsyWV3R+qTkq7WV5TPys14u6QlW0WPvAH7RwAgBbEZD2uyhth7wdjE2UqP5AoGAD/vQxAHG7LxcumzhY5QkBDr9LocW/05mxQ7UXZOhVglW9kcp05QMgzbDKUwi/Ts9jPn/22HUoh0YyVu6KAKnRobxATxXw9t+m8zoGyA/dcHfBXvCVViEV1vBX9V7mO5xr7DGOxMSCj89rkTTBpvRUO5X6/mr24JmBRAKs4nKqnsCgYEAkvVn8kV4xO3FM/bAmIOdrgJP8UWihly0X/AnyjOgkEuInMOt3YaVfirkzrhCv+5riCsO0fzLdEuFGTJQa32yzi9OIN0n2/8OFnLJN0H3A02d9CuVmRS5SDINTMg1w6avKs4QRXtC3qKcnBrp4YUihVfA6ymIqmG9u3CzDIOJDrM=
   publicKey: MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAx7psSKGuqlYUFSiK9nn+A56C2h5BchrKCE6U5rAPX3zoiEbgMHdqziZ8+QkDa0GCJ5tIJRpet26bdKKxycixn9AeEM52YqYmYSU3SBkdpKk5gG9aIzSCvSsFvRbPrXiy9nAORGL+cW2E4S03plwlx+Q1MkhngR/BA7HmnKszS2ZofJ9Bvu6KVW35ylO5Cbc1v/hWQZyupQ8IAJQWfpxhshcQJBR+270x+aI0pYOMm25RfGCHhgGfaWDXnIVr/JqdrNvZim77MFvY/kpJt6yeHUYFFx/EuVnNfMSFhvoMeF58JnEYHc+o1JzAGLcTfF7v4TsEA71EQAfwYMyM1nYwIQIDAQAB
   gateway: openapi.alipaydev.com
-  returnUrl: http://localhost:8082/account/order
-  notifyUrl: http://dsnt9r.natappfree.cc/pay/fallback
+  returnUrl: http://localhost:8081/account/order
+  notifyUrl: http://mq8fep.natappfree.cc/pay/fallback
 # 度量参数
 management:
   endpoints:
